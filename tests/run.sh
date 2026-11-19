@@ -1,5 +1,6 @@
 #!/bin/sh
-# Builds the mod, checks mod.json the way HMG-API reads it, and runs the JVM unit tests.
+# Builds the mod, checks it the way HMG-API reads it (our checker, then HMG-API's own engine on a
+# fake head unit through the mod SDK), and runs the JVM unit tests.
 # Needs JDK 17+ and Python 3. (No Docker: the mod has no on-unit shell scripts yet.)
 set -eu
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -9,6 +10,10 @@ W="$ROOT/build/tests"
 python3 "$ROOT/tools/gen_input.py" --check
 sh "$ROOT/tools/build.sh"
 python3 "$ROOT/tests/check_mod.py"
+
+SDK="$(sh "$ROOT/tools/sdk.sh")"
+sh "$SDK/bin/check-scripts.sh" "$ROOT/mod/5w-screencap"
+HMGAPI_SDK="$SDK" sh "$ROOT/tests/engine.sh"
 
 rm -rf "$W" && mkdir -p "$W"
 # the pure classes and the ones whose logic is tested; android-all on the classpath to load them

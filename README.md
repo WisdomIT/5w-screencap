@@ -13,9 +13,19 @@
 | 버튼 (HMG-API 바인딩, ☆ 메뉴) | 🛠 구현, 실차 확인 전 |
 | 플로팅 버튼 | 🛠 구현, 실차 확인 전 |
 | Launch 화면 (캡처 테스트·설정·진단·QR) | 🛠 구현, 실차 확인 전 |
-| 패키징·릴리스 | ⏳ 첫 릴리스 전에 추가 |
+| 패키징·릴리스 | 🛠 `tools/package.sh`, `tools/release.sh` (HMG-API mod SDK) |
 
 화면 설계: [docs/ui-mockup.html](docs/ui-mockup.html)
+
+## 설치 (첫 릴리스 후)
+
+**HMG-API 1.0 이상**이 먼저 설치되어 있어야 합니다(HMG-API는 NEMESIS 위에서 동작합니다).
+
+1. [릴리스](https://github.com/WisdomIT/5w-screencap/releases)에서 `5w-screencap-<버전>-usb.zip`을 받아 압축을 풀고, `NEMESIS.data`와 `packages` 폴더를 USB **맨 위**에 복사합니다.
+2. 차에 꽂고 NEMESIS가 물으면 **예**를 누릅니다.
+3. NEMESIS Manager → 5W Screencap → **Launch**에서 버튼과 녹화를 설정합니다.
+
+시동이 꺼질 때 녹화 중이던 파일을 마저 닫는 기능은 HMG-API 1.1.0 이상에서 동작합니다(그 전 버전에서는 마지막 2분 이내 구간이 저장되지 않을 수 있습니다).
 
 ## 쓰는 법 (예정)
 
@@ -35,7 +45,7 @@ JDK 17 이상과 Python 3가 필요합니다. 빌드 도구(aapt2, r8, android-a
 tests/run.sh
 ```
 
-빌드, `mod.json` 검사, 단위 테스트를 한 번에 합니다. 빌드만 하려면 `tools/build.sh`를 씁니다. 결과물은 `mod/5w-screencap/app/`과 `mod/5w-screencap/svc/`에 생깁니다.
+빌드, `mod.json` 검사, HMG-API 엔진 검사(mod SDK로 가짜 헤드유닛에서 설치·버튼 바인딩 확인), 단위 테스트를 한 번에 합니다. 빌드만 하려면 `tools/build.sh`, 설치 파일까지 만들려면 `tools/package.sh`를 씁니다(`dist/release/`).
 
 개발 흐름은 [CONTRIBUTING.md](CONTRIBUTING.md), 릴리스는 [docs/RELEASING.md](docs/RELEASING.md)를 따릅니다.
 
@@ -46,6 +56,6 @@ tests/run.sh
 | `mod/5w-screencap/` | HMG-API mod: `mod.json`(버전의 출처), `settings.json` |
 | `daemon/` | `screencapd`: root로 도는 캡처·녹화 서비스 |
 | `app/` | 차량 앱: 버튼 수신, 소리·토스트, 플로팅 버튼, Launch 화면 |
-| `tools/` | `build.sh`, `gen_input.py`(버튼 바인딩 생성) |
-| `tests/` | `mod.json` 검사, JVM 단위 테스트 |
+| `tools/` | `build.sh`, `package.sh`, `release.sh`, `sdk.sh`(HMG-API mod SDK), `gen_input.py`(버튼 바인딩 생성) |
+| `tests/` | `mod.json` 검사, HMG-API 엔진 검사(`engine.sh`), JVM 단위 테스트 |
 | `diag/`, `diag2/`, `diag3/` | 구현 가능성 검토 때 쓴 실차 진단 (`diag/results/`에 결과) |

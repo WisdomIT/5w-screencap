@@ -27,7 +27,7 @@ GitHub 저장소의 기본 브랜치는 `main`으로 둡니다. 처음 오는 �
    git switch -c feature/<주제>
    ```
 3. 작업하고 커밋합니다. 커밋 메시지는 무엇을 왜 바꿨는지 적습니다.
-4. 빌드와 테스트를 돌립니다. 전부 통과해야 합니다(JDK 17 이상, Python 3).
+4. 빌드와 테스트를 돌립니다. 전부 통과해야 합니다(JDK 17 이상, Python 3. 처음 한 번은 빌드 도구와 HMG-API mod SDK를 내려받습니다).
    ```bash
    tests/run.sh
    ```
@@ -44,8 +44,8 @@ GitHub 저장소의 기본 브랜치는 `main`으로 둡니다. 처음 오는 �
 | `mod/5w-screencap/` | HMG-API mod 폴더. `mod.json`(버전의 출처), `settings.json`. 빌드 결과물(`app/`, `svc/`)은 커밋하지 않습니다. |
 | `daemon/` | `screencapd`: root로 도는 캡처·녹화 서비스 (app_process, `mod.json`의 `services`) |
 | `app/` | 차량 앱: 버튼 수신, 소리·토스트, 플로팅 버튼, Launch 화면 |
-| `tools/` | 빌드(`build.sh`), 버튼 바인딩 생성(`gen_input.py`) |
-| `tests/` | JVM 단위 테스트와 `mod.json` 검사 |
+| `tools/` | 빌드(`build.sh`), 패키징(`package.sh`), 릴리스(`release.sh`), HMG-API mod SDK(`sdk.sh`), 버튼 바인딩 생성(`gen_input.py`) |
+| `tests/` | `mod.json` 검사, HMG-API 엔진 검사(`engine.sh`), JVM 단위 테스트 |
 | `diag*/` | 구현 가능성 검토 때 쓴 실차 진단 스크립트와 결과 |
 
 ## 지켜야 할 것
