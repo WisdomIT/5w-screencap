@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        차량의 Launch 화면(NEMESIS Manager → 5W Screencap → Launch)에서 QR을 스캔했다면 아래 차량 정보가 이미 채워져 있습니다.
+        차량의 5W Screencap 화면(앱 메뉴의 "화면 캡처")에서 QR을 스캔했다면 아래 차량 정보가 이미 채워져 있습니다.
         가능하면 Launch 화면의 **진단 실행** 결과도 첨부해 주세요. 진단이 끝나면 USB의 `5W-Screencap/diag/` 폴더에 날짜별 폴더가 생기고, 그 안의 `SUMMARY.txt`를 올리면 됩니다.
 
   - type: textarea

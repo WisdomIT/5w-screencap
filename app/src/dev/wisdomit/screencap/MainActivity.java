@@ -26,7 +26,7 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 /**
- * The Launch screen (NEMESIS Manager's Launch, the app menu tile).
+ * The Launch screen (the app menu tile "화면 캡처"; NEMESIS Manager's Launch opens the HMG-API app instead).
  * Left: four cards (capture test, buttons, recording, diagnostics). Right: the issue QR,
  * filled with this car's versions. Built in code, no layout XML (keeps the resource build
  * simple), in the same style as pretendard-systemfont's status screen.

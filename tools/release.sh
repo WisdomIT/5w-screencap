@@ -50,7 +50,7 @@ NOTES="$ROOT/dist/release-notes.md"
     echo
     echo "1. 아래 **\`5w-screencap-$V-usb.zip\`**을 받아 압축을 풀고, 안에 있는 \`NEMESIS.data\`와 \`packages\` 폴더를 USB **맨 위**에 복사합니다."
     echo "2. 차에 꽂고 NEMESIS가 물으면 **예**를 누릅니다."
-    echo "3. NEMESIS Manager → 5W Screencap → **Launch**에서 버튼과 녹화를 설정합니다."
+    echo "3. 앱 메뉴의 **\"화면 캡처\"**에서 버튼과 녹화를 설정합니다."
     echo
     echo "| 파일 | 용도 |"
     echo "|---|---|"

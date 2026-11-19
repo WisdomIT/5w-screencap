@@ -23,7 +23,7 @@
 
 1. [릴리스](https://github.com/WisdomIT/5w-screencap/releases)에서 `5w-screencap-<버전>-usb.zip`을 받아 압축을 풀고, `NEMESIS.data`와 `packages` 폴더를 USB **맨 위**에 복사합니다.
 2. 차에 꽂고 NEMESIS가 물으면 **예**를 누릅니다.
-3. NEMESIS Manager → 5W Screencap → **Launch**에서 버튼과 녹화를 설정합니다.
+3. 앱 메뉴의 **"화면 캡처"**에서 버튼과 녹화를 설정합니다. (NEMESIS Manager의 Launch는 HMG-API 앱을 엽니다)
 
 시동이 꺼질 때 녹화 중이던 파일을 마저 닫는 기능은 HMG-API 1.1.0 이상에서 동작합니다(그 전 버전에서는 마지막 2분 이내 구간이 저장되지 않을 수 있습니다).
 
@@ -33,7 +33,7 @@
 |---|---|
 | 캡처 | 고른 버튼 1회·길게·연속 2회, 차량 ☆ 메뉴의 "화면 캡처", 또는 플로팅 버튼 탭 |
 | 녹화 시작/정지 | 고른 버튼, ☆ 메뉴의 "화면 녹화 시작/정지", 또는 플로팅 버튼 길게 누르기 |
-| 설정 | NEMESIS Manager → 5W Screencap → Launch, 또는 앱 메뉴의 "화면 캡처" |
+| 설정 | 앱 메뉴의 "화면 캡처" (HMG-API 앱의 mod 설정에서도 바꿀 수 있음) |
 
 결과는 USB의 `5W-Screencap/Screenshots`, `5W-Screencap/Recordings`에 저장됩니다. 녹화는 2분 단위 MP4로 나뉘어 저장됩니다.
 

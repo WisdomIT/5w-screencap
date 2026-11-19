@@ -15,7 +15,7 @@
         android:label="5W Screencap"
         android:allowBackup="false">
 
-        <!-- Launch screen: NEMESIS Manager's Launch, the HMG-API app menu tile -->
+        <!-- Launch screen: the app menu tile (mod.json provides.launcher); NEMESIS Manager's Launch opens the HMG-API app -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
