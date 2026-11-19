@@ -32,6 +32,22 @@ final class Actions {
         });
     }
 
+    /**
+     * The capture button: a photo, or while a recording runs, the end of that recording. With
+     * capture on one press of a button and recording on its long press, the press that follows
+     * a recording is meant to stop it (the floating button works the same way: tap stops).
+     */
+    static void captureOrStop(final Context c, final Done done) {
+        final Context app = c.getApplicationContext();
+        WORK.execute(new Runnable() {
+            @Override public void run() {
+                JSONObject st = Daemon.call("status", 3000);
+                if (st.optBoolean("recording")) record(app, "stop", done);
+                else capture(app, done);
+            }
+        });
+    }
+
     /** "toggle", "start" or "stop" */
     static void record(final Context c, final String how, final Done done) {
         final Context app = c.getApplicationContext();
