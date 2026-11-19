@@ -1,0 +1,13 @@
+libOMX.TCC.VPUEnc.so:OMX.TCC.base.so
+libOMX.TCC.VPUEnc.so:OMX.TCC.VPUEnc.so
+libOMX.TCC.VideoEnc.so:OMX.TCC.base.so
+libOMX.TCC.VideoEnc.so:OMX.TCC.VPUEnc.so
+libOMX.TCC.VideoEnc.so:OMX.TCC.VideoEnc.so
+libOMX.TCC.VideoEnc.so:OMX.TCC.ENC.mpeg4
+libOMX.TCC.VideoEnc.so:OMX.TCC.ENC.avc
+libOMX.TCC.VideoEnc.so:OMX.TCC.ENC.h263
+libOMX.TCC.mp3enc.so:OMX.TCC.base.so
+libOMX.TCC.mp3enc.so:OMX.TCC.mp3enc.so
+libOMX.TCC.mp3enc.so:OMX.TCC.mp3enc
+libTCC_OMXCore.so:OMX.TCC.VideoEnc
+libtcc.video.call.direct.interface.so:OMX.TCC.VPUEnc.so

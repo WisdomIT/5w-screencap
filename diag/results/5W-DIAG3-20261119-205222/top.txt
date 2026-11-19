@@ -1,0 +1,96 @@
+--- t=216912
+
+
+
+User 37%, System 14%, IOW 0%, IRQ 0%
+User 435 + Nice 0 + Sys 165 + Idle 548 + IOW 0 + IRQ 0 + SIRQ 7 = 1155
+
+  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name
+15626  0  23% R    10 487916K  49208K     root     app_process
+  603  1   7% S   125 676708K 108092K  fg system   system_server
+  954  0   4% S    44 686264K  58368K  fg system   com.daudio.app.dipo
+  161  1   3% S    16  93688K  14644K  fg system   /system/bin/surfaceflinger
+ 1240  3   3% S   105 864208K 185100K  fg u0_a19   com.mnsoft.navi
+  174  2   1% S    30 140468K  17344K  fg root     /system/bin/tcc_dxb_service
+ 1431  0   1% S     1      0K      0K     root     dhd_dpc
+ 1011  1   1% S    14 531352K  57380K  fg system   com.hkmc.system.app.rearcamera
+--- t=218037
+
+
+
+User 40%, System 14%, IOW 1%, IRQ 1%
+User 466 + Nice 4 + Sys 168 + Idle 501 + IOW 12 + IRQ 0 + SIRQ 18 = 1169
+
+  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name
+15626  0  23% R    10 487988K  49440K     root     app_process
+  603  2   6% S   125 676708K 107232K  fg system   system_server
+  954  2   4% S    44 686264K  58648K  fg system   com.daudio.app.dipo
+ 1240  0   4% S   105 864208K 183924K  fg u0_a19   com.mnsoft.navi
+  161  2   2% S    16  93688K  14644K  fg system   /system/bin/surfaceflinger
+  174  2   1% S    30 140468K  17344K  fg root     /system/bin/tcc_dxb_service
+ 1431  0   1% S     1      0K      0K     root     dhd_dpc
+   30  2   1% S     1      0K      0K     root     ksmd
+--- t=219159
+
+
+
+User 52%, System 12%, IOW 0%, IRQ 0%
+User 603 + Nice 2 + Sys 147 + Idle 382 + IOW 1 + IRQ 0 + SIRQ 9 = 1144
+
+  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name
+15626  3  40% R    16 495216K  54576K     root     app_process
+  603  1   5% S   125 676720K 107088K  fg system   system_server
+  954  2   4% S    44 686264K  59184K  fg system   com.daudio.app.dipo
+  161  3   4% S    16  93688K  14644K  fg system   /system/bin/surfaceflinger
+ 1240  3   3% S   105 864208K 183924K  fg u0_a19   com.mnsoft.navi
+  174  2   1% S    30 140468K  17344K  fg root     /system/bin/tcc_dxb_service
+ 1431  0   1% S     1      0K      0K     root     dhd_dpc
+   30  3   1% S     1      0K      0K     root     ksmd
+--- t=220285
+
+
+
+User 40%, System 13%, IOW 0%, IRQ 0%
+User 457 + Nice 1 + Sys 150 + Idle 522 + IOW 0 + IRQ 0 + SIRQ 9 = 1139
+
+  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name
+15626  1  29% R    16 501600K  55744K     root     app_process
+  603  3   6% S   125 676720K 107072K  fg system   system_server
+  954  3   3% S    44 686264K  59552K  fg system   com.daudio.app.dipo
+  161  3   3% S    16  93688K  14644K  fg system   /system/bin/surfaceflinger
+ 1240  3   3% S   105 864208K 183924K  fg u0_a19   com.mnsoft.navi
+  174  3   1% S    30 140468K  17344K  fg root     /system/bin/tcc_dxb_service
+   30  1   1% S     1      0K      0K     root     ksmd
+  973  2   1% R    25 557112K 116436K  fg system   com.mobis.splitscreen.right
+--- t=221408
+
+
+
+User 47%, System 20%, IOW 0%, IRQ 0%
+User 553 + Nice 1 + Sys 241 + Idle 361 + IOW 1 + IRQ 0 + SIRQ 11 = 1168
+
+  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name
+15626  3  38% R    18 520204K  66576K     root     app_process
+  603  2   8% S   125 676864K 108032K  fg system   system_server
+  954  2   4% S    44 686264K  60004K  fg system   com.daudio.app.dipo
+  161  0   3% S    16  93688K  14644K  fg system   /system/bin/surfaceflinger
+ 1240  1   3% S   105 864208K 183924K  fg u0_a19   com.mnsoft.navi
+  174  3   1% S    30 140468K  17344K  fg root     /system/bin/tcc_dxb_service
+ 1431  0   1% S     1      0K      0K     root     dhd_dpc
+ 1011  3   1% S    14 531352K  57380K  fg system   com.hkmc.system.app.rearcamera
+--- t=222528
+
+
+
+User 50%, System 24%, IOW 0%, IRQ 0%
+User 601 + Nice 3 + Sys 299 + Idle 288 + IOW 0 + IRQ 0 + SIRQ 11 = 1202
+
+  PID PR CPU% S  #THR     VSS     RSS PCY UID      Name
+15626  3  50% S    18 549028K  88148K     root     app_process
+  603  2   5% S   125 676864K 107468K  fg system   system_server
+ 1240  1   3% S   105 864208K 183924K  fg u0_a19   com.mnsoft.navi
+  161  3   3% S    16  93688K  14644K  fg system   /system/bin/surfaceflinger
+  954  2   3% S    42 682124K  60224K  fg system   com.daudio.app.dipo
+  174  3   1% S    30 140468K  17344K  fg root     /system/bin/tcc_dxb_service
+ 1431  0   1% S     1      0K      0K     root     dhd_dpc
+ 1011  3   1% S    14 531352K  57380K  fg system   com.hkmc.system.app.rearcamera

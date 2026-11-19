@@ -1,0 +1,100 @@
+# 5w_screencap diag2  stamp=20261119-204230
+product=DEPEHEV.KOR.S5W_M.V039.001.260902  platform=tcc897x
+
+===== 1. libraries / devices
+libs -> libs_system.txt, libs_vendor.txt
+dev: crw-rw-rw- system   system   236,   1 2015-01-01 18:30 admem
+dev: crw-rw-rw- root     root      10,  44 2015-01-01 18:30 ashmem
+dev: crw-rw-rw- graphics graphics  10, 204 2015-01-01 18:30 ccfb
+dev: drwxr-xr-x root     root              2015-01-01 18:30 graphics
+dev: crw-rw-rw- media    graphics 211,   1 2015-01-01 18:30 jpegenc
+dev: crw-rw---- media    system    10,  26 2015-01-01 18:30 jpu_dev_mgr
+dev: crw------- root     root       1,   1 2015-01-01 18:30 mem
+dev: crw------- root     root      10,  33 2015-01-01 18:30 memory_bandwidth
+dev: crw-rw-rw- media    graphics  10,  61 2015-01-01 18:30 overlay
+dev: crw-rw-rw- media    graphics  10,  53 2015-01-01 18:30 scaler1
+dev: crw-rw-rw- media    graphics  10,  52 2015-01-01 18:30 scaler3
+dev: crw-rw-rw- system   system   237,   1 2015-01-01 18:30 tcc-cp
+dev: crw------- root     root      10,  55 2015-01-01 18:30 tcc-otp
+dev: crw-rw-rw- system   system   251,   0 2015-01-01 18:30 tcc-tsif0
+dev: crw-rw---- bluetooth bluetooth 234,   1 2015-01-01 18:30 tcc_bt_dev
+dev: crw-rw-rw- system   system   221,   0 2015-01-01 18:30 tcc_cm_ctrl
+dev: crw-rw---- system   system   252,   0 2015-01-01 18:30 tcc_dxb_ctrl
+dev: crw-rw-rw- system   system    10,  57 2015-01-01 18:30 tcc_lut
+dev: crw-rw---- media    graphics  10,  60 2015-01-01 18:30 tcc_vsync0
+dev: crw-rw---- media    graphics  10,  59 2015-01-01 18:30 tcc_vsync1
+dev: crw-rw-rw- system   system   213,   1 2015-01-01 18:30 tmem
+dev: crw-rw-rw- root     root     204,  64 2026-11-19 20:16 ttyTCC0
+dev: crw------- bluetooth bluetooth 204,  65 2026-11-19 20:17 ttyTCC1
+dev: crw-rw-rw- root     root     204,  66 2026-11-19 20:42 ttyTCC2
+dev: crw-rw-rw- root     root     204,  67 2015-01-01 18:30 ttyTCC3
+dev: crw-rw-rw- root     root     204,  68 2015-01-01 18:30 ttyTCC4
+dev: crw-rw-rw- root     root     204,  70 2015-01-01 18:30 ttyTCC6
+dev: crw-rw-rw- media    graphics  81,   0 2015-01-01 18:30 video0
+dev: crw-rw-rw- media    graphics 230,   0 2015-01-01 18:30 viqe
+dev: crw-rw---- media    system    10,  32 2015-01-01 18:30 vpu_dev_mgr
+dev: crw-rw---- media    system    10,  31 2015-01-01 18:30 vpu_mem
+dev: crw-rw---- media    system    10,  30 2015-01-01 18:30 vpu_vdec
+dev: crw-rw---- media    system    10,  29 2015-01-01 18:30 vpu_vdec_ext
+dev: crw-rw---- media    system    10,  28 2015-01-01 18:30 vpu_venc
+media_profiles.xml copied
+omx enc: libOMX.TCC.VPUEnc.so:OMX.TCC.base.so
+omx enc: libOMX.TCC.VPUEnc.so:OMX.TCC.VPUEnc.so
+omx enc: libOMX.TCC.VideoEnc.so:OMX.TCC.base.so
+omx enc: libOMX.TCC.VideoEnc.so:OMX.TCC.VPUEnc.so
+omx enc: libOMX.TCC.VideoEnc.so:OMX.TCC.VideoEnc.so
+omx enc: libOMX.TCC.VideoEnc.so:OMX.TCC.ENC.mpeg4
+omx enc: libOMX.TCC.VideoEnc.so:OMX.TCC.ENC.avc
+omx enc: libOMX.TCC.VideoEnc.so:OMX.TCC.ENC.h263
+omx enc: libOMX.TCC.mp3enc.so:OMX.TCC.base.so
+omx enc: libOMX.TCC.mp3enc.so:OMX.TCC.mp3enc.so
+omx enc: libOMX.TCC.mp3enc.so:OMX.TCC.mp3enc
+omx enc: libTCC_OMXCore.so:OMX.TCC.VideoEnc
+omx enc: libtcc.video.call.direct.interface.so:OMX.TCC.VPUEnc.so
+
+===== 2. /dev/graphics/fb0
+fb0 name: tccfb
+fb0 virtual_size: 1920,2160
+fb0 bits_per_pixel: 32
+fb0 stride: 7680
+fb0 modes: U:1920x720p-0
+fb0 pan: 0,0
+fb0 read (up to 24 MiB) rc=0 ms=6010 size=16777216
+fb0 10 frame reads ms=9380
+
+===== 3. /system/bin/screenshot
+binary copied -> bin_screenshot
+before /sdcard: /sdcard
+before /sdcard/Pictures: 
+before /sdcard/Pictures/Screenshots: /sdcard/Pictures/Screenshots: No such file or directory
+before /data/local/tmp: 5wdiag2
+korea-projection-hint.txt
+korea-projection-progress.txt
+korea-projection-status.txt
+korea-projection-watch.txt
+korea.projection
+nemesis
+before /data/local/tmp/5wdiag2: 
+screenshot -h rc=1 ms=1010
+screenshot (no args) rc=1 ms=1000
+screenshot FILE rc=0 ms=5010 size=1138688
+after  /sdcard: /sdcard
+after  /sdcard/Pictures: 
+after  /sdcard/Pictures/Screenshots: /sdcard/Pictures/Screenshots: No such file or directory
+after  /data/local/tmp: 5wdiag2
+korea-projection-hint.txt
+korea-projection-progress.txt
+korea-projection-status.txt
+korea-projection-watch.txt
+korea.projection
+nemesis
+after  /data/local/tmp/5wdiag2: ss_test.png
+
+===== 4. Java probe (screenshot speed, encoders, MP4)
+probe rc=0 ms=11020  -> probe.txt
+
+===== 5. logcat
+logcat (filtered) -> logcat_filtered.txt
+mediaserver now: media     164   1     34112  10116 ffffffff b6ec5868 S /system/bin/mediaserver
+
+done

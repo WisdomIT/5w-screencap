@@ -1,0 +1,10 @@
+/dev/block/platform/bdm/by-name/vr1 /storage/vr1 ext4 ro,relatime,data=ordered 0 0
+/dev/block/platform/bdm/by-name/upgrade /storage/upgrade ext4 rw,nosuid,nodev,noatime,discard,nodelalloc,errors=continue,data=journal 0 0
+/dev/block/platform/bdm/by-name/vr2 /storage/vr2 ext4 ro,relatime,data=ordered 0 0
+/dev/block/platform/bdm/by-name/log /storage/log ext4 rw,nosuid,nodev,noatime,discard,nodelalloc,errors=continue,data=journal 0 0
+/dev/block/platform/bdm/by-name/navi /storage/navi ext4 ro,relatime,data=ordered 0 0
+/dev/block/platform/bdm/by-name/navi2 /storage/navi2 ext4 ro,relatime,data=ordered 0 0
+adb /dev/usb-ffs/adb functionfs rw,relatime 0 0
+/dev/fuse /mnt/shell/emulated fuse rw,nosuid,nodev,relatime,user_id=1023,group_id=1023,default_permissions,allow_other 0 0
+/dev/block/vold/8:1 /mnt/media_rw/usb0 vfat rw,dirsync,nosuid,nodev,noexec,noatime,nodiratime,uid=1023,gid=1023,fmask=0007,dmask=0007,allow_utime=0020,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro 0 0
+/dev/fuse /storage/usb0 fuse rw,sync,noatime,nodiratime,user_id=1023,group_id=1023,default_permissions,allow_other 0 0

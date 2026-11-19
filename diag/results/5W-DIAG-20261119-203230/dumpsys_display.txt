@@ -1,0 +1,145 @@
+DISPLAY MANAGER (dumpsys display)
+  mHeadless=false
+  mOnlyCode=false
+  mSafeMode=false
+  mPendingTraversal=false
+  mAllDisplayBlankStateFromPowerManager=2
+  mNextNonDefaultDisplayId=1
+  mDefaultViewport=DisplayViewport{valid=true, displayId=0, orientation=0, logicalFrame=Rect(0, 0 - 1920, 720), physicalFrame=Rect(0, 0 - 1920, 720), deviceWidth=1920, deviceHeight=720}
+  mExternalTouchViewport=DisplayViewport{valid=false, displayId=0, orientation=0, logicalFrame=Rect(0, 0 - 0, 0), physicalFrame=Rect(0, 0 - 0, 0), deviceWidth=0, deviceHeight=0}
+  mSingleDisplayDemoMode=false
+  mWifiDisplayScanRequestCount=0
+
+Display Adapters: size=4
+  LocalDisplayAdapter
+  OverlayDisplayAdapter
+    mCurrentOverlaySetting=
+    mOverlays: size=0
+  WifiDisplayAdapter
+    mCurrentStatus=WifiDisplayStatus{featureState=1, scanState=0, activeDisplayState=0, activeDisplay=null, displays=[], sessionInfo=WifiDisplaySessionInfo:
+        Client/Owner: Client
+        GroupId: 
+        Passphrase: 
+        SessionId: 0
+        IP Address: }
+    mFeatureState=1
+    mScanState=0
+    mActiveDisplayState=0
+    mActiveDisplay=null
+    mDisplays=[]
+    mAvailableDisplays=[]
+    mRememberedDisplays=[]
+    mPendingStatusChangeBroadcast=false
+    mPendingNotificationUpdate=false
+    mSupportsProtectedBuffers=false
+    mDisplayController:
+      mWifiDisplayOnSetting=true
+      mWifiP2pEnabled=false
+      mWfdEnabled=false
+      mWfdEnabling=false
+      mNetworkInfo=null
+      mScanRequested=false
+      mDiscoverPeersInProgress=false
+      mDesiredDevice=null
+      mConnectingDisplay=null
+      mDisconnectingDisplay=null
+      mCancelingDisplay=null
+      mConnectedDevice=null
+      mConnectionRetriesLeft=0
+      mRemoteDisplay=null
+      mRemoteDisplayInterface=null
+      mRemoteDisplayConnected=false
+      mAdvertisedDisplay=null
+      mAdvertisedDisplaySurface=null
+      mAdvertisedDisplayWidth=0
+      mAdvertisedDisplayHeight=0
+      mAdvertisedDisplayFlags=0
+      mAvailableWifiDisplayPeers: size=0
+  VirtualDisplayAdapter
+
+Display Devices: size=1
+  DisplayDeviceInfo{"기본으로 제공되는 화면": 1920 x 720, 60.000004 fps, density 240, 159.895 x 160.421 dpi, touch INTERNAL, rotation 0, type BUILT_IN, FLAG_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}
+    mAdapter=LocalDisplayAdapter
+    mDisplayToken=android.os.BinderProxy@41b570c8
+    mCurrentLayerStack=0
+    mCurrentOrientation=0
+    mCurrentLayerStackRect=Rect(0, 0 - 1920, 720)
+    mCurrentDisplayRect=Rect(0, 0 - 1920, 720)
+    mCurrentSurface=null
+    mBuiltInDisplayId=0
+    mPhys=PhysicalDisplayInfo{1920 x 720, 60.000004 fps, density 1.5, 159.895 x 160.421 dpi, secure true}
+    mBlanked=false
+
+Logical Displays: size=1
+  Display 0:
+    mDisplayId=0
+    mLayerStack=0
+    mHasContent=true
+    mPrimaryDisplayDevice=기본으로 제공되는 화면
+    mBaseDisplayInfo=DisplayInfo{"기본으로 제공되는 화면", app 1920 x 720, real 1920 x 720, largest app 1920 x 720, smallest app 1920 x 720, 60.000004 fps, rotation0, density 240 (159.895 x 160.421) dpi, layerStack 0, type BUILT_IN, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}
+    mOverrideDisplayInfo=DisplayInfo{"기본으로 제공되는 화면", app 1920 x 720, real 1920 x 720, largest app 1920 x 1830, smallest app 720 x 630, 60.000004 fps, rotation0, density 240 (159.895 x 160.421) dpi, layerStack 0, type BUILT_IN, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}
+
+Callbacks: size=63
+  0: mPid=603, mWifiDisplayScanRequested=false
+  1: mPid=708, mWifiDisplayScanRequested=false
+  2: mPid=722, mWifiDisplayScanRequested=false
+  3: mPid=746, mWifiDisplayScanRequested=false
+  4: mPid=774, mWifiDisplayScanRequested=false
+  5: mPid=809, mWifiDisplayScanRequested=false
+  6: mPid=828, mWifiDisplayScanRequested=false
+  7: mPid=858, mWifiDisplayScanRequested=false
+  8: mPid=864, mWifiDisplayScanRequested=false
+  9: mPid=901, mWifiDisplayScanRequested=false
+  10: mPid=934, mWifiDisplayScanRequested=false
+  11: mPid=945, mWifiDisplayScanRequested=false
+  12: mPid=954, mWifiDisplayScanRequested=false
+  13: mPid=973, mWifiDisplayScanRequested=false
+  14: mPid=979, mWifiDisplayScanRequested=false
+  15: mPid=993, mWifiDisplayScanRequested=false
+  16: mPid=1011, mWifiDisplayScanRequested=false
+  17: mPid=1033, mWifiDisplayScanRequested=false
+  18: mPid=1044, mWifiDisplayScanRequested=false
+  19: mPid=1055, mWifiDisplayScanRequested=false
+  20: mPid=1076, mWifiDisplayScanRequested=false
+  21: mPid=1096, mWifiDisplayScanRequested=false
+  22: mPid=1116, mWifiDisplayScanRequested=false
+  23: mPid=1137, mWifiDisplayScanRequested=false
+  24: mPid=1177, mWifiDisplayScanRequested=false
+  25: mPid=1185, mWifiDisplayScanRequested=false
+  26: mPid=1209, mWifiDisplayScanRequested=false
+  27: mPid=1233, mWifiDisplayScanRequested=false
+  28: mPid=1240, mWifiDisplayScanRequested=false
+  29: mPid=1435, mWifiDisplayScanRequested=false
+  30: mPid=1449, mWifiDisplayScanRequested=false
+  31: mPid=1467, mWifiDisplayScanRequested=false
+  32: mPid=1493, mWifiDisplayScanRequested=false
+  33: mPid=1512, mWifiDisplayScanRequested=false
+  34: mPid=1528, mWifiDisplayScanRequested=false
+  35: mPid=1569, mWifiDisplayScanRequested=false
+  36: mPid=1628, mWifiDisplayScanRequested=false
+  37: mPid=1664, mWifiDisplayScanRequested=false
+  38: mPid=1734, mWifiDisplayScanRequested=false
+  39: mPid=1817, mWifiDisplayScanRequested=false
+  40: mPid=1903, mWifiDisplayScanRequested=false
+  41: mPid=1942, mWifiDisplayScanRequested=false
+  42: mPid=1977, mWifiDisplayScanRequested=false
+  43: mPid=2037, mWifiDisplayScanRequested=false
+  44: mPid=2081, mWifiDisplayScanRequested=false
+  45: mPid=2120, mWifiDisplayScanRequested=false
+  46: mPid=2145, mWifiDisplayScanRequested=false
+  47: mPid=2169, mWifiDisplayScanRequested=false
+  48: mPid=2278, mWifiDisplayScanRequested=false
+  49: mPid=2368, mWifiDisplayScanRequested=false
+  50: mPid=2454, mWifiDisplayScanRequested=false
+  51: mPid=2503, mWifiDisplayScanRequested=false
+  52: mPid=2531, mWifiDisplayScanRequested=false
+  53: mPid=2602, mWifiDisplayScanRequested=false
+  54: mPid=2622, mWifiDisplayScanRequested=false
+  55: mPid=2667, mWifiDisplayScanRequested=false
+  56: mPid=2749, mWifiDisplayScanRequested=false
+  57: mPid=2763, mWifiDisplayScanRequested=false
+  58: mPid=2859, mWifiDisplayScanRequested=false
+  59: mPid=2874, mWifiDisplayScanRequested=false
+  60: mPid=2906, mWifiDisplayScanRequested=false
+  61: mPid=3811, mWifiDisplayScanRequested=false
+  62: mPid=3832, mWifiDisplayScanRequested=false

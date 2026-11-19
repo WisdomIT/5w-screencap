@@ -1,0 +1,4 @@
+WARNING: linker: libTCC_CDK_LIB.so has text relocations. This is wasting memory and is a security risk. Please fix.
+ERROR: unable to create encoder input surface (err=-38)
+Main display is 1920x720 @60.00fps (orientation=0)
+Configuring recorder for 1920x720 video at 4.00Mbps

@@ -1,0 +1,60 @@
+# probe3 start
+
+===== A0. pixel byte order
+(100,100) getPixel=ff6b6a6f  bytes=6b 6a 6f ff
+(960,360) getPixel=ff353d3a  bytes=35 3d 3a ff
+(1500,600) getPixel=ff343748  bytes=34 37 48 ff
+(300,650) getPixel=ff4f505a  bytes=4f 50 5a ff
+
+===== A. capture path (avg of 10)
+1920x720 shot=14.1ms copyPixelsToBuffer=111.4ms rgbaToI420=129.9ms total=255.3ms (max 3.9 fps)
+1280x480 shot=9.9ms copyPixelsToBuffer=50.9ms rgbaToI420=57.3ms total=118.0ms (max 8.5 fps)
+1024x384 shot=10.0ms copyPixelsToBuffer=30.6ms rgbaToI420=34.5ms total=75.2ms (max 13.3 fps)
+512x192 shot=9.3ms copyPixelsToBuffer=8.1ms rgbaToI420=9.0ms total=26.4ms (max 37.9 fps)
+
+===== B. JPEG sequence (avg of 8)
+960x360 q70 shot=10.7ms jpeg=116.4ms size=42KB (max 7.9 fps, 20.6 MB/min)
+960x360 q85 shot=12.3ms jpeg=117.5ms size=60KB (max 7.7 fps, 28.6 MB/min)
+1280x480 q70 shot=10.8ms jpeg=200.5ms size=62KB (max 4.7 fps, 18.2 MB/min)
+1280x480 q85 shot=9.9ms jpeg=198.1ms size=88KB (max 4.8 fps, 26.2 MB/min)
+1920x720 q70 shot=16.7ms jpeg=458.0ms size=110KB (max 2.1 fps, 14.3 MB/min)
+1920x720 q85 shot=16.0ms jpeg=474.4ms size=168KB (max 2.0 fps, 21.1 MB/min)
+
+===== C. OMX_google_mpeg4_encoder_1024x384_15fps (mp4)
+started; input buffer capacity=589824 need=589824
+OK in=82 dropped=0 late=78 secs=7.1 in_fps=11.61 out_frames=82 out_kbps=1315
+avg ms: shot=10.9 copy=33.5 toI420=37.4 queue+drain=3.8  busy=85.7 of 66.7 per frame
+file size=1163346
+
+===== C. OMX_google_mpeg4_encoder_1280x480_9fps (mp4)
+started; input buffer capacity=921600 need=921600
+OK in=57 dropped=0 late=46 secs=7.1 in_fps=8.00 out_frames=57 out_kbps=1557
+avg ms: shot=11.7 copy=49.7 toI420=56.8 queue+drain=5.1  busy=123.3 of 111.1 per frame
+file size=1389825
+
+===== C. OMX_google_mpeg4_encoder_1920x720_4fps (mp4)
+started; input buffer capacity=2073600 need=2073600
+OK in=26 dropped=0 late=10 secs=7.4 in_fps=3.52 out_frames=26 out_kbps=1581
+avg ms: shot=22.1 copy=120.8 toI420=126.4 queue+drain=8.4  busy=277.7 of 250.0 per frame
+file size=1464152
+
+===== C. OMX_google_h264_encoder_512x192_15fps (mp4)
+started; input buffer capacity=147456 need=147456
+FAIL at encode after in=18: java.lang.IllegalStateException
+file size=77339
+
+===== C. OMX_google_vp8_encoder_1280x480_15fps (ivf)
+started; input buffer capacity=921600 need=921600
+OK in=54 dropped=0 late=52 secs=7.2 in_fps=7.53 out_frames=54 out_kbps=246
+avg ms: shot=13.6 copy=56.0 toI420=57.1 queue+drain=4.8  busy=131.6 of 66.7 per frame
+file size=221384
+
+===== C. OMX_google_vp8_encoder_1920x720_10fps (ivf)
+started; input buffer capacity=2073600 need=2073600
+OK in=25 dropped=0 late=24 secs=7.1 in_fps=3.50 out_frames=25 out_kbps=305
+avg ms: shot=20.3 copy=123.4 toI420=127.1 queue+drain=9.1  busy=279.9 of 100.0 per frame
+file size=272813
+
+===== C. OMX_TCC_ENC_avc_1280x480_15fps (mp4)
+create FAIL: java.io.IOException: Failed to allocate component instance
+done

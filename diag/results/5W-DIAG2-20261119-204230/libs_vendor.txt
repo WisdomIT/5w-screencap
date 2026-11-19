@@ -1,0 +1,4 @@
+-rw-r--r-- root     root        62520 2026-09-02 18:09 libTCCInterSubtitle.so
+-rw-r--r-- root     root       103672 2026-09-02 18:14 libTCCsubtitle.so
+-rw-r--r-- root     root         9328 2026-09-02 18:29 libstagefrighthw.so
+-rw-r--r-- root     root        50292 2026-09-02 18:30 libtcc.video.call.direct.interface.so

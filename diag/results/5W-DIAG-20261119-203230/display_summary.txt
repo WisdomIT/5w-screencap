@@ -1,0 +1,5 @@
+  DisplayDeviceInfo{"기본으로 제공되는 화면": 1920 x 720, 60.000004 fps, density 240, 159.895 x 160.421 dpi, touch INTERNAL, rotation 0, type BUILT_IN, FLAG_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}
+    mPhys=PhysicalDisplayInfo{1920 x 720, 60.000004 fps, density 1.5, 159.895 x 160.421 dpi, secure true}
+    mDisplayId=0
+    mBaseDisplayInfo=DisplayInfo{"기본으로 제공되는 화면", app 1920 x 720, real 1920 x 720, largest app 1920 x 720, smallest app 1920 x 720, 60.000004 fps, rotation0, density 240 (159.895 x 160.421) dpi, layerStack 0, type BUILT_IN, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}
+    mOverrideDisplayInfo=DisplayInfo{"기본으로 제공되는 화면", app 1920 x 720, real 1920 x 720, largest app 1920 x 1830, smallest app 720 x 630, 60.000004 fps, rotation0, density 240 (159.895 x 160.421) dpi, layerStack 0, type BUILT_IN, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}

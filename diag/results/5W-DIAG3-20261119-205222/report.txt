@@ -1,0 +1,13 @@
+# 5w_screencap diag3  stamp=20261119-205222
+product=DEPEHEV.KOR.S5W_M.V039.001.260902  platform=tcc897x
+mediaserver pid=164
+
+===== Java probe
+probe pid=15626
+probe rc=0 secs=62  -> probe3.txt
+
+===== logcat
+logcat -> logcat_codec_pids.txt, logcat_filtered.txt
+mediaserver now: media     164   1     35136  10120 ffffffff b6ec5868 S /system/bin/mediaserver
+
+done
