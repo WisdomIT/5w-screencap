@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- versionCode/versionName come from mod.json "version" (tools/build.sh) -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dev.wisdomit.screencap">
+
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="19" />
+
+    <!-- the floating button (TYPE_SYSTEM_ERROR: above the status bar, left out of captures) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- the capture test's thumbnail, read back from the stick -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:label="5W Screencap"
+        android:allowBackup="false">
+
+        <!-- Launch screen: NEMESIS Manager's Launch, the HMG-API app menu tile -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
+
+        <service android:name=".FloatingService" android:exported="false" />
+
+        <!-- buttons: HMG-API "input" bindings and the car's ★-key menu entries (provides.star_key) -->
+        <receiver android:name=".KeyReceiver">
+            <intent-filter>
+                <action android:name="dev.wisdomit.screencap.CAPTURE" />
+                <action android:name="dev.wisdomit.screencap.RECORD" />
+            </intent-filter>
+        </receiver>
+
+        <!-- start-up, settings saved anywhere, USB stick in/out -->
+        <receiver android:name=".EventReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="hmgapi.intent.action.STATE_CHANGED" />
+                <action android:name="hmgapi.intent.action.USB_FOLDER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- car events: only a sender with DEVICE_POWER (HMG-API, as root) reaches it -->
+        <receiver android:name=".CarEventReceiver" android:permission="android.permission.DEVICE_POWER">
+            <intent-filter>
+                <action android:name="hmgapi.intent.action.CAR_EVENT" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

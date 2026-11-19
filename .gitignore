@@ -15,7 +15,7 @@ __pycache__/
 *.raw
 diag/results/**/bin_screenshot
 
-# on-car output copied off a USB stick (screenshots, recordings, diagnostics): never commit
-5W-Screencap/
-5W-DIAG*/
-!diag/results/5W-DIAG*/
+# on-car output copied off a USB stick (screenshots, recordings, diagnostics): never commit.
+# Anchored to the root: git on macOS ignores case, and an unanchored 5W-Screencap/ would hide mod/5w-screencap/.
+/5W-Screencap/
+/5W-DIAG*/

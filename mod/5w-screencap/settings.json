@@ -1,0 +1,405 @@
+{
+  "version": 1,
+  "settings": [
+    {
+      "key": "capture",
+      "type": "choice",
+      "default": "star",
+      "title": "캡처 버튼",
+      "options": [
+        {
+          "value": "off",
+          "title": "사용 안 함"
+        },
+        {
+          "value": "star",
+          "title": "차량 ☆ 버튼 설정에서 고름 (설정 > 버튼 > ☆)"
+        },
+        {
+          "value": "wheel_custom.hold",
+          "title": "운전대 ☆ · 길게 누름"
+        },
+        {
+          "value": "custom.hold",
+          "title": "헤드유닛 ☆ · 길게 누름"
+        },
+        {
+          "value": "mode.short",
+          "title": "운전대 MODE · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "mode.short_r",
+          "title": "운전대 MODE · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "mode.hold",
+          "title": "운전대 MODE · 길게 누름"
+        },
+        {
+          "value": "mode.double",
+          "title": "운전대 MODE · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "mute.short",
+          "title": "운전대 음소거 · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "mute.short_r",
+          "title": "운전대 음소거 · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "mute.hold",
+          "title": "운전대 음소거 · 길게 누름"
+        },
+        {
+          "value": "mute.double",
+          "title": "운전대 음소거 · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "call.short",
+          "title": "운전대 통화 · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "call.short_r",
+          "title": "운전대 통화 · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "call.hold",
+          "title": "운전대 통화 · 길게 누름"
+        },
+        {
+          "value": "call.double",
+          "title": "운전대 통화 · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "radio.short",
+          "title": "RADIO · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "radio.short_r",
+          "title": "RADIO · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "radio.hold",
+          "title": "RADIO · 길게 누름"
+        },
+        {
+          "value": "radio.double",
+          "title": "RADIO · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "media.short",
+          "title": "MEDIA · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "media.short_r",
+          "title": "MEDIA · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "media.hold",
+          "title": "MEDIA · 길게 누름"
+        },
+        {
+          "value": "media.double",
+          "title": "MEDIA · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "fmam.short",
+          "title": "FM/AM · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "fmam.short_r",
+          "title": "FM/AM · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "fmam.hold",
+          "title": "FM/AM · 길게 누름"
+        },
+        {
+          "value": "fmam.double",
+          "title": "FM/AM · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "setup.short",
+          "title": "SETUP · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "setup.short_r",
+          "title": "SETUP · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "setup.hold",
+          "title": "SETUP · 길게 누름"
+        },
+        {
+          "value": "setup.double",
+          "title": "SETUP · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "phone.short",
+          "title": "PHONE · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "phone.short_r",
+          "title": "PHONE · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "phone.hold",
+          "title": "PHONE · 길게 누름"
+        },
+        {
+          "value": "phone.double",
+          "title": "PHONE · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "map.short",
+          "title": "MAP · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "map.short_r",
+          "title": "MAP · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "map.hold",
+          "title": "MAP · 길게 누름"
+        },
+        {
+          "value": "map.double",
+          "title": "MAP · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "tune_enter.short",
+          "title": "TUNE 누름 · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "tune_enter.short_r",
+          "title": "TUNE 누름 · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "tune_enter.hold",
+          "title": "TUNE 누름 · 길게 누름"
+        },
+        {
+          "value": "tune_enter.double",
+          "title": "TUNE 누름 · 연속 2회 (원래 기능 막기)"
+        }
+      ]
+    },
+    {
+      "key": "record",
+      "type": "choice",
+      "default": "wheel_custom.hold",
+      "title": "녹화 시작/정지 버튼",
+      "options": [
+        {
+          "value": "off",
+          "title": "사용 안 함"
+        },
+        {
+          "value": "star",
+          "title": "차량 ☆ 버튼 설정에서 고름 (설정 > 버튼 > ☆)"
+        },
+        {
+          "value": "wheel_custom.hold",
+          "title": "운전대 ☆ · 길게 누름"
+        },
+        {
+          "value": "custom.hold",
+          "title": "헤드유닛 ☆ · 길게 누름"
+        },
+        {
+          "value": "mode.short",
+          "title": "운전대 MODE · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "mode.short_r",
+          "title": "운전대 MODE · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "mode.hold",
+          "title": "운전대 MODE · 길게 누름"
+        },
+        {
+          "value": "mode.double",
+          "title": "운전대 MODE · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "mute.short",
+          "title": "운전대 음소거 · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "mute.short_r",
+          "title": "운전대 음소거 · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "mute.hold",
+          "title": "운전대 음소거 · 길게 누름"
+        },
+        {
+          "value": "mute.double",
+          "title": "운전대 음소거 · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "call.short",
+          "title": "운전대 통화 · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "call.short_r",
+          "title": "운전대 통화 · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "call.hold",
+          "title": "운전대 통화 · 길게 누름"
+        },
+        {
+          "value": "call.double",
+          "title": "운전대 통화 · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "radio.short",
+          "title": "RADIO · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "radio.short_r",
+          "title": "RADIO · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "radio.hold",
+          "title": "RADIO · 길게 누름"
+        },
+        {
+          "value": "radio.double",
+          "title": "RADIO · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "media.short",
+          "title": "MEDIA · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "media.short_r",
+          "title": "MEDIA · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "media.hold",
+          "title": "MEDIA · 길게 누름"
+        },
+        {
+          "value": "media.double",
+          "title": "MEDIA · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "fmam.short",
+          "title": "FM/AM · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "fmam.short_r",
+          "title": "FM/AM · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "fmam.hold",
+          "title": "FM/AM · 길게 누름"
+        },
+        {
+          "value": "fmam.double",
+          "title": "FM/AM · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "setup.short",
+          "title": "SETUP · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "setup.short_r",
+          "title": "SETUP · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "setup.hold",
+          "title": "SETUP · 길게 누름"
+        },
+        {
+          "value": "setup.double",
+          "title": "SETUP · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "phone.short",
+          "title": "PHONE · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "phone.short_r",
+          "title": "PHONE · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "phone.hold",
+          "title": "PHONE · 길게 누름"
+        },
+        {
+          "value": "phone.double",
+          "title": "PHONE · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "map.short",
+          "title": "MAP · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "map.short_r",
+          "title": "MAP · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "map.hold",
+          "title": "MAP · 길게 누름"
+        },
+        {
+          "value": "map.double",
+          "title": "MAP · 연속 2회 (원래 기능 막기)"
+        },
+        {
+          "value": "tune_enter.short",
+          "title": "TUNE 누름 · 1회 누름 (원래 기능도 실행)"
+        },
+        {
+          "value": "tune_enter.short_r",
+          "title": "TUNE 누름 · 1회 누름 (원래 기능 막기)"
+        },
+        {
+          "value": "tune_enter.hold",
+          "title": "TUNE 누름 · 길게 누름"
+        },
+        {
+          "value": "tune_enter.double",
+          "title": "TUNE 누름 · 연속 2회 (원래 기능 막기)"
+        }
+      ]
+    },
+    {
+      "key": "quality",
+      "type": "choice",
+      "default": "standard",
+      "title": "녹화 화질",
+      "options": [
+        {
+          "value": "standard",
+          "title": "표준 · 1024×384 · 약 12fps · 10MB/분"
+        },
+        {
+          "value": "sharp",
+          "title": "선명 · 1280×480 · 약 8fps · 12MB/분"
+        },
+        {
+          "value": "full",
+          "title": "원본 · 1920×720 · 약 3fps · 12MB/분"
+        }
+      ]
+    },
+    {
+      "key": "auto_record",
+      "type": "toggle",
+      "default": false,
+      "title": "USB 연결 시 자동 녹화"
+    },
+    {
+      "key": "floating",
+      "type": "toggle",
+      "default": true,
+      "title": "플로팅 버튼 표시"
+    }
+  ]
+}
