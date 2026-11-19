@@ -70,6 +70,21 @@ final class Diag {
         String mounts = Sh.run(3000, "/system/bin/cat", "/proc/mounts");
         if (mounts != null) for (String l : mounts.split("\n")) if (l.contains("usb")) out.append(l).append('\n');
 
+        section("service log (last 80 lines)");
+        String log = Sh.run(3000, "/system/bin/cat", "/data/hmgapi/logs/5w-screencap/screencapd.log");
+        if (log != null) {
+            String[] lines = log.split("\n");
+            for (int i = Math.max(0, lines.length - 80); i < lines.length; i++) out.append(lines[i]).append('\n');
+        }
+
+        section("media writer messages (logcat)");
+        String lc = Sh.run(10000, "/system/bin/logcat", "-d", "-v", "time", "-s",
+                "MPEG4Writer:*", "MediaMuxer:*", "MediaAdapter:*", "SoftAACEncoder2:*", "SoftMPEG4Encoder:*", "AudioRecord:*");
+        if (lc != null) {
+            String[] lines = lc.split("\n");
+            for (int i = Math.max(0, lines.length - 80); i < lines.length; i++) out.append(lines[i]).append('\n');
+        }
+
         File f = new File(dir, "SUMMARY.txt");
         Writer w = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
         try { w.write(out.toString()); } finally { w.close(); }

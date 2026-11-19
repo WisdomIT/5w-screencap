@@ -18,10 +18,17 @@ import java.nio.ByteBuffer;
  * Runs on its own thread; samples go to the recorder's MP4 with presentation times on the
  * recorder's clock (t0), so sound and picture line up. If the microphone or the encoder fails,
  * the recording carries on without sound.
+ *
+ * Output times are counted here, one AAC frame (1024 samples) apart from the first input's time,
+ * not taken from the encoder: KitKat's software AAC encoder stamps every frame cut from one input
+ * buffer with that buffer's time, and KitKat's MPEG4Writer drops the whole file's index (no moov:
+ * an unplayable file) when a track's times don't move forward.
  */
 final class Mic implements Runnable {
     static final String CODEC = "OMX.google.aac.encoder", MIME = "audio/mp4a-latm";
     static final int SOURCE_MIC = 1, AAC_LC = 2, BITRATE = 48000;
+    /** samples in one AAC-LC frame */
+    static final int AAC_FRAME = 1024;
     static final int[] RATES = { 16000, 44100, 48000 };
 
     interface Sink {
@@ -72,7 +79,7 @@ final class Mic implements Runnable {
             rec.startRecording();
 
             byte[] pcm = new byte[4096];
-            long frames = 0, baseUs = -1;
+            long frames = 0, baseUs = -1, aacFrames = 0;
             boolean eosSent = false;
             while (true) {
                 if (!eosSent) {
@@ -105,10 +112,12 @@ final class Mic implements Runnable {
                     } else if (idx == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                         sink.audioFormat(aac.getOutputFormat());
                     } else if (idx >= 0) {
-                        if (info.size > 0 && (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) == 0) {
+                        if (info.size > 0 && (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) == 0 && baseUs >= 0) {
                             ByteBuffer b = out[idx];
                             b.position(info.offset);
                             b.limit(info.offset + info.size);
+                            info.presentationTimeUs = baseUs + aacFrames * AAC_FRAME * 1000000L / rate;
+                            aacFrames++;
                             sink.audioSample(b, info);
                         }
                         aac.releaseOutputBuffer(idx, false);

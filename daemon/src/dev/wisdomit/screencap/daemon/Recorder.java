@@ -185,7 +185,7 @@ final class Recorder implements Runnable {
         boolean expectAudio, audioGone;
         MediaMuxer muxer;
         int track, audioTrack = -1;
-        long firstPtsUs, openedAt;
+        long firstPtsUs, openedAt, lastVideoUs = -1, lastAudioUs = -1;
 
         synchronized void write(ByteBuffer b, MediaCodec.BufferInfo info) throws Exception {
             boolean key = (info.flags & 1) != 0;   // BUFFER_FLAG_SYNC_FRAME
@@ -203,10 +203,15 @@ final class Recorder implements Runnable {
                 currentFile = f.getName();
                 firstPtsUs = info.presentationTimeUs;
                 openedAt = System.currentTimeMillis();
+                lastVideoUs = -1;
+                lastAudioUs = -1;
                 Sh.log("segment " + f.getPath() + (audioTrack >= 0 ? " (with sound)" : ""));
             }
             long pts = info.presentationTimeUs;
-            info.presentationTimeUs = pts - firstPtsUs;
+            long rel = pts - firstPtsUs;
+            if (rel <= lastVideoUs) return;   // MPEG4Writer drops the file's index if a track's times go back
+            lastVideoUs = rel;
+            info.presentationTimeUs = rel;
             muxer.writeSampleData(track, b, info);
             info.presentationTimeUs = pts;
         }
@@ -222,6 +227,8 @@ final class Recorder implements Runnable {
             if (muxer == null || audioTrack < 0) return;
             long pts = info.presentationTimeUs - firstPtsUs;
             if (pts < 0) return;   // from before this segment's first frame
+            if (pts <= lastAudioUs) return;   // times must move forward (see Mic)
+            lastAudioUs = pts;
             long orig = info.presentationTimeUs;
             info.presentationTimeUs = pts;
             try {
@@ -242,7 +249,14 @@ final class Recorder implements Runnable {
 
         synchronized void close() {
             if (muxer == null) return;
-            try { muxer.stop(); } catch (Throwable t) { Sh.log("muxer stop", t); }
+            try {
+                muxer.stop();
+            } catch (Throwable t) {
+                // the file has no index and won't play (MPEG4Writer refused: see logcat MPEG4Writer)
+                Sh.log("muxer stop FAILED for " + currentFile + " (audio track " + audioTrack + ", last video "
+                        + lastVideoUs + " us, last audio " + lastAudioUs + " us)", t);
+                Sh.toast("녹화 파일을 마무리하지 못했습니다: " + currentFile + " (진단을 실행해 신고해 주세요)");
+            }
             try { muxer.release(); } catch (Throwable ignored) { }
             muxer = null;
             audioTrack = -1;
