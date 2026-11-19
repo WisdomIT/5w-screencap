@@ -6,8 +6,7 @@
   "authors": [
     "WisdomIT"
   ],
-  "license": "MIT",
-  "description": "Saves the head unit screen to USB: a photo with one button press, a video while you drive. CarPlay and Android Auto included; no sound.",
+  "description": "Saves the head unit screen to USB: a photo with one button press, a video while you drive. CarPlay and Android Auto included; picture only, no sound.",
   "repo": "https://github.com/WisdomIT/5w-screencap",
   "live": true,
   "apps": [
