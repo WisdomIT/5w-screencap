@@ -1,0 +1,130 @@
+11-19 20:42:21.870 D/dalvikvm(  954): GC_FOR_ALLOC freed 744K, 44% free 4950K/8764K, paused 22ms, total 22ms
+11-19 20:42:24.700 D/dalvikvm(  954): GC_FOR_ALLOC freed 746K, 44% free 4950K/8764K, paused 22ms, total 22ms
+11-19 20:42:25.530 D/dalvikvm( 1233): GC_CONCURRENT freed 1901K, 46% free 4191K/7740K, paused 12ms+3ms, total 75ms
+11-19 20:42:25.760 D/dalvikvm( 2278): GC_CONCURRENT freed 1897K, 47% free 4098K/7704K, paused 2ms+8ms, total 41ms
+11-19 20:42:26.500 D/AndroidRuntime(11754): 
+11-19 20:42:26.500 D/AndroidRuntime(11754): >>>>>> AndroidRuntime START com.android.internal.os.RuntimeInit <<<<<<
+11-19 20:42:26.500 D/AndroidRuntime(11754): AndroidRuntime START startVm
+11-19 20:42:26.500 D/AndroidRuntime(11754): startVm is started
+11-19 20:42:26.500 D/AndroidRuntime(11754): CheckJNI is OFF
+11-19 20:42:26.500 D/AndroidRuntime(11754): startVm make option
+11-19 20:42:26.500 V/AndroidRuntime(11754): Assertions disabled
+11-19 20:42:26.500 D/AndroidRuntime(11754): startVm JNI_CreateJavaVM
+11-19 20:42:26.530 D/dalvikvm(11754): Trying to load lib libjavacore.so 0x0
+11-19 20:42:26.540 D/dalvikvm(11754): Added shared lib libjavacore.so 0x0
+11-19 20:42:26.540 D/dalvikvm(11754): Trying to load lib libnativehelper.so 0x0
+11-19 20:42:26.550 D/dalvikvm(11754): Added shared lib libnativehelper.so 0x0
+11-19 20:42:26.550 D/dalvikvm(11754): No JNI_OnLoad found in libnativehelper.so 0x0, skipping init
+11-19 20:42:26.580 D/AndroidRuntime(11754): startVm ended
+11-19 20:42:26.580 D/AndroidRuntime(11754): AndroidRuntime START onVmCreated
+11-19 20:42:26.590 D/AndroidRuntime(11754): AndroidRuntime START startReg
+11-19 20:42:26.590 D/AndroidRuntime(11754): AndroidRuntime START startReg Internal start
+11-19 20:42:26.590 V/AndroidRuntime(11754): --- registering native functions ---
+11-19 20:42:26.620 D/dalvikvm(11754): Note: class Landroid/app/ActivityManagerNative; has 191 unimplemented (abstract) methods
+11-19 20:42:26.960 D/AndroidRuntime(11754): AndroidRuntime START startReg Internal end
+11-19 20:42:26.960 D/AndroidRuntime(11754): AndroidRuntime START CallStaticVoidMethod
+11-19 20:42:27.000 D/AndroidRuntime(11754): Calling main entry com.android.commands.am.Am
+11-19 20:42:27.060 D/AndroidRuntime(11754): Shutting down VM
+11-19 20:42:27.060 D/ActivityManager(  603): screenshotActivities do NOT work on Automotive Services
+11-19 20:42:27.070 D/dalvikvm(11754): GC_CONCURRENT freed 100K, 15% free 609K/712K, paused 1ms+1ms, total 10ms
+11-19 20:42:27.630 D/dalvikvm(  954): GC_FOR_ALLOC freed 830K, 44% free 4951K/8764K, paused 23ms, total 23ms
+11-19 20:42:27.700 D/dalvikvm(  973): GC_FOR_ALLOC freed 6256K, 19% free 48393K/59244K, paused 65ms, total 65ms
+11-19 20:42:27.830 D/dalvikvm(  603): GC_CONCURRENT freed 5664K, 22% free 26526K/33852K, paused 7ms+15ms, total 199ms
+11-19 20:42:27.830 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 131ms
+11-19 20:42:27.840 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 132ms
+11-19 20:42:27.840 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 101ms
+11-19 20:42:27.840 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 133ms
+11-19 20:42:27.840 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 78ms
+11-19 20:42:27.840 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 132ms
+11-19 20:42:29.360 D/ActivityManager(  603): screenshotActivities do NOT work on Automotive Services
+11-19 20:42:30.000 D/dalvikvm(  954): GC_FOR_ALLOC freed 796K, 44% free 4950K/8764K, paused 22ms, total 22ms
+11-19 20:42:32.850 D/dalvikvm(  954): GC_FOR_ALLOC freed 745K, 44% free 4950K/8764K, paused 26ms, total 26ms
+11-19 20:42:35.700 D/dalvikvm(  954): GC_FOR_ALLOC freed 749K, 44% free 4950K/8764K, paused 22ms, total 22ms
+11-19 20:42:38.550 D/dalvikvm(  954): GC_FOR_ALLOC freed 744K, 44% free 4950K/8764K, paused 22ms, total 22ms
+11-19 20:42:41.200 D/dalvikvm(  828): GC_EXPLICIT freed 592K, 40% free 4296K/7068K, paused 2ms+18ms, total 51ms
+11-19 20:42:41.400 D/dalvikvm(  954): GC_FOR_ALLOC freed 746K, 44% free 4950K/8764K, paused 30ms, total 30ms
+11-19 20:42:42.590 D/dalvikvm(  603): GC_CONCURRENT freed 5692K, 22% free 26517K/33864K, paused 7ms+15ms, total 186ms
+11-19 20:42:42.590 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 65ms
+11-19 20:42:44.390 D/dalvikvm(  774): GC_CONCURRENT freed 1992K, 39% free 5909K/9624K, paused 5ms+5ms, total 52ms
+11-19 20:42:47.270 D/dalvikvm(  954): GC_FOR_ALLOC freed 933K, 44% free 4951K/8764K, paused 21ms, total 21ms
+11-19 20:42:58.230 D/dalvikvm(  603): GC_CONCURRENT freed 5687K, 22% free 26495K/33864K, paused 7ms+14ms, total 181ms
+11-19 20:43:05.790 D/AndroidRuntime(12388): 
+11-19 20:43:05.790 D/AndroidRuntime(12388): >>>>>> AndroidRuntime START com.android.internal.os.RuntimeInit <<<<<<
+11-19 20:43:05.790 D/AndroidRuntime(12388): AndroidRuntime START startVm
+11-19 20:43:05.800 D/AndroidRuntime(12388): startVm is started
+11-19 20:43:05.800 D/AndroidRuntime(12388): CheckJNI is OFF
+11-19 20:43:05.800 D/AndroidRuntime(12388): startVm make option
+11-19 20:43:05.800 V/AndroidRuntime(12388): Assertions disabled
+11-19 20:43:05.800 D/AndroidRuntime(12388): startVm JNI_CreateJavaVM
+11-19 20:43:05.810 D/dalvikvm(12388): Trying to load lib libjavacore.so 0x0
+11-19 20:43:05.810 D/dalvikvm(12388): Added shared lib libjavacore.so 0x0
+11-19 20:43:05.820 D/dalvikvm(12388): Trying to load lib libnativehelper.so 0x0
+11-19 20:43:05.820 D/dalvikvm(12388): Added shared lib libnativehelper.so 0x0
+11-19 20:43:05.820 D/dalvikvm(12388): No JNI_OnLoad found in libnativehelper.so 0x0, skipping init
+11-19 20:43:05.840 D/dalvikvm(12388): DexOpt: --- BEGIN '5w_diag2.jar' (bootstrap=0) ---
+11-19 20:43:05.880 D/dalvikvm(12390): DexOpt: load 4ms, verify+opt 12ms, 141492 bytes
+11-19 20:43:05.910 D/dalvikvm(12388): DexOpt: --- END '5w_diag2.jar' (success) ---
+11-19 20:43:05.910 D/dalvikvm(12388): DEX prep '/data/local/tmp/5wdiag2/5w_diag2.jar': unzip in 1ms, rewrite 75ms
+11-19 20:43:05.920 D/AndroidRuntime(12388): startVm ended
+11-19 20:43:05.920 D/AndroidRuntime(12388): AndroidRuntime START onVmCreated
+11-19 20:43:05.920 D/AndroidRuntime(12388): AndroidRuntime START startReg
+11-19 20:43:05.920 D/AndroidRuntime(12388): AndroidRuntime START startReg Internal start
+11-19 20:43:05.920 V/AndroidRuntime(12388): --- registering native functions ---
+11-19 20:43:05.940 D/dalvikvm(12388): Note: class Landroid/app/ActivityManagerNative; has 191 unimplemented (abstract) methods
+11-19 20:43:06.210 D/AndroidRuntime(12388): AndroidRuntime START startReg Internal end
+11-19 20:43:06.210 D/AndroidRuntime(12388): AndroidRuntime START CallStaticVoidMethod
+11-19 20:43:06.240 D/AndroidRuntime(12388): Calling main entry fivew.diag.Probe
+11-19 20:43:06.300 I/dalvikvm(12388): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:43:06.300 I/dalvikvm(12388): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:43:06.300 I/dalvikvm(12388): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:43:06.300 I/dalvikvm(12388): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:43:06.320 W/linker  (  164): libTCC.mp3enc.so has text relocations. This is wasting memory and is a security risk. Please fix.
+11-19 20:43:06.320 D/TCC_OMXCore(  164): Library 'libOMX.TCC.mp3enc.so' 'OMX.TCC.mp3enc' loaded
+11-19 20:43:06.410 E/ACodec  (12388): Unable to instantiate decoder 'OMX.TCC.VideoEnc.so'.
+11-19 20:43:06.410 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:43:06.410 D/TCC_OMXCore(  164): Library 'libOMX.TCC.VideoEnc.so' 'OMX.TCC.ENC.avc' loaded
+11-19 20:43:06.410 E/ACodec  (12388): Unable to instantiate decoder 'OMX.TCC.ENC.avc'.
+11-19 20:43:06.410 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:43:06.410 E/ACodec  (12388): Unable to instantiate decoder 'OMX.TCC.VideoEnc'.
+11-19 20:43:06.410 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:43:06.410 E/ACodec  (12388): Unable to instantiate decoder 'OMX.TCC.avcenc'.
+11-19 20:43:06.410 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:43:06.420 E/ACodec  (12388): Unable to instantiate decoder 'OMX.TCC.h264enc'.
+11-19 20:43:06.420 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:43:06.420 E/ACodec  (12388): Unable to instantiate decoder 'OMX.TCC.videoenc'.
+11-19 20:43:06.420 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:43:12.810 D/dalvikvm( 1240): GC_CONCURRENT freed 1917K, 52% free 4356K/8972K, paused 3ms+2ms, total 38ms
+11-19 20:43:13.360 D/dalvikvm(  603): GC_CONCURRENT freed 5705K, 22% free 26497K/33864K, paused 26ms+18ms, total 312ms
+11-19 20:43:13.360 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 182ms
+11-19 20:43:13.360 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 179ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 150ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 150ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 139ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 143ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 130ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 122ms
+11-19 20:43:13.370 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 83ms
+11-19 20:43:14.410 D/dalvikvm(  945): GC_CONCURRENT freed 2053K, 43% free 5011K/8648K, paused 2ms+2ms, total 31ms
+11-19 20:43:14.410 D/dalvikvm(  945): WAIT_FOR_CONCURRENT_GC blocked 18ms
+11-19 20:43:15.500 E/OMXNodeInstance(12388): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:43:15.500 E/ACodec  (12388): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:43:15.500 I/ACodec  (12388): setupVideoEncoder succeeded
+11-19 20:43:15.500 I/ACodec  (12388): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:43:15.500 E/ACodec  (12388): [OMX.google.h264.encoder] ERROR(0x80001001)
+11-19 20:43:15.500 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001001, internalError -2147483648)
+11-19 20:43:15.520 E/OMXNodeInstance(12388): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:43:15.520 E/ACodec  (12388): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:43:15.520 I/ACodec  (12388): setupVideoEncoder succeeded
+11-19 20:43:15.520 I/ACodec  (12388): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:43:15.520 E/ACodec  (12388): [OMX.google.h264.encoder] ERROR(0x80001001)
+11-19 20:43:15.520 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001001, internalError -2147483648)
+11-19 20:43:15.540 E/OMXNodeInstance(12388): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:43:15.540 E/ACodec  (12388): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:43:15.540 I/ACodec  (12388): setupVideoEncoder succeeded
+11-19 20:43:15.540 I/ACodec  (12388): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:43:15.540 E/ACodec  (12388): [OMX.google.h264.encoder] ERROR(0x80001001)
+11-19 20:43:15.540 E/MediaCodec(12388): Codec reported an error. (omx error 0x80001001, internalError -2147483648)
+11-19 20:43:15.550 I/AndroidRuntime(12388): VM exiting with result code 0.
+11-19 20:43:15.950 D/dalvikvm(  954): Note: class Lcom/hkmc/usm/IUSMService$Stub; has 655 unimplemented (abstract) methods
+11-19 20:43:19.090 D/dalvikvm( 1817): GC_CONCURRENT freed 1922K, 29% free 8941K/12452K, paused 4ms+2ms, total 36ms
+11-19 20:43:28.450 D/dalvikvm(  603): GC_CONCURRENT freed 5653K, 22% free 26524K/33864K, paused 7ms+14ms, total 194ms

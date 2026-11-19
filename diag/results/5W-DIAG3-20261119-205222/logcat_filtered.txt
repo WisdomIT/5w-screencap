@@ -1,0 +1,237 @@
+11-19 20:52:43.890 D/dalvikvm(  954): GC_FOR_ALLOC freed 506K, 42% free 4982K/8556K, paused 30ms, total 30ms
+11-19 20:52:44.630 D/dalvikvm(  828): GC_EXPLICIT freed 606K, 40% free 4251K/7068K, paused 2ms+10ms, total 42ms
+11-19 20:52:44.860 W/linker  (15626): libTCC_CDK_LIB.so has text relocations. This is wasting memory and is a security risk. Please fix.
+11-19 20:52:44.900 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:52:44.910 I/SoftMPEG4Encoder(15626): Construct SoftMPEG4Encoder
+11-19 20:52:44.920 E/SoftMPEG4Encoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:52:44.920 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:52:44.920 E/ACodec  (15626): [OMX.google.mpeg4.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:52:44.920 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:52:44.920 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/mp4v-es
+11-19 20:52:45.230 D/dalvikvm(15626): GC_FOR_ALLOC freed 1111K, 96% free 643K/13560K, paused 5ms, total 5ms
+11-19 20:52:45.240 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 84% free 2179K/13560K, paused 6ms, total 6ms
+11-19 20:52:45.420 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:52:45.500 I/MPEG4Writer(15626): setStartTimestampUs: 209
+11-19 20:52:45.500 I/MPEG4Writer(15626): Earliest track starting time: 209
+11-19 20:52:45.800 D/dalvikvm(  954): GC_FOR_ALLOC freed 561K, 42% free 4982K/8556K, paused 24ms, total 24ms
+11-19 20:52:47.300 D/dalvikvm(  973): GC_FOR_ALLOC freed 7254K, 19% free 48608K/59840K, paused 84ms, total 84ms
+11-19 20:52:47.730 D/dalvikvm(  954): GC_FOR_ALLOC freed 512K, 42% free 4982K/8556K, paused 36ms, total 36ms
+11-19 20:52:49.640 D/dalvikvm(  954): GC_FOR_ALLOC freed 490K, 42% free 4981K/8556K, paused 29ms, total 29ms
+11-19 20:52:51.550 D/dalvikvm(  954): GC_FOR_ALLOC freed 505K, 42% free 4981K/8556K, paused 27ms, total 27ms
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:52:52.310 I/MPEG4Writer(15626): Received total/0-length (82/0) buffers and encoded 82 frames. - video
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:52:52.310 D/MPEG4Writer(15626): Video track stopped
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:52:52.310 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:52:52.310 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:52:52.810 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:52:52.820 I/SoftMPEG4Encoder(15626): Construct SoftMPEG4Encoder
+11-19 20:52:52.820 E/SoftMPEG4Encoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:52:52.820 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:52:52.820 E/ACodec  (15626): [OMX.google.mpeg4.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:52:52.820 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:52:52.820 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/mp4v-es
+11-19 20:52:53.130 D/dalvikvm(15626): GC_FOR_ALLOC freed 2136K, 96% free 648K/13560K, paused 4ms, total 4ms
+11-19 20:52:53.130 I/dalvikvm-heap(15626): Grow heap (frag case) to 2.976MB for 2457616-byte allocation
+11-19 20:52:53.140 D/dalvikvm(15626): GC_FOR_ALLOC freed 1K, 78% free 3047K/13560K, paused 4ms, total 4ms
+11-19 20:52:53.150 D/dalvikvm(15626): GC_CONCURRENT freed 3K, 71% free 3943K/13560K, paused 2ms+1ms, total 9ms
+11-19 20:52:53.380 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:52:53.480 D/dalvikvm(  954): GC_FOR_ALLOC freed 496K, 42% free 4981K/8556K, paused 48ms, total 48ms
+11-19 20:52:53.510 I/MPEG4Writer(15626): setStartTimestampUs: 8
+11-19 20:52:53.510 I/MPEG4Writer(15626): Earliest track starting time: 8
+11-19 20:52:54.730 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 175280
+11-19 20:52:54.850 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 177008
+11-19 20:52:54.970 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 178736
+11-19 20:52:55.100 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 181280
+11-19 20:52:55.230 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 183008
+11-19 20:52:55.380 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 184736
+11-19 20:52:55.410 D/dalvikvm(  954): GC_FOR_ALLOC freed 504K, 42% free 4982K/8556K, paused 26ms, total 26ms
+11-19 20:52:55.530 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 187280
+11-19 20:52:55.670 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 189008
+11-19 20:52:55.800 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 190736
+11-19 20:52:55.930 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 193280
+11-19 20:52:56.070 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 195008
+11-19 20:52:56.230 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 196736
+11-19 20:52:56.360 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 199280
+11-19 20:52:56.490 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 201008
+11-19 20:52:56.620 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 202736
+11-19 20:52:56.750 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 205280
+11-19 20:52:57.310 D/dalvikvm(  954): GC_FOR_ALLOC freed 498K, 42% free 4981K/8556K, paused 30ms, total 30ms
+11-19 20:52:57.500 D/dalvikvm(  603): GC_CONCURRENT freed 5750K, 22% free 26600K/33964K, paused 7ms+22ms, total 259ms
+11-19 20:52:57.710 D/dalvikvm(  774): GC_CONCURRENT freed 1832K, 38% free 5972K/9624K, paused 4ms+9ms, total 78ms
+11-19 20:52:58.510 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 207008
+11-19 20:52:59.230 D/dalvikvm(  954): GC_FOR_ALLOC freed 503K, 42% free 4981K/8556K, paused 26ms, total 26ms
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:00.270 I/MPEG4Writer(15626): Received total/0-length (57/0) buffers and encoded 57 frames. - video
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:53:00.270 D/MPEG4Writer(15626): Video track stopped
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:53:00.270 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:53:00.270 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:00.290 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 208736
+11-19 20:53:00.420 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 211280
+11-19 20:53:00.550 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 213008
+11-19 20:53:00.680 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 214736
+11-19 20:53:00.770 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:00.770 I/SoftMPEG4Encoder(15626): Construct SoftMPEG4Encoder
+11-19 20:53:00.780 E/SoftMPEG4Encoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:53:00.780 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:53:00.780 E/ACodec  (15626): [OMX.google.mpeg4.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:00.780 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:00.780 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/mp4v-es
+11-19 20:53:01.090 D/dalvikvm(15626): GC_FOR_ALLOC freed 3321K, 96% free 647K/13560K, paused 7ms, total 7ms
+11-19 20:53:01.110 I/dalvikvm-heap(15626): Grow heap (frag case) to 5.905MB for 5529616-byte allocation
+11-19 20:53:01.110 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 56% free 6046K/13560K, paused 4ms, total 4ms
+11-19 20:53:01.130 D/dalvikvm(15626): GC_CONCURRENT freed 3K, 41% free 8068K/13560K, paused 1ms+6ms, total 12ms
+11-19 20:53:01.130 D/dalvikvm(  954): GC_FOR_ALLOC freed 497K, 42% free 4981K/8556K, paused 23ms, total 23ms
+11-19 20:53:01.650 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:53:01.910 I/MPEG4Writer(15626): setStartTimestampUs: 2319
+11-19 20:53:01.910 I/MPEG4Writer(15626): Earliest track starting time: 2319
+11-19 20:53:03.050 D/dalvikvm(  954): GC_FOR_ALLOC freed 497K, 42% free 4981K/8556K, paused 28ms, total 29ms
+11-19 20:53:05.010 D/dalvikvm(  954): GC_FOR_ALLOC freed 496K, 42% free 4981K/8556K, paused 40ms, total 40ms
+11-19 20:53:07.010 D/dalvikvm(  954): GC_FOR_ALLOC freed 508K, 42% free 4981K/8556K, paused 62ms, total 62ms
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:08.530 I/MPEG4Writer(15626): Received total/0-length (26/0) buffers and encoded 26 frames. - video
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:53:08.530 D/MPEG4Writer(15626): Video track stopped
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:53:08.530 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:53:08.530 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:09.030 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:09.040 I/SoftAVCEncoder(15626): Construct SoftAVCEncoder
+11-19 20:53:09.040 E/SoftAVCEncoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:53:09.040 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:53:09.040 E/ACodec  (15626): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:09.040 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:09.040 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:53:09.450 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:53:09.510 I/MPEG4Writer(15626): setStartTimestampUs: 8
+11-19 20:53:09.510 I/MPEG4Writer(15626): Earliest track starting time: 8
+11-19 20:53:10.220 D/dalvikvm(  993): GC_FOR_ALLOC freed 838K, 50% free 3684K/7248K, paused 24ms, total 24ms
+11-19 20:53:10.260 D/dalvikvm(  954): GC_FOR_ALLOC freed 1053K, 41% free 5077K/8556K, paused 37ms, total 38ms
+11-19 20:53:10.300 D/dalvikvm(  954): GC_FOR_ALLOC freed 188K, 40% free 5264K/8652K, paused 37ms, total 37ms
+11-19 20:53:10.340 D/dalvikvm(  954): GC_FOR_ALLOC freed 572K, 43% free 5076K/8844K, paused 22ms, total 22ms
+11-19 20:53:10.400 D/dalvikvm( 1076): GC_FOR_ALLOC freed 4596K, 29% free 20665K/28776K, paused 37ms, total 38ms
+11-19 20:53:10.520 E/SoftAVCEncoder(15626): encoderStatus = -27 at line 930
+11-19 20:53:10.520 E/ACodec  (15626): [OMX.google.h264.encoder] ERROR(0x80001001)
+11-19 20:53:10.520 E/MediaCodec(15626): Codec reported an error. (omx error 0x80001001, internalError -2147483648)
+11-19 20:53:10.580 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:10.580 I/MPEG4Writer(15626): Received total/0-length (16/0) buffers and encoded 16 frames. - video
+11-19 20:53:10.580 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:53:10.580 D/MPEG4Writer(15626): Video track stopped
+11-19 20:53:10.580 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:53:10.580 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:53:10.580 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:53:10.590 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:11.090 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:11.100 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x8000101b
+11-19 20:53:11.100 E/ACodec  (15626): [OMX.google.vp8.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:11.100 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:11.100 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/x-vnd.on2.vp8
+11-19 20:53:11.420 D/dalvikvm(15626): GC_FOR_ALLOC freed 7982K, 96% free 648K/13560K, paused 9ms, total 9ms
+11-19 20:53:11.420 I/dalvikvm-heap(15626): Grow heap (frag case) to 2.976MB for 2457616-byte allocation
+11-19 20:53:11.430 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 78% free 3047K/13560K, paused 4ms, total 4ms
+11-19 20:53:11.440 D/dalvikvm(15626): GC_CONCURRENT freed 2K, 71% free 3945K/13560K, paused 1ms+1ms, total 8ms
+11-19 20:53:12.490 D/dalvikvm(  603): GC_CONCURRENT freed 5738K, 22% free 26576K/33964K, paused 10ms+51ms, total 330ms
+11-19 20:53:12.490 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 55ms
+11-19 20:53:12.490 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 54ms
+11-19 20:53:12.490 D/dalvikvm(  603): WAIT_FOR_CONCURRENT_GC blocked 56ms
+11-19 20:53:19.120 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:19.130 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x8000101b
+11-19 20:53:19.130 E/ACodec  (15626): [OMX.google.vp8.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:19.130 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:19.130 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/x-vnd.on2.vp8
+11-19 20:53:19.440 D/dalvikvm(15626): GC_FOR_ALLOC freed 3538K, 96% free 648K/13560K, paused 5ms, total 5ms
+11-19 20:53:19.450 I/dalvikvm-heap(15626): Grow heap (frag case) to 5.906MB for 5529616-byte allocation
+11-19 20:53:19.450 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 56% free 6047K/13560K, paused 4ms, total 4ms
+11-19 20:53:19.460 D/dalvikvm(15626): GC_CONCURRENT freed 2K, 41% free 8070K/13560K, paused 2ms+1ms, total 7ms
+11-19 20:53:25.770 D/dalvikvm(  901): GC_CONCURRENT freed 1919K, 47% free 3969K/7480K, paused 84ms+8ms, total 122ms
+11-19 20:53:27.120 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:27.120 D/TCC_OMXCore(  164): Library 'libOMX.TCC.VideoEnc.so' 'OMX.TCC.ENC.avc' loaded
+11-19 20:53:27.120 E/TCC_OMXCore(  164): Error[0x80001003] init fail!!
+11-19 20:53:27.120 E/ACodec  (15626): Unable to instantiate decoder 'OMX.TCC.ENC.avc'.
+11-19 20:53:27.120 E/MediaCodec(15626): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:53:27.630 I/AndroidRuntime(15626): VM exiting with result code 0.
+11-19 20:53:28.070 D/dalvikvm(  603): GC_CONCURRENT freed 5715K, 22% free 26563K/33964K, paused 6ms+14ms, total 185ms
+11-19 20:53:30.850 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 175280
+11-19 20:53:30.970 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 177008
+11-19 20:53:31.110 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 178736
+11-19 20:53:31.240 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 181280
+11-19 20:53:31.360 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 183008
+11-19 20:53:31.490 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 184736
+11-19 20:53:31.620 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 187280
+11-19 20:53:31.740 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 189008
+11-19 20:53:31.860 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 190736
+11-19 20:53:31.970 D/dalvikvm(  954): GC_CONCURRENT freed 2251K, 46% free 4805K/8844K, paused 3ms+5ms, total 43ms
+11-19 20:53:32.000 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 193280
+11-19 20:53:32.140 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 195008
+11-19 20:53:32.270 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 196736
+11-19 20:53:32.270 D/dalvikvm( 2667): GC_CONCURRENT freed 1926K, 47% free 3970K/7476K, paused 4ms+2ms, total 37ms
+11-19 20:53:32.390 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 199280
+11-19 20:53:32.510 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 201008
+11-19 20:53:32.650 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 202736
+11-19 20:53:32.740 D/dalvikvm(  993): GC_FOR_ALLOC freed 381K, 50% free 3684K/7248K, paused 27ms, total 27ms
+11-19 20:53:32.770 D/dalvikvm(  993): GC_FOR_ALLOC freed 90K, 50% free 3684K/7248K, paused 25ms, total 25ms
+11-19 20:53:32.770 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 205280
+11-19 20:53:32.800 D/dalvikvm(  954): GC_FOR_ALLOC freed 939K, 42% free 5155K/8844K, paused 27ms, total 27ms
+11-19 20:53:32.830 D/dalvikvm(  954): GC_FOR_ALLOC freed 177K, 40% free 5331K/8844K, paused 22ms, total 22ms
+11-19 20:53:32.880 D/dalvikvm(  954): GC_FOR_ALLOC freed 552K, 44% free 5051K/8936K, paused 40ms, total 40ms
+11-19 20:53:32.940 D/dalvikvm( 1076): GC_FOR_ALLOC freed 1992K, 29% free 20652K/28776K, paused 36ms, total 37ms
+11-19 20:53:32.940 I/dalvikvm-heap( 1076): Grow heap (frag case) to 22.839MB for 1183760-byte allocation
+11-19 20:53:32.990 D/dalvikvm( 1076): GC_FOR_ALLOC freed 0K, 28% free 21808K/29936K, paused 47ms, total 47ms
+11-19 20:53:33.040 D/dalvikvm( 1076): GC_FOR_ALLOC freed 1592K, 33% free 20216K/29936K, paused 24ms, total 24ms
+11-19 20:53:33.070 D/dalvikvm(  973): GC_FOR_ALLOC freed 6665K, 18% free 49314K/59840K, paused 91ms, total 91ms
+11-19 20:53:33.100 D/dalvikvm( 1076): GC_CONCURRENT freed 2K, 29% free 21374K/29936K, paused 5ms+5ms, total 54ms
+11-19 20:53:34.100 D/dalvikvm(  954): GC_FOR_ALLOC freed 1359K, 45% free 4967K/8936K, paused 28ms, total 29ms
+11-19 20:53:34.120 D/dalvikvm(  993): GC_FOR_ALLOC freed 366K, 50% free 3684K/7248K, paused 17ms, total 17ms
+11-19 20:53:34.130 I/dalvikvm-heap(  993): Grow heap (frag case) to 5.367MB for 242478-byte allocation
+11-19 20:53:34.150 D/dalvikvm(  993): GC_FOR_ALLOC freed 0K, 48% free 3921K/7488K, paused 20ms, total 20ms
+11-19 20:53:34.160 D/dalvikvm(  993): GC_FOR_ALLOC freed 237K, 51% free 3684K/7488K, paused 18ms, total 18ms
+11-19 20:53:34.200 D/dalvikvm(  954): GC_FOR_ALLOC freed 70K, 45% free 4959K/8936K, paused 24ms, total 24ms
+11-19 20:53:34.220 D/dalvikvm(  954): GC_FOR_ALLOC freed 89K, 43% free 5107K/8936K, paused 26ms, total 26ms
+11-19 20:53:34.220 I/dalvikvm-heap(  954): Grow heap (frag case) to 6.756MB for 242478-byte allocation
+11-19 20:53:34.250 D/dalvikvm(  954): GC_FOR_ALLOC freed 0K, 42% free 5344K/9176K, paused 25ms, total 25ms
+11-19 20:53:34.250 I/dalvikvm-heap(  954): Grow heap (frag case) to 6.988MB for 242478-byte allocation
+11-19 20:53:34.270 D/dalvikvm(  954): GC_FOR_ALLOC freed 0K, 41% free 5581K/9416K, paused 23ms, total 23ms
+11-19 20:53:34.300 D/dalvikvm(  954): GC_FOR_ALLOC freed 236K, 44% free 5345K/9416K, paused 25ms, total 25ms
+11-19 20:53:34.320 D/dalvikvm(  954): GC_FOR_ALLOC freed <1K, 41% free 5582K/9416K, paused 24ms, total 24ms
+11-19 20:53:34.320 I/dalvikvm-heap(  954): Grow heap (frag case) to 7.219MB for 242478-byte allocation
+11-19 20:53:34.350 D/dalvikvm(  954): GC_FOR_ALLOC freed 236K, 43% free 5582K/9656K, paused 23ms, total 23ms
+11-19 20:53:34.370 D/dalvikvm(  954): GC_FOR_ALLOC freed 237K, 43% free 5582K/9656K, paused 22ms, total 22ms
+11-19 20:53:34.400 D/dalvikvm(  954): GC_FOR_ALLOC freed 0K, 40% free 5819K/9656K, paused 25ms, total 25ms
+11-19 20:53:34.400 I/dalvikvm-heap(  954): Grow heap (frag case) to 7.451MB for 242478-byte allocation
+11-19 20:53:34.430 D/dalvikvm(  954): GC_FOR_ALLOC freed 0K, 39% free 6055K/9896K, paused 33ms, total 33ms
+11-19 20:53:34.430 I/dalvikvm-heap(  954): Grow heap (frag case) to 7.682MB for 242478-byte allocation
+11-19 20:53:34.460 D/dalvikvm(  954): GC_FOR_ALLOC freed 88K, 39% free 6204K/10136K, paused 24ms, total 24ms
+11-19 20:53:34.520 D/dalvikvm(  954): GC_FOR_ALLOC freed 916K, 46% free 5554K/10136K, paused 34ms, total 34ms
+11-19 20:53:34.720 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 207008
+11-19 20:53:34.740 D/dalvikvm( 1076): GC_FOR_ALLOC freed 129K, 29% free 21525K/29936K, paused 46ms, total 46ms
+11-19 20:53:34.740 I/dalvikvm-heap( 1076): Grow heap (frag case) to 23.692MB for 1183760-byte allocation
+11-19 20:53:34.770 D/dalvikvm( 1076): GC_FOR_ALLOC freed <1K, 28% free 22680K/31096K, paused 30ms, total 30ms
+11-19 20:53:34.820 D/dalvikvm( 1076): GC_FOR_ALLOC freed 2315K, 35% free 20365K/31096K, paused 39ms, total 39ms
+11-19 20:53:34.890 D/dalvikvm( 1734): GC_CONCURRENT freed 1933K, 42% free 4898K/8416K, paused 3ms+25ms, total 82ms
+11-19 20:53:35.080 D/dalvikvm( 1076): GC_CONCURRENT freed 5K, 31% free 21523K/31096K, paused 7ms+4ms, total 251ms
+11-19 20:53:36.270 D/dalvikvm(  954): GC_FOR_ALLOC freed 1150K, 44% free 5702K/10136K, paused 23ms, total 27ms
+11-19 20:53:36.490 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 208736
+11-19 20:53:38.230 D/dalvikvm(  954): GC_FOR_ALLOC freed 1069K, 44% free 5702K/10112K, paused 38ms, total 38ms
+11-19 20:53:38.230 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 211280
+11-19 20:53:38.380 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 213008
+11-19 20:53:38.500 D/TDMB_MANAGER_TUNER(  174): In tcc_tuner_scan_channel_manual freq = 214736
+11-19 20:53:39.200 D/dalvikvm(  973): GC_FOR_ALLOC freed 3591K, 18% free 49288K/59840K, paused 70ms, total 71ms
+11-19 20:53:39.730 D/dalvikvm(  945): GC_CONCURRENT freed 2054K, 43% free 5006K/8644K, paused 14ms+4ms, total 54ms
+11-19 20:53:39.730 D/dalvikvm(  945): WAIT_FOR_CONCURRENT_GC blocked 36ms
+11-19 20:53:40.100 D/dalvikvm(  954): GC_FOR_ALLOC freed 1071K, 44% free 5702K/10112K, paused 28ms, total 29ms
+11-19 20:53:42.000 D/dalvikvm(  954): GC_FOR_ALLOC freed 1069K, 44% free 5702K/10112K, paused 21ms, total 21ms
+11-19 20:53:43.180 D/dalvikvm(  603): GC_CONCURRENT freed 5724K, 22% free 26561K/33964K, paused 10ms+19ms, total 231ms
+11-19 20:53:43.900 D/dalvikvm(  954): GC_FOR_ALLOC freed 1066K, 44% free 5702K/10112K, paused 23ms, total 23ms
+11-19 20:53:45.370 D/dalvikvm(  973): GC_FOR_ALLOC freed 3400K, 18% free 49284K/59840K, paused 61ms, total 62ms
+11-19 20:53:45.790 D/dalvikvm(  954): GC_FOR_ALLOC freed 1070K, 44% free 5702K/10112K, paused 23ms, total 23ms
+11-19 20:53:47.700 D/dalvikvm(  954): GC_FOR_ALLOC freed 1071K, 44% free 5702K/10112K, paused 29ms, total 29ms

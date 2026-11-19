@@ -1,0 +1,115 @@
+11-19 20:52:44.860 W/linker  (15626): libTCC_CDK_LIB.so has text relocations. This is wasting memory and is a security risk. Please fix.
+11-19 20:52:44.900 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.900 D/MtpDeviceJNI(15626): register_android_mtp_MtpDevice
+11-19 20:52:44.910 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/dalvikvm(15626): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+11-19 20:52:44.910 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:52:44.910 I/SoftMPEG4Encoder(15626): Construct SoftMPEG4Encoder
+11-19 20:52:44.920 E/SoftMPEG4Encoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:52:44.920 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:52:44.920 E/ACodec  (15626): [OMX.google.mpeg4.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:52:44.920 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:52:44.920 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/mp4v-es
+11-19 20:52:45.230 D/dalvikvm(15626): GC_FOR_ALLOC freed 1111K, 96% free 643K/13560K, paused 5ms, total 5ms
+11-19 20:52:45.240 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 84% free 2179K/13560K, paused 6ms, total 6ms
+11-19 20:52:45.420 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:52:45.500 I/MPEG4Writer(15626): setStartTimestampUs: 209
+11-19 20:52:45.500 I/MPEG4Writer(15626): Earliest track starting time: 209
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:52:52.310 I/MPEG4Writer(15626): Received total/0-length (82/0) buffers and encoded 82 frames. - video
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:52:52.310 D/MPEG4Writer(15626): Video track stopped
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:52:52.310 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:52:52.310 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:52:52.310 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:52:52.810 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:52:52.820 I/SoftMPEG4Encoder(15626): Construct SoftMPEG4Encoder
+11-19 20:52:52.820 E/SoftMPEG4Encoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:52:52.820 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:52:52.820 E/ACodec  (15626): [OMX.google.mpeg4.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:52:52.820 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:52:52.820 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/mp4v-es
+11-19 20:52:53.130 D/dalvikvm(15626): GC_FOR_ALLOC freed 2136K, 96% free 648K/13560K, paused 4ms, total 4ms
+11-19 20:52:53.130 I/dalvikvm-heap(15626): Grow heap (frag case) to 2.976MB for 2457616-byte allocation
+11-19 20:52:53.140 D/dalvikvm(15626): GC_FOR_ALLOC freed 1K, 78% free 3047K/13560K, paused 4ms, total 4ms
+11-19 20:52:53.150 D/dalvikvm(15626): GC_CONCURRENT freed 3K, 71% free 3943K/13560K, paused 2ms+1ms, total 9ms
+11-19 20:52:53.380 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:52:53.510 I/MPEG4Writer(15626): setStartTimestampUs: 8
+11-19 20:52:53.510 I/MPEG4Writer(15626): Earliest track starting time: 8
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:00.270 I/MPEG4Writer(15626): Received total/0-length (57/0) buffers and encoded 57 frames. - video
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:53:00.270 D/MPEG4Writer(15626): Video track stopped
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:53:00.270 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:53:00.270 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:53:00.270 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:00.770 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:00.770 I/SoftMPEG4Encoder(15626): Construct SoftMPEG4Encoder
+11-19 20:53:00.780 E/SoftMPEG4Encoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:53:00.780 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:53:00.780 E/ACodec  (15626): [OMX.google.mpeg4.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:00.780 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:00.780 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/mp4v-es
+11-19 20:53:01.090 D/dalvikvm(15626): GC_FOR_ALLOC freed 3321K, 96% free 647K/13560K, paused 7ms, total 7ms
+11-19 20:53:01.110 I/dalvikvm-heap(15626): Grow heap (frag case) to 5.905MB for 5529616-byte allocation
+11-19 20:53:01.110 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 56% free 6046K/13560K, paused 4ms, total 4ms
+11-19 20:53:01.130 D/dalvikvm(15626): GC_CONCURRENT freed 3K, 41% free 8068K/13560K, paused 1ms+6ms, total 12ms
+11-19 20:53:01.650 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:53:01.910 I/MPEG4Writer(15626): setStartTimestampUs: 2319
+11-19 20:53:01.910 I/MPEG4Writer(15626): Earliest track starting time: 2319
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:08.530 I/MPEG4Writer(15626): Received total/0-length (26/0) buffers and encoded 26 frames. - video
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:53:08.530 D/MPEG4Writer(15626): Video track stopped
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:53:08.530 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:53:08.530 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:53:08.530 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:09.030 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:09.040 I/SoftAVCEncoder(15626): Construct SoftAVCEncoder
+11-19 20:53:09.040 E/SoftAVCEncoder(15626): internalSetParameter: StoreMetadataInBuffersParams.nPortIndex not zero!
+11-19 20:53:09.040 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:53:09.040 E/ACodec  (15626): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:09.040 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:09.040 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:53:09.450 I/MPEG4Writer(15626): limits: 2147483647/0 bytes/us, bit rate: -1 bps and the estimated moov size 3072 bytes
+11-19 20:53:09.510 I/MPEG4Writer(15626): setStartTimestampUs: 8
+11-19 20:53:09.510 I/MPEG4Writer(15626): Earliest track starting time: 8
+11-19 20:53:10.520 E/SoftAVCEncoder(15626): encoderStatus = -27 at line 930
+11-19 20:53:10.520 E/ACodec  (15626): [OMX.google.h264.encoder] ERROR(0x80001001)
+11-19 20:53:10.520 E/MediaCodec(15626): Codec reported an error. (omx error 0x80001001, internalError -2147483648)
+11-19 20:53:10.580 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:10.580 I/MPEG4Writer(15626): Received total/0-length (16/0) buffers and encoded 16 frames. - video
+11-19 20:53:10.580 D/MPEG4Writer(15626): Stopping Video track source
+11-19 20:53:10.580 D/MPEG4Writer(15626): Video track stopped
+11-19 20:53:10.580 D/MPEG4Writer(15626): Stopping writer thread
+11-19 20:53:10.580 D/MPEG4Writer(15626): 0 chunks are written in the last batch
+11-19 20:53:10.580 D/MPEG4Writer(15626): Writer thread stopped
+11-19 20:53:10.590 D/MPEG4Writer(15626): Stopping Video track
+11-19 20:53:11.090 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:11.100 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x8000101b
+11-19 20:53:11.100 E/ACodec  (15626): [OMX.google.vp8.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:11.100 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:11.100 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/x-vnd.on2.vp8
+11-19 20:53:11.420 D/dalvikvm(15626): GC_FOR_ALLOC freed 7982K, 96% free 648K/13560K, paused 9ms, total 9ms
+11-19 20:53:11.420 I/dalvikvm-heap(15626): Grow heap (frag case) to 2.976MB for 2457616-byte allocation
+11-19 20:53:11.430 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 78% free 3047K/13560K, paused 4ms, total 4ms
+11-19 20:53:11.440 D/dalvikvm(15626): GC_CONCURRENT freed 2K, 71% free 3945K/13560K, paused 1ms+1ms, total 8ms
+11-19 20:53:19.120 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:19.130 E/OMXNodeInstance(15626): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x8000101b
+11-19 20:53:19.130 E/ACodec  (15626): [OMX.google.vp8.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:53:19.130 I/ACodec  (15626): setupVideoEncoder succeeded
+11-19 20:53:19.130 I/ACodec  (15626): onConfigureComponent: initNativeWindow for video/x-vnd.on2.vp8
+11-19 20:53:19.440 D/dalvikvm(15626): GC_FOR_ALLOC freed 3538K, 96% free 648K/13560K, paused 5ms, total 5ms
+11-19 20:53:19.450 I/dalvikvm-heap(15626): Grow heap (frag case) to 5.906MB for 5529616-byte allocation
+11-19 20:53:19.450 D/dalvikvm(15626): GC_FOR_ALLOC freed <1K, 56% free 6047K/13560K, paused 4ms, total 4ms
+11-19 20:53:19.460 D/dalvikvm(15626): GC_CONCURRENT freed 2K, 41% free 8070K/13560K, paused 2ms+1ms, total 7ms
+11-19 20:53:27.120 I/OMXClient(15626): Using client-side OMX mux.
+11-19 20:53:27.120 D/TCC_OMXCore(  164): Library 'libOMX.TCC.VideoEnc.so' 'OMX.TCC.ENC.avc' loaded
+11-19 20:53:27.120 E/TCC_OMXCore(  164): Error[0x80001003] init fail!!
+11-19 20:53:27.120 E/ACodec  (15626): Unable to instantiate decoder 'OMX.TCC.ENC.avc'.
+11-19 20:53:27.120 E/MediaCodec(15626): Codec reported an error. (omx error 0x80001003, internalError -2147483648)
+11-19 20:53:27.630 I/AndroidRuntime(15626): VM exiting with result code 0.

@@ -1,0 +1,110 @@
+# probe start sdk=19
+
+===== 1. MediaCodecList
+dec OMX.TCC.mpeg4dec video/mp4v-es 
+dec OMX.TCC.h263dec video/3gpp 
+dec OMX.TCC.avcdec video/avc 
+dec OMX.TCC.wmvdec video/vc1 
+dec OMX.TCC.wmv12dec video/x-wmv-1-2 
+dec OMX.TCC.rvdec video/vnd.rn-realvideo 
+dec OMX.TCC.divxdec video/x-divx 
+dec OMX.TCC.mpeg2dec video/mpeg2 
+dec OMX.TCC.mjpegdec video/x-jpeg 
+dec OMX.TCC.flv1dec video/x-flv 
+dec OMX.TCC.avsdec video/avs-video 
+dec OMX.TCC.mvcdec video/x-mvc 
+dec OMX.TCC.vp8dec video/x-vnd.on2.vp8 
+dec OMX.TCC.google.vp9dec video/x-vnd.on2.vp9 
+dec OMX.TCC.hevcdec video/hevc 
+dec OMX.TCC.mp3dec audio/x-mpeg-tcc 
+dec OMX.TCC.aacdec audio/x-mp4a-latm-tcc 
+dec OMX.TCC.wmadec audio/x-ms-wma 
+dec OMX.TCC.ac3dec audio/ac3 audio/e-ac3 audio/x-true-hd 
+dec OMX.TCC.radec audio/vnd.rn-realaudio 
+dec OMX.TCC.flacdec audio/flac 
+dec OMX.TCC.apedec audio/x-ape 
+dec OMX.TCC.mp2dec audio/mpeg2 
+dec OMX.TCC.pcmdec audio/x-pcm 
+dec OMX.TCC.dtsdec audio/vnd.dts audio/vnd.dts.hd 
+dec OMX.google.mp3.decoder audio/mpeg 
+dec OMX.google.amrnb.decoder audio/3gpp 
+dec OMX.google.amrwb.decoder audio/amr-wb 
+dec OMX.google.aac.decoder audio/mp4a-latm 
+dec OMX.google.g711.alaw.decoder audio/g711-alaw 
+dec OMX.google.g711.mlaw.decoder audio/g711-mlaw 
+dec OMX.google.vorbis.decoder audio/vorbis 
+dec OMX.google.opus.decoder audio/opus 
+dec OMX.google.mpeg4.decoder video/mp4v-es 
+dec OMX.google.h263.decoder video/3gpp 
+dec OMX.google.h264.decoder video/avc 
+dec OMX.google.vp8.decoder video/x-vnd.on2.vp8 
+dec OMX.google.vp9.decoder video/x-vnd.on2.vp9 
+ENC OMX.TCC.mp3enc audio/x-mpeg-tcc colors= 
+ENC OMX.google.mpeg4.encoder video/mp4v-es colors=19,21,2130708361 
+ENC OMX.google.h263.encoder video/3gpp colors=19,21,2130708361 
+ENC OMX.google.h264.encoder video/avc colors=19,21,2130708361 
+ENC OMX.google.amrnb.encoder audio/3gpp colors= 
+ENC OMX.google.amrwb.encoder audio/amr-wb colors= 
+ENC OMX.google.aac.encoder audio/mp4a-latm colors= 
+ENC OMX.google.flac.encoder audio/flac colors= 
+ENC OMX.google.opus.encoder audio/opus colors= 
+ENC OMX.google.vp8.encoder video/x-vnd.on2.vp8 colors=19,21,2130708361 
+ENC AACEncoder audio/mp4a-latm colors= 
+dec OMX.google.raw.decoder audio/raw 
+
+===== 2. AVC encoder candidates
+create OK   OMX.google.h264.encoder
+create FAIL OMX.TCC.VideoEnc.so : java.io.IOException: Failed to allocate component instance
+create FAIL OMX.TCC.ENC.avc : java.io.IOException: Failed to allocate component instance
+create FAIL OMX.TCC.VideoEnc : java.io.IOException: Failed to allocate component instance
+create FAIL OMX.TCC.avcenc : java.io.IOException: Failed to allocate component instance
+create FAIL OMX.TCC.h264enc : java.io.IOException: Failed to allocate component instance
+create FAIL OMX.TCC.videoenc : java.io.IOException: Failed to allocate component instance
+encode order: [OMX.google.h264.encoder]
+
+===== 3. SurfaceControl.screenshot
+first shot 1920x720
+1920x720 shot avg=14928us getPixels avg=256614us
+1280x480 shot avg=10207us getPixels avg=114432us
+640x240 shot avg=7327us getPixels avg=27651us
+png compress+write=4193ms  jpeg(92) compress+write=495ms
+
+===== 4. encode OMX.google.h264.encoder 1280x480
+configured color=19
+ERROR encode OMX.google.h264.encoder 1280x480: java.lang.IllegalStateException
+java.lang.IllegalStateException
+	at android.media.MediaCodec.getBuffers(Native Method)
+	at android.media.MediaCodec.getOutputBuffers(MediaCodec.java:551)
+	at fivew.diag.Probe$Enc.<init>(Probe.java:278)
+	at fivew.diag.Probe.encode(Probe.java:215)
+	at fivew.diag.Probe.main(Probe.java:62)
+	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:243)
+	at dalvik.system.NativeStart.main(Native Method)
+
+===== 4. encode OMX.google.h264.encoder 640x240
+configured color=19
+ERROR encode OMX.google.h264.encoder 640x240: java.lang.IllegalStateException
+java.lang.IllegalStateException
+	at android.media.MediaCodec.getBuffers(Native Method)
+	at android.media.MediaCodec.getOutputBuffers(MediaCodec.java:551)
+	at fivew.diag.Probe$Enc.<init>(Probe.java:278)
+	at fivew.diag.Probe.encode(Probe.java:215)
+	at fivew.diag.Probe.main(Probe.java:62)
+	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:243)
+	at dalvik.system.NativeStart.main(Native Method)
+
+===== 4. encode OMX.google.h264.encoder 1920x720
+configured color=19
+ERROR encode OMX.google.h264.encoder 1920x720: java.lang.IllegalStateException
+java.lang.IllegalStateException
+	at android.media.MediaCodec.getBuffers(Native Method)
+	at android.media.MediaCodec.getOutputBuffers(MediaCodec.java:551)
+	at fivew.diag.Probe$Enc.<init>(Probe.java:278)
+	at fivew.diag.Probe.encode(Probe.java:215)
+	at fivew.diag.Probe.main(Probe.java:62)
+	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:243)
+	at dalvik.system.NativeStart.main(Native Method)
+done

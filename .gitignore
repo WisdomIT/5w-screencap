@@ -1,0 +1,11 @@
+# build tools (d8) and build outputs
+.tools/
+diag*/usb/*.jar
+
+# macOS
+.DS_Store
+._*
+
+# raw framebuffer / screen dumps (large) and the OEM binary copied off the head unit
+*.raw
+diag/results/**/bin_screenshot

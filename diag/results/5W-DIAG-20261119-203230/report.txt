@@ -1,0 +1,97 @@
+# 5w_screencap diag  stamp=20261119-203230
+date=Thu Nov 19 20:32:33 +09:00 2026
+
+===== 1. system
+id=uid=0(root) gid=0(root)
+kernel=Linux version 3.18.24-tcc (vmadmin@cbcd-deploy-avnwidecpu-090217243651-5f776f8847-k24sf) (gcc version 4.7 (GCC) ) #1 SMP PREEMPT Wed Sep 2 18:01:33 KST 2026
+usb_root=/storage/usb0
+nemesis_version=1.16.7
+props -> props.txt
+
+===== 2. binaries
+-rwxr-xr-x root     shell        9440 2026-09-02 18:30 screencap  [/system/bin]
+screencap: on PATH
+-rwxr-xr-x root     shell       17800 2026-09-02 18:30 screenrecord  [/system/bin]
+screenrecord: on PATH
+-rwxr-xr-x root     shell       42356 2026-09-02 18:29 screenshot  [/system/bin]
+screenshot: on PATH
+fb: crw-rw-rw- root     graphics  29,   0 2015-01-01 18:30 fb0
+
+===== 3. display
+wm size: Physical size: 1920x720
+wm density: Physical density: 240
+dumpsys display -> dumpsys_display.txt
+dumpsys SurfaceFlinger -> dumpsys_surfaceflinger.txt (HWC layer table: OVERLAY vs FB)
+display summary -> display_summary.txt
+
+===== 4. usb
+mount: /dev/block/platform/bdm/by-name/vr1 /storage/vr1 ext4 ro,relatime,data=ordered 0 0
+mount: /dev/block/platform/bdm/by-name/upgrade /storage/upgrade ext4 rw,nosuid,nodev,noatime,discard,nodelalloc,errors=continue,data=journal 0 0
+mount: /dev/block/platform/bdm/by-name/vr2 /storage/vr2 ext4 ro,relatime,data=ordered 0 0
+mount: /dev/block/platform/bdm/by-name/log /storage/log ext4 rw,nosuid,nodev,noatime,discard,nodelalloc,errors=continue,data=journal 0 0
+mount: /dev/block/platform/bdm/by-name/navi /storage/navi ext4 ro,relatime,data=ordered 0 0
+mount: /dev/block/platform/bdm/by-name/navi2 /storage/navi2 ext4 ro,relatime,data=ordered 0 0
+mount: adb /dev/usb-ffs/adb functionfs rw,relatime 0 0
+mount: /dev/fuse /mnt/shell/emulated fuse rw,nosuid,nodev,relatime,user_id=1023,group_id=1023,default_permissions,allow_other 0 0
+mount: /dev/block/vold/8:1 /mnt/media_rw/usb0 vfat rw,dirsync,nosuid,nodev,noexec,noatime,nodiratime,uid=1023,gid=1023,fmask=0007,dmask=0007,allow_utime=0020,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro 0 0
+mount: /dev/fuse /storage/usb0 fuse rw,sync,noatime,nodiratime,user_id=1023,group_id=1023,default_permissions,allow_other 0 0
+ls /storage: cdrom_actual
+emulated
+log
+navi
+navi2
+sdcard0
+sdcard1
+sdcard2
+sdcard3
+upgrade
+usb0
+usb1
+vr1
+vr2
+ls /mnt/media_rw: sdcard1
+sdcard2
+sdcard3
+usb0
+usb1
+df: Filesystem               Size     Used     Free   Blksize
+/storage/usb0           14.7G   103.6M    14.6G   8192
+usb_write=ok
+media_codecs.xml copied
+codec: <?xml version="1.0" encoding="utf-8" ?>
+codec: <!ELEMENT MediaCodecs (Decoders,Encoders)>
+codec: <!ELEMENT Encoders (MediaCodec*)>
+codec:     <Encoders>
+codec:         <MediaCodec name="OMX.TCC.mp3enc" type="audio/x-mpeg-tcc" >
+codec:         <MediaCodec name="OMX.google.mpeg4.encoder" type="video/mp4v-es" />
+codec:         <MediaCodec name="OMX.google.h263.encoder" type="video/3gpp" />
+codec:         <MediaCodec name="OMX.google.h264.encoder" type="video/avc" />
+codec:         <MediaCodec name="OMX.google.amrnb.encoder" type="audio/3gpp" />
+codec:         <MediaCodec name="OMX.google.amrwb.encoder" type="audio/amr-wb" />
+codec:         <MediaCodec name="OMX.google.aac.encoder" type="audio/mp4a-latm" />
+codec:         <MediaCodec name="OMX.google.flac.encoder" type="audio/flac" />
+codec:         <MediaCodec name="OMX.google.opus.encoder" type="audio/opus" />
+codec:         <MediaCodec name="OMX.google.vp8.encoder" type="video/x-vnd.on2.vp8" />
+codec:     </Encoders>
+
+===== 5. screencap
+cap_direct      rc=0 ms=5010 size=1134601  (PNG straight to USB)
+cap_tmp         rc=0 ms=4000 size=1134039  (PNG to /data/local/tmp)
+cap_via_tmp copy size=1134039
+cap_raw         rc=0 ms=1000 size=5529612  (raw, = 12 + w*h*bpp)
+cap_raw_x3      ms=1300
+cap_display1    rc=0 ms=4010 size=1135515
+cap_display2    rc=0 ms=5010 size=1135525
+cap_display3    rc=0 ms=5010 size=1135454
+
+===== 6. screenrecord
+help -> rec_help.txt
+rec_default     rc=218 ms=1000 size=0  (display size, USB)
+rec_720p_tmp    rc=218 ms=1000 size=0  (1280x720, tmp)
+rec_sigint      stopped_by=none size=0  (INT, then HUP, then KILL)
+
+===== 7. logcat
+logcat (filtered) -> logcat_filtered.txt
+mediaserver now: media     164   1     33088  10116 ffffffff b6ec5868 S /system/bin/mediaserver
+
+done

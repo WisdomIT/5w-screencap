@@ -1,0 +1,4 @@
+screenshot: invalid option -- h
+usage: screenshot [-s soundfile] filename.png
+   -s: play a sound effect to signal success
+   -i: autoincrement to avoid overwriting filename.png

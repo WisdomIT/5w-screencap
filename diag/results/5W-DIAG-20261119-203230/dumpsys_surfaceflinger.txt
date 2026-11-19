@@ -1,0 +1,394 @@
+Build configuration: [sf] [libui] [libgui]
+Sync configuration: [using: EGL_ANDROID_native_fence_sync EGL_KHR_wait_sync]
+Visible layers (count = 9)
++ LayerDim 0xb8f06e88 (DimLayer)
+  Region transparentRegion (this=0xb8f06fec, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8f06e90, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(  16,  16), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 0, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=3 mCurrentTexture=-1
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ LayerDim 0xb8edb988 (DimLayer)
+  Region transparentRegion (this=0xb8edbaec, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8edb990, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(  16,  16), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 0, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=4 mCurrentTexture=-1
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ LayerDim 0xb8eeea28 (DimLayer)
+  Region transparentRegion (this=0xb8eeeb8c, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8eeea30, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(  16,  16), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 0, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=6 mCurrentTexture=-1
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ LayerDim 0xb8ee9a30 (DimLayer)
+  Region transparentRegion (this=0xb8ee9b94, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8ee9a38, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(  16,  16), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 0, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=7 mCurrentTexture=-1
+            mCurrentCrop=[-1192514552,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ Layer 0xb8f05ba8 (SurfaceView)
+  Region transparentRegion (this=0xb8f05d0c, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8f05bb0, count=1)
+    [  0,   0, 1920, 720]
+      layerStack=   0, z=    21005, pos=(0,0), size=(1920, 720), crop=(   0,   0,1920, 720), isOpaque=1, invalidate=0, alpha=0xff, flags=0x00000000, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f03968
+      format= 4, activeBuffer=[1920x 720:1920,3231565A], queued-frames=1, mRefreshPending=0
+            mTexName=11 mCurrentTexture=2
+            mCurrentCrop=[0,0,1920,720] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x720], default-format=4, transform-hint=00, FIFO(1)={03:0xb8efd580 crop=[0,0,1920,720], xform=0x00, time=0, scale=SCALE_TO_WINDOW
+}
+             [00:0xb8ef5de0] state=DEQUEUED, 0xb8ef4998 [1920x 720:1920,3231565A]
+             [01:0xb8ef5e60] state=DEQUEUED, 0xb8eec930 [1920x 720:1920,3231565A]
+            >[02:0xb8eecaa0] state=ACQUIRED, 0xb8eecb20 [1920x 720:1920,3231565A]
+             [03:0xb8efd580] state=QUEUED  , 0xb8efd618 [1920x 720:1920,3231565A]
+             [04:0xb8ee5800] state=DEQUEUED, 0xb8ee5898 [1920x 720:1920,3231565A]
+             [05:0xb8ee58f8] state=DEQUEUED, 0xb8efd678 [1920x 720:1920,3231565A]
++ Layer 0xb8edf2d8 (com.daudio.app.dipo/com.daudio.app.dipo.ui.DipoActivity)
+  Region transparentRegion (this=0xb8edf43c, count=1)
+    [  0,   0, 1920, 720]
+  Region visibleRegion (this=0xb8edf2e0, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=    21010, pos=(0,0), size=(1920, 720), crop=(   0,   0,1920, 720), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000000, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f03968
+      format= 1, activeBuffer=[1920x 720:1920,  1], queued-frames=0, mRefreshPending=0
+            mTexName=10 mCurrentTexture=0
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x720], default-format=1, transform-hint=00, FIFO(0)={}
+            >[00:0xb8ee1660] state=ACQUIRED, 0xb8efca58 [1920x 720:1920,  1]
+             [01:0xb8edf0d0] state=FREE    , 0xb8ef2ac0 [1920x 720:1920,  1]
+             [02:0xb8f18cc8] state=FREE    , 0xb8f11668 [1920x 720:1920,  1]
+             [03:0xb8ef0ae0] state=FREE    , 0xb8ee11f8 [1920x 720:1920,  1]
++ Layer 0xb8f04920 (FocusedStackFrame)
+  Region transparentRegion (this=0xb8f04a84, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8f04928, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=    21011, pos=(0,0), size=(   1,   1), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0x4d, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 1, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=5 mCurrentTexture=-1
+            mCurrentCrop=[0,0,4,-1251834308] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ Layer 0xb8ee3938 (StatusBar)
+  Region transparentRegion (this=0xb8ee3a9c, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8ee3940, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=   151000, pos=(0,0), size=(1920,  90), crop=(   0,   0,1920,  90), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8ee9800
+      format= 1, activeBuffer=[1920x  90:1920,  1], queued-frames=0, mRefreshPending=0
+            mTexName=8 mCurrentTexture=2
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x90], default-format=1, transform-hint=00, FIFO(0)={}
+             [00:0xb8ef0bd8] state=FREE    , 0xb8f084c0 [1920x  90:1920,  1]
+             [01:0xb8efcc00] state=FREE    , 0xb8f01498 [1920x  90:1920,  1]
+            >[02:0xb8efcfc0] state=ACQUIRED, 0xb8efdd60 [1920x  90:1920,  1]
+             [03:0xb8ee0ab0] state=FREE    , 0xb8edac90 [1920x  90:1920,  1]
++ Layer 0xb8ef9b80 ()
+  Region transparentRegion (this=0xb8ef9ce4, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8ef9b88, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=   191000, pos=(960,360), size=(   1,   1), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000000, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8efe618
+      format= 1, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=2 mCurrentTexture=-1
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
+Displays (1 entries)
++ DisplayDevice: Built-in Screen
+   type=0, hwcId=0, layerStack=0, (1920x 720), ANativeWindow=0xb8ed8260, orient= 0 (type=00000000), flips=28488, isSecure=1, secureVis=0, acquired=1, numLayers=1
+   v:[0,0,1920,720], f:[0,0,1920,720], s:[0,0,1920,720],transform:[[1.000,0.000,0.000][0.000,1.000,0.000][0.000,0.000,1.000]]
+mAbandoned=0
+-BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x720], default-format=1, transform-hint=00, FIFO(0)={}
+ [00:0xb8ed96d0] state=FREE    , 0xb8ed97f8 [1920x 720:1920,  1]
+ [01:0xb8eda940] state=FREE    , 0xb8efb968 [1920x 720:1920,  1]
+>[02:0xb8ed4280] state=ACQUIRED, 0xb8efd308 [1920x 720:1920,  1]
+SurfaceFlinger global state:
+EGL implementation : 1.4 Linux-r7p0-00rel0
+EGL_KHR_image EGL_KHR_image_base EGL_KHR_image_pixmap EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_fence_sync EGL_KHR_wait_sync EGL_KHR_swap_buffers_with_damage EGL_EXT_swap_buffers_with_damage EGL_ANDROID_image_native_buffer EGL_ANDROID_recordable EGL_EXT_yuv_surface EGL_ANDROID_native_fence_sync EGL_ANDROID_framebuffer_target EGL_EXT_create_context_robustness EGL_ANDROID_blob_cache EGL_KHR_create_context EGL_KHR_partial_update EGL_EXT_protected_surface EGL_KHR_create_context_no_error 
+GLES: ARM, Mali-400 MP, OpenGL ES 2.0
+GL_EXT_debug_marker GL_OES_texture_npot GL_OES_vertex_array_object GL_OES_compressed_ETC1_RGB8_texture GL_EXT_compressed_ETC1_RGB8_sub_texture GL_OES_standard_derivatives GL_OES_EGL_image GL_OES_depth24 GL_ARM_rgba8 GL_ARM_mali_shader_binary GL_OES_depth_texture GL_OES_packed_depth_stencil GL_EXT_texture_format_BGRA8888 GL_OES_vertex_half_float GL_EXT_blend_minmax GL_OES_EGL_image_external GL_OES_EGL_sync GL_OES_rgb8_rgba8 GL_EXT_multisampled_render_to_texture GL_EXT_discard_framebuffer GL_OES_get_program_binary GL_ARM_mali_program_binary GL_EXT_shader_texture_lod GL_EXT_robustness GL_OES_depth_texture_cube_map GL_KHR_debug GL_ARM_shader_framebuffer_fetch GL_ARM_shader_framebuffer_fetch_depth_stencil GL_OES_mapbuffer GL_KHR_no_error
+  Region undefinedRegion (this=0xb8ed4704, count=1)
+    [  0,   0,   0,   0]
+  orientation=0, canDraw=1
+  last eglSwapBuffers() time: 370.541000 us
+  last transaction time     : 75.792000 us
+  transaction-flags         : 00000000
+  refresh-rate              : 60.000002 fps
+  x-dpi                     : 159.895004
+  y-dpi                     : 160.421005
+  EGL_NATIVE_VISUAL_ID      : 5
+  gpu_to_cpu_unsupported    : 0
+  eglSwapBuffers time: 0.000000 us
+  transaction time: 0.000000 us
+VSYNC state: enabled
+  soft-vsync: disabled
+  numListeners=13,
+  events-delivered: 24878
+    0xb8ee0d18: count=-1
+    0xb8ee7208: count=-1
+    0xb8ee99d8: count=-1
+    0xb8eeb1b0: count=-1
+    0xb8eebe60: count=0
+    0xb8ef9af0: count=-1
+    0xb8efb0a8: count=-1
+    0xb8efd0e8: count=-1
+    0xb8efea50: count=-1
+    0xb8f02c08: count=-1
+    0xb8f02d50: count=-1
+    0xb8f02e60: count=-1
+    0xb8f11578: count=-1
+h/w composer state:
+  h/w composer present and enabled
+Hardware Composer state (version  1010000):
+  mDebugForceFakeVSync=0
+  Display[0] : 1920x720, xdpi=159.895004, ydpi=160.421005, refresh=16666666
+  numHwLayers=2, flags=00000000
+    type    |  handle  |   hints  |   flags  | tr | blend |  format  |          source crop            |           frame           name 
+------------+----------+----------+----------+----+-------+----------+---------------------------------+--------------------------------
+       GLES | b8eecb20 | 00000000 | 00000000 | 00 | 00100 | 3231565a | [      0,      0,   1920,    720] | [    0,    0, 1920,  720] SurfaceView
+  FB TARGET | b8efd308 | 00000000 | 00000000 | 00 | 00105 | 00000001 | [      0,      0,   1920,    720] | [    0,    0, 1920,  720] HWC_FRAMEBUFFER_TARGET
+Allocated buffers:
+0xb8ed97f8: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00001e02
+0xb8edac90:  675.00 KiB | 1920 (1920) x   90 |        1 | 0x00000f02
+0xb8ee11f8: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00000f02
+0xb8ee5898: unknown     | 1920 (1920) x  720 | 3231565A | 0xa0002b30
+0xb8eec930: unknown     | 1920 (1920) x  720 | 3231565A | 0xa0002b30
+0xb8eecb20: unknown     | 1920 (1920) x  720 | 3231565A | 0xa0002b30
+0xb8ef2ac0: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00000f02
+0xb8ef4998: unknown     | 1920 (1920) x  720 | 3231565A | 0xa0002b30
+0xb8efb968: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00001e02
+0xb8efca58: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00000f02
+0xb8efd308: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00001e02
+0xb8efd618: unknown     | 1920 (1920) x  720 | 3231565A | 0xa0002b30
+0xb8efd678: unknown     | 1920 (1920) x  720 | 3231565A | 0xa0002b30
+0xb8efdd60:  675.00 KiB | 1920 (1920) x   90 |        1 | 0x00000f02
+0xb8f01498:  675.00 KiB | 1920 (1920) x   90 |        1 | 0x00000f02
+0xb8f084c0:  675.00 KiB | 1920 (1920) x   90 |        1 | 0x00000f02
+0xb8f11668: 5400.00 KiB | 1920 (1920) x  720 |        1 | 0x00000f02
+Total allocated (estimate): 40500.00 KB
+
+Blackscreen (min pixels:967679):
+
+01-01 18:30:08.757 [Debug for blackscreen] Visible layers (count = 1), boot finished:0, reason:add layer(DimLayer)
++ Layer 0xb8ef9b80 (BootAnimation)
+  Region transparentRegion (this=0xb8ef9ce4, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8ef9b88, count=1)
+    [  0,   0, 1920, 720]
+      layerStack=   0, z=1073741824, pos=(0,0), size=(1920, 720), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000000, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8ef9a60
+      format= 4, activeBuffer=[1920x 720:1920,  1], queued-frames=0, mRefreshPending=0
+            mTexName=2 mCurrentTexture=2
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x720], default-format=4, transform-hint=00, FIFO(0)={}
+             [00:0xb8efcc00] state=FREE    , 0xb8ef9ac8 [1920x 720:1920,  1]
+             [01:0xb8f02148] state=FREE    , 0xb8ef9a00 [1920x 720:1920,  1]
+            >[02:0xb8ed9858] state=ACQUIRED, 0xb8f01498 [1920x 720:1920,  1]
+             [03:0xb8f02a68] state=FREE    , 0xb8efbdf8 [1920x 720:1920,  1]
+01-01 18:30:12.560 Maybe blackscreen now. diff(nsec):9071749463, l:0, t:0, r:1920, b:720, boot finished:0
+01-01 18:30:12.561 [Debug for blackscreen] Visible layers (count = 5), boot finished:0, reason:unset blackscreen
++ LayerDim 0xb8f06e88 (DimLayer)
+  Region transparentRegion (this=0xb8f06fec, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8f06e90, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(  16,  16), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 0, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=3 mCurrentTexture=-1
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ LayerDim 0xb8edb988 (DimLayer)
+  Region transparentRegion (this=0xb8edbaec, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8edb990, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(  16,  16), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 0, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=4 mCurrentTexture=-1
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ Layer 0xb8f04920 (FocusedStackFrame)
+  Region transparentRegion (this=0xb8f04a84, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8f04928, count=1)
+    [  0,   0,   0,   0]
+      layerStack=   0, z=        0, pos=(0,0), size=(   1,   1), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0x4d, flags=0x00000001, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8f02c60
+      format= 1, activeBuffer=[   0x   0:   0,  0], queued-frames=0, mRefreshPending=0
+            mTexName=5 mCurrentTexture=-1
+            mCurrentCrop=[0,0,4,-1251834308] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1x1], default-format=1, transform-hint=00, FIFO(0)={}
++ Layer 0xb8f05ba8 (ScreenSaver(BlackScreen))
+  Region transparentRegion (this=0xb8f05d0c, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8f05bb0, count=1)
+    [  0,   0, 1920, 720]
+      layerStack=   0, z=   331000, pos=(0,0), size=(1920, 720), crop=(   0,   0,1920, 720), isOpaque=1, invalidate=0, alpha=0xff, flags=0x00000000, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8efe618
+      format= 2, activeBuffer=[1920x 720:1920,  2], queued-frames=0, mRefreshPending=0
+            mTexName=6 mCurrentTexture=0
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x720], default-format=2, transform-hint=00, FIFO(0)={}
+            >[00:0xb8ee0af0] state=ACQUIRED, 0xb8f09388 [1920x 720:1920,  2]
++ Layer 0xb8ef9b80 (BootAnimation)
+  Region transparentRegion (this=0xb8ef9ce4, count=1)
+    [  0,   0,   0,   0]
+  Region visibleRegion (this=0xb8ef9b88, count=1)
+    [  0,   0, 1920, 720]
+      layerStack=   0, z=1073741824, pos=(0,0), size=(1920, 720), crop=(   0,   0,  -1,  -1), isOpaque=0, invalidate=0, alpha=0xff, flags=0x00000000, tr=[1.00, 0.00][0.00, 1.00]
+      client=0xb8ef9a60
+      format= 4, activeBuffer=[1920x 720:1920,  1], queued-frames=0, mRefreshPending=0
+            mTexName=2 mCurrentTexture=3
+            mCurrentCrop=[0,0,0,0] mCurrentTransform=0
+            mAbandoned=0
+            -BufferQueue mMaxAcquiredBufferCount=1, mDequeueBufferCannotBlock=0, default-size=[1920x720], default-format=4, transform-hint=00, FIFO(0)={}
+             [00:0xb8efcc00] state=FREE    , 0xb8ef9ac8 [1920x 720:1920,  1]
+             [01:0xb8f02148] state=FREE    , 0xb8ef9a00 [1920x 720:1920,  1]
+             [02:0xb8ed9858] state=FREE    , 0xb8f01498 [1920x 720:1920,  1]
+            >[03:0xb8f02a68] state=ACQUIRED, 0xb8efbdf8 [1920x 720:1920,  1]
+
+Layer History:
+
+01-01 18:30:03.517 createNormalLayer() failed (0:Success)
+01-01 18:30:03.519 createLayer(type:0) w:1920, h:720, name:BootAnimation, client:0xb8ef9a60, layer:0xb8ef9b80
+01-01 18:30:08.757 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8f06e88
+01-01 18:30:08.757 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8edb988
+01-01 18:30:08.806 createNormalLayer() failed (0:Success)
+01-01 18:30:08.806 createLayer(type:0) w:1, h:1, name:FocusedStackFrame, client:0xb8f02c60, layer:0xb8f04920
+01-01 18:30:12.428 createNormalLayer() failed (0:Success)
+01-01 18:30:12.428 createLayer(type:0) w:1920, h:720, name:ScreenSaver(BlackScreen), client:0xb8efe618, layer:0xb8f05ba8
+01-01 18:30:12.545 eVisibilityChanged hidden:0, name:ScreenSaver(BlackScreen), visible:0, layer:0xb8f05ba8
+11-19 20:16:32.024 createNormalLayer() failed (0:Success)
+11-19 20:16:32.024 createLayer(type:0) w:1, h:1, name:ConsentScreen, client:0xb8ee9800, layer:0xb8ee9a30
+11-19 20:16:32.052 eSizeChanged w:1920, h:630, name:ConsentScreen, visible:0, layer:0xb8ee9a30
+11-19 20:16:32.179 createNormalLayer() failed (0:Success)
+11-19 20:16:32.179 createLayer(type:0) w:1920, h:1, name:StatusBar, client:0xb8ee9800, layer:0xb8ee3938
+11-19 20:16:32.183 eSizeChanged w:1920, h:90, name:StatusBar, visible:0, layer:0xb8ee3938
+11-19 20:16:32.863 createNormalLayer() failed (0:Success)
+11-19 20:16:32.863 createLayer(type:0) w:1, h:1, name:com.android.launcher3/com.android.launcher3.view.Launcher, client:0xb8ef31a8, layer:0xb8eed7a0
+11-19 20:16:32.875 eSizeChanged w:1920, h:720, name:com.android.launcher3/com.android.launcher3.view.Launcher, visible:0, layer:0xb8eed7a0
+11-19 20:16:33.452 eVisibilityChanged hidden:0, name:com.android.launcher3/com.android.launcher3.view.Launcher, visible:0, layer:0xb8eed7a0
+11-19 20:16:33.562 eVisibilityChanged hidden:0, name:ConsentScreen, visible:0, layer:0xb8ee9a30
+11-19 20:16:33.809 eVisibilityChanged hidden:0, name:StatusBar, visible:0, layer:0xb8ee3938
+11-19 20:16:41.033 eVisibilityChanged hidden:1, name:StatusBar, visible:1, layer:0xb8ee3938
+11-19 20:17:06.255 createNormalLayer() failed (0:Success)
+11-19 20:17:06.255 createLayer(type:0) w:1, h:1, name:, client:0xb8efe618, layer:0xb8ef9b80
+11-19 20:17:06.346 eVisibilityChanged hidden:0, name:, visible:0, layer:0xb8ef9b80
+11-19 20:17:11.208 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8f05ba8
+11-19 20:17:11.211 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8edf2d8
+11-19 20:17:13.021 createNormalLayer() failed (0:Success)
+11-19 20:17:13.021 createLayer(type:0) w:1, h:1, name:, client:0xb8ef6ac8, layer:0xb8eeea28
+11-19 20:17:13.080 eSizeChanged w:1260, h:368, name:, visible:0, layer:0xb8eeea28
+11-19 20:17:13.315 createNormalLayer() failed (0:Success)
+11-19 20:17:13.315 createLayer(type:0) w:1, h:1, name:com.mobis.system/com.mobis.system.MicomSystemPopup, client:0xb8ef6ac8, layer:0xb8ee9a30
+11-19 20:17:13.486 eSizeChanged w:1056, h:80, name:com.mobis.system/com.mobis.system.MicomSystemPopup, visible:0, layer:0xb8ee9a30
+11-19 20:17:14.340 eVisibilityChanged hidden:0, name:, visible:0, layer:0xb8eeea28
+11-19 20:17:14.620 eSizeChanged w:2880, h:1080, name:DimLayer, visible:0, layer:0xb8f05ba8
+11-19 20:17:14.620 eVisibilityChanged hidden:0, name:com.mobis.system/com.mobis.system.MicomSystemPopup, visible:0, layer:0xb8ee9a30
+11-19 20:17:14.714 eVisibilityChanged hidden:0, name:DimLayer, visible:0, layer:0xb8f05ba8
+11-19 20:17:17.517 createNormalLayer() failed (0:Success)
+11-19 20:17:17.517 createLayer(type:0) w:1920, h:90, name:Heads Up, client:0xb8ee9800, layer:0xb8ee1c48
+11-19 20:17:17.640 eVisibilityChanged hidden:0, name:Heads Up, visible:0, layer:0xb8ee1c48
+11-19 20:17:20.011 eVisibilityChanged hidden:1, name:, visible:0, layer:0xb8eeea28
+11-19 20:17:20.128 eVisibilityChanged hidden:1, name:DimLayer, visible:1, layer:0xb8f05ba8
+11-19 20:17:20.238 eVisibilityChanged hidden:1, name:com.mobis.system/com.mobis.system.MicomSystemPopup, visible:0, layer:0xb8ee9a30
+11-19 20:17:25.765 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8ee9a30
+11-19 20:17:25.767 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8edf2d8
+11-19 20:17:26.251 createNormalLayer() failed (0:Success)
+11-19 20:17:26.251 createLayer(type:0) w:1, h:1, name:, client:0xb8ef6ac8, layer:0xb8f05ba8
+11-19 20:17:26.259 eSizeChanged w:1260, h:368, name:, visible:0, layer:0xb8f05ba8
+11-19 20:17:26.321 createNormalLayer() failed (0:Success)
+11-19 20:17:26.321 createLayer(type:0) w:1, h:1, name:com.mobis.system/com.mobis.system.MicomSystemPopup, client:0xb8ef6ac8, layer:0xb8eeea28
+11-19 20:17:26.324 eSizeChanged w:1056, h:80, name:com.mobis.system/com.mobis.system.MicomSystemPopup, visible:0, layer:0xb8eeea28
+11-19 20:17:26.628 eVisibilityChanged hidden:0, name:, visible:0, layer:0xb8f05ba8
+11-19 20:17:26.706 eSizeChanged w:2880, h:1080, name:DimLayer, visible:0, layer:0xb8ee9a30
+11-19 20:17:26.706 eVisibilityChanged hidden:0, name:com.mobis.system/com.mobis.system.MicomSystemPopup, visible:0, layer:0xb8eeea28
+11-19 20:17:26.729 createNormalLayer() failed (0:Success)
+11-19 20:17:26.730 createLayer(type:0) w:1920, h:90, name:Heads Up, client:0xb8ee9800, layer:0xb8ee1838
+11-19 20:17:26.746 eVisibilityChanged hidden:0, name:DimLayer, visible:0, layer:0xb8ee9a30
+11-19 20:17:26.959 eVisibilityChanged hidden:0, name:Heads Up, visible:0, layer:0xb8ee1838
+11-19 20:17:26.965 eVisibilityChanged hidden:1, name:, visible:0, layer:0xb8f05ba8
+11-19 20:17:27.058 eVisibilityChanged hidden:1, name:DimLayer, visible:1, layer:0xb8ee9a30
+11-19 20:17:27.207 eVisibilityChanged hidden:1, name:com.mobis.system/com.mobis.system.MicomSystemPopup, visible:0, layer:0xb8eeea28
+11-19 20:17:28.859 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8eeea28
+11-19 20:17:28.878 createLayer(type:131072) w:16, h:16, name:DimLayer, client:0xb8f02c60, layer:0xb8ee9a30
+11-19 20:17:29.459 createNormalLayer() failed (0:Success)
+11-19 20:17:29.459 createLayer(type:0) w:1920, h:720, name:com.daudio.app.dipo/com.daudio.app.dipo.ui.DipoActivity, client:0xb8f03968, layer:0xb8edf2d8
+11-19 20:17:29.859 createNormalLayer() failed (0:Success)
+11-19 20:17:29.859 createLayer(type:0) w:1920, h:720, name:SurfaceView, client:0xb8f03968, layer:0xb8f05ba8
+11-19 20:17:30.074 eVisibilityChanged hidden:1, name:com.android.launcher3/com.android.launcher3.view.Launcher, visible:1, layer:0xb8eed7a0
+11-19 20:17:30.074 eVisibilityChanged hidden:0, name:SurfaceView, visible:0, layer:0xb8f05ba8
+11-19 20:17:30.074 eVisibilityChanged hidden:0, name:com.daudio.app.dipo/com.daudio.app.dipo.ui.DipoActivity, visible:0, layer:0xb8edf2d8
+11-19 20:18:59.798 createNormalLayer() failed (0:Success)
+11-19 20:18:59.798 createLayer(type:0) w:1, h:1, name:HkmcToast, client:0xb8efe618, layer:0xb8ee1838
+11-19 20:18:59.800 eSizeChanged w:1920, h:72, name:HkmcToast, visible:0, layer:0xb8ee1838
+11-19 20:18:59.844 eVisibilityChanged hidden:0, name:HkmcToast, visible:0, layer:0xb8ee1838
+11-19 20:19:03.247 eVisibilityChanged hidden:1, name:HkmcToast, visible:0, layer:0xb8ee1838
+11-19 20:19:35.405 createNormalLayer() failed (0:Success)
+11-19 20:19:35.405 createLayer(type:0) w:1920, h:90, name:Heads Up, client:0xb8ee9800, layer:0xb8eed7a0
+11-19 20:19:35.455 eVisibilityChanged hidden:0, name:Heads Up, visible:0, layer:0xb8eed7a0
+11-19 20:19:37.242 createNormalLayer() failed (0:Success)
+11-19 20:19:37.242 createLayer(type:0) w:80, h:192, name:SS_Button_Window, client:0xb8efcb40, layer:0xb8ee1c40
+11-19 20:19:37.331 createNormalLayer() failed (0:Success)
+11-19 20:19:37.331 createLayer(type:0) w:1, h:1, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, client:0xb8ee5990, layer:0xb8f095f8
+11-19 20:19:37.339 eSizeChanged w:1920, h:720, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8f095f8
+11-19 20:19:37.370 eVisibilityChanged hidden:0, name:SS_Button_Window, visible:0, layer:0xb8ee1c40
+11-19 20:19:37.445 eVisibilityChanged hidden:0, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8f095f8
+11-19 20:19:39.382 eVisibilityChanged hidden:1, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8f095f8
+11-19 20:19:55.925 createNormalLayer() failed (0:Success)
+11-19 20:19:55.925 createLayer(type:0) w:1, h:1, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, client:0xb8ee5990, layer:0xb8eed7a0
+11-19 20:19:55.936 eSizeChanged w:1920, h:720, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8eed7a0
+11-19 20:19:55.994 createNormalLayer() failed (0:Success)
+11-19 20:19:55.994 createLayer(type:0) w:80, h:192, name:SS_Button_Window, client:0xb8efcb40, layer:0xb8ee1838
+11-19 20:19:56.051 eVisibilityChanged hidden:0, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8eed7a0
+11-19 20:19:56.093 eVisibilityChanged hidden:0, name:SS_Button_Window, visible:0, layer:0xb8ee1838
+11-19 20:19:58.951 eVisibilityChanged hidden:1, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8eed7a0
+11-19 20:32:25.715 createNormalLayer() failed (0:Success)
+11-19 20:32:25.715 createLayer(type:0) w:1920, h:90, name:Heads Up, client:0xb8ee9800, layer:0xb8eed7a0
+11-19 20:32:25.764 eVisibilityChanged hidden:0, name:Heads Up, visible:0, layer:0xb8eed7a0
+11-19 20:32:27.024 createNormalLayer() failed (0:Success)
+11-19 20:32:27.024 createLayer(type:0) w:80, h:192, name:SS_Button_Window, client:0xb8efcb40, layer:0xb8ee1838
+11-19 20:32:27.108 createNormalLayer() failed (0:Success)
+11-19 20:32:27.108 createLayer(type:0) w:1, h:1, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, client:0xb8ee5990, layer:0xb8f19950
+11-19 20:32:27.111 eSizeChanged w:1920, h:720, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8f19950
+11-19 20:32:27.265 eVisibilityChanged hidden:0, name:SS_Button_Window, visible:0, layer:0xb8ee1838
+11-19 20:32:27.345 eVisibilityChanged hidden:0, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:0, layer:0xb8f19950
+11-19 20:32:30.375 eVisibilityChanged hidden:1, name:com.nemesis.manager/com.nemesis.manager.DialogActivity, visible:1, layer:0xb8f19950

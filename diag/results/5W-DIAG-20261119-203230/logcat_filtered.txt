@@ -1,0 +1,71 @@
+11-19 20:32:47.020 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [175280]
+11-19 20:32:47.150 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [177008]
+11-19 20:32:47.280 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [178736]
+11-19 20:32:47.410 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [181280]
+11-19 20:32:47.520 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [183008]
+11-19 20:32:47.640 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [184736]
+11-19 20:32:47.770 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [187280]
+11-19 20:32:47.910 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [189008]
+11-19 20:32:48.030 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [190736]
+11-19 20:32:48.170 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [193280]
+11-19 20:32:48.290 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [195008]
+11-19 20:32:48.410 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [196736]
+11-19 20:32:48.540 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [199280]
+11-19 20:32:48.670 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [201008]
+11-19 20:32:48.800 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [202736]
+11-19 20:32:48.920 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [205280]
+11-19 20:32:50.600 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [207008]
+11-19 20:32:50.720 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [208736]
+11-19 20:32:50.860 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [211280]
+11-19 20:32:50.980 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [213008]
+11-19 20:32:51.100 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [214736]
+11-19 20:32:53.340 E/SurfaceFlinger(  161): getDefaultDisplay: id=2 is not a valid default display id
+11-19 20:32:58.350 E/SurfaceFlinger(  161): getDefaultDisplay: id=3 is not a valid default display id
+11-19 20:33:03.580 I/OMXClient( 8543): Using client-side OMX mux.
+11-19 20:33:03.590 E/OMXNodeInstance( 8543): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:33:03.590 E/ACodec  ( 8543): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:33:03.590 I/ACodec  ( 8543): setupVideoEncoder succeeded
+11-19 20:33:03.590 I/ACodec  ( 8543): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:33:03.590 E/OMXNodeInstance( 8543): createInputSurface requires COLOR_FormatSurface (AndroidOpaque) color format
+11-19 20:33:03.590 E/ACodec  ( 8543): [OMX.google.h264.encoder] onCreateInputSurface returning error -38
+11-19 20:33:03.590 W/MediaCodec( 8543): createInputSurface failed, err=-38
+11-19 20:33:03.590 D/ScreenRecord( 8543): failed
+11-19 20:33:04.600 I/OMXClient( 8557): Using client-side OMX mux.
+11-19 20:33:04.610 E/OMXNodeInstance( 8557): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:33:04.610 E/ACodec  ( 8557): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:33:04.610 I/ACodec  ( 8557): setupVideoEncoder succeeded
+11-19 20:33:04.610 I/ACodec  ( 8557): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:33:04.610 E/OMXNodeInstance( 8557): createInputSurface requires COLOR_FormatSurface (AndroidOpaque) color format
+11-19 20:33:04.610 E/ACodec  ( 8557): [OMX.google.h264.encoder] onCreateInputSurface returning error -38
+11-19 20:33:04.610 W/MediaCodec( 8557): createInputSurface failed, err=-38
+11-19 20:33:04.610 D/ScreenRecord( 8557): failed
+11-19 20:33:05.650 I/OMXClient( 8572): Using client-side OMX mux.
+11-19 20:33:05.660 E/OMXNodeInstance( 8572): OMX_SetParameter() failed for StoreMetaDataInBuffers: 0x80001001
+11-19 20:33:05.660 E/ACodec  ( 8572): [OMX.google.h264.encoder] storeMetaDataInBuffers (output) failed w/ err -2147483648
+11-19 20:33:05.660 I/ACodec  ( 8572): setupVideoEncoder succeeded
+11-19 20:33:05.660 I/ACodec  ( 8572): onConfigureComponent: initNativeWindow for video/avc
+11-19 20:33:05.660 E/OMXNodeInstance( 8572): createInputSurface requires COLOR_FormatSurface (AndroidOpaque) color format
+11-19 20:33:05.660 E/ACodec  ( 8572): [OMX.google.h264.encoder] onCreateInputSurface returning error -38
+11-19 20:33:05.660 W/MediaCodec( 8572): createInputSurface failed, err=-38
+11-19 20:33:05.660 D/ScreenRecord( 8572): failed
+11-19 20:33:21.250 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [175280]
+11-19 20:33:21.370 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [177008]
+11-19 20:33:21.500 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [178736]
+11-19 20:33:21.600 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [181280]
+11-19 20:33:21.730 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [183008]
+11-19 20:33:21.850 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [184736]
+11-19 20:33:21.970 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [187280]
+11-19 20:33:22.120 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [189008]
+11-19 20:33:22.230 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [190736]
+11-19 20:33:22.360 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [193280]
+11-19 20:33:22.480 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [195008]
+11-19 20:33:22.590 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [196736]
+11-19 20:33:22.710 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [199280]
+11-19 20:33:22.850 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [201008]
+11-19 20:33:22.980 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [202736]
+11-19 20:33:23.090 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [205280]
+11-19 20:33:24.790 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [207008]
+11-19 20:33:24.920 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [208736]
+11-19 20:33:25.050 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [211280]
+11-19 20:33:25.190 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [213008]
+11-19 20:33:25.320 D/Tcc317X (  174): # [1][FSCAN] channel set [0], Frequency [214736]
