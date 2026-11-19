@@ -1,0 +1,593 @@
+<title>5W Screencap UI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column of documentation around two 1280x480dp car-screen frames (the Gen5W display at 1.5x), scaled to fit. Single dark look on purpose: it mocks a head unit at night. */
+:root {
+  color-scheme: dark;
+  /* page */
+  --page: #0b0d10; --ink: #e8eaed; --sub: #959ba4; --muted: #646a73; --rule: #20242a; --panel: #13161a;
+  --accent: #3d8bfd;
+  /* car UI (same values as pretendard-systemfont StatusActivity) */
+  --c-bg: #111317; --c-card: #1c1f24; --c-card2: #252931; --c-line: #2a2e35;
+  --c-text: #f2f3f5; --c-sub: #9aa0a8; --c-muted: #6b717a;
+  --c-good: #4ade9b; --c-good-bg: #143326; --c-warn: #f5c451; --c-warn-bg: #3a2f12;
+  --c-rec: #ff4d4f; --c-rec-bg: #3d1a1a;
+  --map-bg: #22262c; --map-road: #3a3f47; --map-green: #35c26b; --map-orange: #f39a2b;
+  --font: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+body { background: var(--page); color: var(--ink); font-family: var(--font); line-height: 1.6; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 56px; }
+header { display: flex; flex-direction: column; gap: 10px; }
+.eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+h1 { font-size: clamp(26px, 4vw, 38px); line-height: 1.2; margin: 0; text-wrap: balance; font-weight: 700; }
+h2 { font-size: 22px; margin: 0; font-weight: 700; text-wrap: balance; }
+h3 { font-size: 16px; margin: 0; font-weight: 700; }
+p { margin: 0; max-width: 68ch; color: var(--sub); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.chip { font-size: 12px; padding: 3px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--sub); font-variant-numeric: tabular-nums; }
+section { display: flex; flex-direction: column; gap: 18px; }
+.sec-head { display: flex; flex-direction: column; gap: 6px; }
+code, .mono { font-family: var(--mono); font-size: .92em; color: var(--ink); }
+
+/* ---- scaled car frames ---- */
+.frame-scroll { overflow-x: auto; }
+.frame { position: relative; min-width: 720px; aspect-ratio: 1280 / 480; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px var(--rule), 0 24px 60px -30px #000; }
+.screen { position: absolute; left: 0; top: 0; width: 1280px; height: 480px; transform-origin: 0 0; background: var(--c-bg); color: var(--c-text); font-family: var(--font); overflow: hidden; user-select: none; -webkit-user-select: none; touch-action: none; }
+.dims { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* OEM status bar drawn over apps (56dp) */
+.statusbar { position: absolute; inset: 0 0 auto 0; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: linear-gradient(#0b0c0f, rgba(11,12,15,.85)); font-size: 20px; z-index: 5; }
+.statusbar .right { display: flex; gap: 18px; align-items: center; color: var(--c-sub); font-size: 17px; }
+.statusbar b { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* ---- screen 1: normal head unit screen (abstract, no real map) ---- */
+.home { position: absolute; inset: 0; display: grid; grid-template-columns: 96px 1fr 420px; gap: 12px; padding: 12px; }
+.dock { background: var(--c-card); border-radius: 22px; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 22px 0; }
+.dock .clock { font-size: 26px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.dock .app { width: 56px; height: 56px; border-radius: 14px; background: var(--c-card2); }
+.dock .app.a1 { background: linear-gradient(135deg, #2fb36b, #1f7ae0); }
+.dock .app.a2 { background: linear-gradient(135deg, #ff5a6a, #8b5cf6); }
+.map { position: relative; border-radius: 22px; background: var(--map-bg); overflow: hidden; }
+.map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.media { display: grid; grid-template-rows: 160px 1fr; gap: 12px; }
+.media .mcard { background: var(--c-card); border-radius: 22px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 70px; }
+.media .round { width: 64px; height: 64px; border-radius: 50%; background: #e9ebee; }
+.media .now { flex-direction: column; gap: 14px; padding: 22px 30px; align-items: stretch; }
+.media .art { width: 200px; height: 104px; border-radius: 10px; background: linear-gradient(135deg, #4a5160, #2a2e35); align-self: center; }
+.media .ttl { font-size: 26px; font-weight: 700; text-align: center; }
+.media .bar { height: 6px; border-radius: 3px; background: #3a3f47; overflow: hidden; }
+.media .bar i { display: block; height: 100%; width: 38%; background: #e9ebee; }
+
+/* floating button (TYPE_SYSTEM_ERROR, layer 22: excluded from captures) */
+.fab { position: absolute; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: rgba(24,27,32,.78); box-shadow: 0 0 0 2px rgba(255,255,255,.85) inset, 0 8px 22px rgba(0,0,0,.55); cursor: grab; z-index: 20; transition: background .2s, box-shadow .2s; }
+.fab:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.fab svg { width: 34px; height: 34px; }
+.fab .time { display: none; font: 500 17px var(--mono); font-variant-numeric: tabular-nums; color: #fff; }
+.fab.rec { background: rgba(214,40,46,.92); box-shadow: 0 0 0 2px rgba(255,255,255,.9) inset, 0 0 0 8px rgba(255,77,79,.22), 0 8px 22px rgba(0,0,0,.55); }
+.fab.rec svg { display: none; }
+.fab.rec .time { display: block; }
+.fab.dragging { cursor: grabbing; transition: none; }
+.fab.snap { transition: left .22s ease, top .22s ease; }
+.fab.press { transform: scale(.94); }
+.fab .ring { position: absolute; inset: -6px; border-radius: 50%; border: 3px solid transparent; }
+.fab.holding .ring { border-color: rgba(255,255,255,.9); clip-path: inset(0 0 0 0); animation: hold .6s linear forwards; }
+@keyframes hold { from { clip-path: polygon(50% 50%, 50% 0, 50% 0); } to { clip-path: polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 0 100%, 0 0, 50% 0); } }
+
+.tab { position: absolute; height: 64px; display: none; align-items: center; gap: 8px; padding: 0 12px; background: rgba(24,27,32,.88); color: #fff; font-size: 28px; line-height: 1; z-index: 20; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.5); border: 0; font-family: var(--font); }
+.tab.right { right: 0; border-radius: 16px 0 0 16px; }
+.tab.left { left: 0; border-radius: 0 16px 16px 0; flex-direction: row-reverse; }
+.tab.show { display: flex; }
+.tab .dot { display: none; width: 12px; height: 12px; border-radius: 50%; background: var(--c-rec); box-shadow: 0 0 0 4px rgba(255,77,79,.25); }
+.tab .t { display: none; font: 500 16px var(--mono); font-variant-numeric: tabular-nums; }
+.tab.rec .dot, .tab.rec .t { display: block; }
+.tab:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 15; }
+.flash.go { animation: flash .35s ease-out; }
+@keyframes flash { 0% { opacity: .55; } 100% { opacity: 0; } }
+
+/* car's own toast (HmgApi.toast) */
+.toast { position: absolute; left: 50%; bottom: 34px; transform: translate(-50%, 16px); background: rgba(30,33,39,.96); border: 1px solid var(--c-line); color: var(--c-text); padding: 14px 26px; border-radius: 14px; font-size: 20px; opacity: 0; transition: opacity .2s, transform .2s; z-index: 30; white-space: nowrap; display: flex; gap: 12px; align-items: center; pointer-events: none; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+.toast small { color: var(--c-sub); font-size: 16px; font-family: var(--mono); }
+
+/* controls under frame 1 */
+.sim { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.sim .lbl { font-size: 13px; color: var(--muted); margin-right: 4px; }
+.btn { font: 500 14px var(--font); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 9px 14px; cursor: pointer; }
+.btn:hover { border-color: #34404f; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn kbd { font-family: var(--mono); font-size: 12px; color: var(--sub); margin-left: 6px; }
+.note { font-size: 13px; color: var(--muted); }
+
+/* ---- screen 2: Launch screen ---- */
+.launch { position: absolute; inset: 56px 0 0 0; display: grid; grid-template-columns: 1fr 330px; }
+.launch .left { padding: 14px 22px 18px 28px; display: grid; grid-template-rows: auto 1fr; gap: 12px; min-width: 0; }
+.lhead { display: flex; align-items: center; gap: 14px; }
+.lhead h4 { margin: 0; font-size: 24px; font-weight: 700; }
+.lhead .ver { color: var(--c-muted); font-size: 16px; font-variant-numeric: tabular-nums; }
+.pill { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; padding: 5px 14px; border-radius: 999px; background: var(--c-good-bg); color: var(--c-good); font-weight: 500; }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pill.rec { background: var(--c-rec-bg); color: var(--c-rec); }
+.grid4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; min-height: 0; }
+.card { background: var(--c-card); border-radius: 18px; padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; }
+.card h5 { margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.card h5 span { font-size: 14px; color: var(--c-muted); font-weight: 400; }
+.row { display: flex; align-items: center; gap: 10px; font-size: 16px; color: var(--c-sub); min-height: 40px; }
+.row > .k { width: 64px; flex: none; }
+.row .grow { flex: 1; }
+.sel { appearance: none; -webkit-appearance: none; font: 500 16px var(--font); color: var(--c-text); background: var(--c-card2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239aa0a8' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid var(--c-line); border-radius: 10px; padding: 7px 34px 7px 12px; min-height: 40px; cursor: pointer; }
+.sel:focus-visible, .cbtn:focus-visible, .sw:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cbtn { font: 700 16px var(--font); color: #fff; background: var(--accent); border: 0; border-radius: 10px; padding: 0 18px; min-height: 42px; cursor: pointer; white-space: nowrap; }
+.cbtn.ghost { background: var(--c-card2); color: var(--c-text); border: 1px solid var(--c-line); }
+.cbtn:disabled { opacity: .5; cursor: default; }
+.sw { position: relative; width: 56px; height: 32px; border-radius: 16px; background: #3a3f47; border: 0; cursor: pointer; flex: none; transition: background .15s; }
+.sw::after { content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.sw[aria-checked="true"] { background: var(--accent); }
+.sw[aria-checked="true"]::after { transform: translateX(24px); }
+.sw:disabled { opacity: .55; cursor: default; }
+.hint { font-size: 14px; color: var(--c-muted); line-height: 1.4; }
+.hint.warn { color: var(--c-warn); }
+
+.captest { display: grid; grid-template-columns: 196px 1fr; gap: 14px; align-items: center; }
+.thumb { position: relative; width: 196px; aspect-ratio: 1280/480; border-radius: 8px; background: var(--c-card2); overflow: hidden; border: 1px solid var(--c-line); }
+.thumb .mini { position: absolute; inset: 0; display: grid; grid-template-columns: 14px 1fr 62px; gap: 2px; padding: 2px; opacity: 0; transition: opacity .3s; }
+.thumb.done .mini { opacity: 1; }
+.thumb .mini i { border-radius: 3px; background: var(--c-card); }
+.thumb .mini i.m { background: var(--map-bg) linear-gradient(160deg, transparent 46%, var(--map-green) 47% 49%, transparent 50%), var(--map-bg); }
+.thumb .empty { position: absolute; inset: 0; display: grid; place-items: center; font-size: 13px; color: var(--c-muted); }
+.thumb.done .empty { display: none; }
+.result { display: flex; flex-direction: column; gap: 4px; font-size: 15px; color: var(--c-sub); }
+.result b { color: var(--c-good); font-weight: 700; }
+.steps { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px; font-size: 15px; color: var(--c-muted); }
+.steps li { list-style: none; display: flex; align-items: center; gap: 8px; }
+.steps li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 2px solid currentColor; flex: none; }
+.steps li.run { color: var(--c-text); }
+.steps li.run::before { border-color: var(--accent); border-right-color: transparent; animation: spin .8s linear infinite; }
+.steps li.ok { color: var(--c-sub); }
+.steps li.ok::before { background: var(--c-good); border-color: var(--c-good); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.steps { margin: 0; padding: 0; }
+
+.qrside { border-left: 1px solid var(--c-line); padding: 22px 26px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.qrbox { width: 210px; height: 210px; background: #fff; border-radius: 12px; padding: 10px; display: grid; place-items: center; }
+.qrbox svg { width: 100%; height: 100%; display: block; }
+.qrside h6 { margin: 0; font-size: 19px; font-weight: 700; }
+.qrside p { color: var(--c-sub); font-size: 14px; line-height: 1.45; max-width: none; }
+.qrside .fw { font-family: var(--mono); font-size: 12px; color: var(--c-muted); }
+
+/* ---- spec tables ---- */
+.specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+.spec { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+td { color: var(--sub); }
+td:first-child { color: var(--ink); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 6px; background: #1b2433; color: #8fb8ff; }
+.tag.y { background: #2e2710; color: var(--c-warn); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Gen5W · NEMESIS + HMG-API mod</div>
+    <h1>5W Screencap 화면 설계 초안</h1>
+    <p>Gen5W 헤드유닛 화면(1920×720px, 1280×480dp) 비율 그대로 그렸습니다. 아래 두 화면은 직접 조작할 수 있습니다. 플로팅 버튼을 드래그하거나 화면 밖으로 밀어 보세요.</p>
+    <div class="meta">
+      <span class="chip">기준 차량 니로 HEV · S5W_M V039</span>
+      <span class="chip">Android 4.4.2 · 240dpi</span>
+      <span class="chip">상단 56dp는 차량 상태바가 덮음</span>
+    </div>
+  </header>
+
+  <!-- ===================== 1. floating button ===================== -->
+  <section aria-labelledby="s1">
+    <div class="sec-head">
+      <h2 id="s1">1. 평소 화면 + 플로팅 버튼</h2>
+      <p>탭하면 캡처, 0.6초 길게 누르면 녹화 시작, 녹화 중 탭하면 정지합니다. 드래그해서 놓으면 가까운 좌우 가장자리에 붙고, 절반 넘게 화면 밖으로 밀면 작은 <code>‹</code> 태그로 접힙니다. 버튼은 캡처 대상 레이어 위에 있어서 사진과 영상에는 찍히지 않습니다.</p>
+    </div>
+    <div class="frame-scroll">
+      <div class="frame" id="f1">
+        <div class="screen" id="scr1">
+          <div class="home">
+            <div class="dock"><div class="clock">8:52</div><div class="app a1"></div><div class="app a2"></div><div class="app"></div></div>
+            <div class="map" aria-hidden="true">
+              <svg viewBox="0 0 700 456" preserveAspectRatio="none">
+                <rect width="700" height="456" fill="var(--map-bg)"/>
+                <g stroke="var(--map-road)" stroke-width="10" fill="none">
+                  <path d="M0 120 L700 60"/><path d="M0 300 L700 230"/><path d="M120 0 L240 456"/><path d="M430 0 L520 456"/><path d="M0 420 L700 360"/>
+                </g>
+                <path d="M-10 380 C 180 340, 300 330, 700 250" stroke="var(--map-green)" stroke-width="9" fill="none"/>
+                <path d="M520 0 C 560 120, 600 160, 700 170" stroke="var(--map-orange)" stroke-width="7" fill="none"/>
+                <circle cx="330" cy="330" r="30" fill="#fff"/><circle cx="330" cy="330" r="24" fill="#2b6ff2"/>
+                <path d="M330 314 L342 340 L330 334 L318 340 Z" fill="#fff"/>
+              </svg>
+            </div>
+            <div class="media">
+              <div class="mcard"><div class="round"></div><div class="round"></div></div>
+              <div class="mcard now"><div class="art"></div><div class="ttl">재생 중인 곡</div><div class="bar"><i></i></div></div>
+            </div>
+          </div>
+          <div class="flash" id="flash"></div>
+          <div class="fab" id="fab" role="button" tabindex="0" aria-label="화면 캡처 버튼. 탭: 캡처, 길게: 녹화">
+            <span class="ring"></span>
+            <svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="12" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="17" cy="17" r="6" fill="#fff"/></svg>
+            <span class="time" id="fabTime">00:00</span>
+          </div>
+          <button class="tab right" id="tab" aria-label="플로팅 버튼 다시 꺼내기"><span class="dot"></span><span class="t" id="tabTime">00:00</span><span class="g" id="tabGlyph">‹</span></button>
+          <div class="toast" id="toast1" role="status"></div>
+        </div>
+      </div>
+    </div>
+    <div class="dims"><span>1280 × 480 dp</span><span id="scaleNote"></span></div>
+    <div class="sim">
+      <span class="lbl">하드웨어 버튼 시뮬레이션 (설정: 운전대 ☆)</span>
+      <button class="btn" id="hwShort">☆ 1회 누름<kbd>캡처</kbd></button>
+      <button class="btn" id="hwHold">☆ 길게 누름<kbd>녹화 시작/정지</kbd></button>
+      <button class="btn" id="resetFab">버튼 위치 초기화</button>
+    </div>
+    <p class="note">하드웨어 버튼은 HMG-API가 system_server에서 키를 받아 처리합니다. "원래 기능 막기"가 켜져 있으면 ☆의 원래 동작은 실행되지 않습니다.</p>
+  </section>
+
+  <!-- ===================== 2. Launch screen ===================== -->
+  <section aria-labelledby="s2">
+    <div class="sec-head">
+      <h2 id="s2">2. Launch 화면 (설정 · 캡처 테스트 · 진단)</h2>
+      <p>NEMESIS Manager의 Launch 또는 앱 메뉴 타일로 엽니다. 왼쪽은 네 개의 카드, 오른쪽은 이 차의 정보를 채운 이슈 신고 QR입니다. 구성은 pretendard-systemfont 상태 화면과 같습니다.</p>
+    </div>
+    <div class="frame-scroll">
+      <div class="frame" id="f2">
+        <div class="screen" id="scr2">
+          <div class="statusbar"><b>8:52</b><div class="right"><span>5G</span><span>USB</span></div></div>
+          <div class="launch">
+            <div class="left">
+              <div class="lhead">
+                <h4>5W Screencap</h4><span class="ver">v0.1.0</span>
+                <span class="pill" id="svc">서비스 동작 중</span>
+              </div>
+              <div class="grid4">
+                <!-- capture test -->
+                <div class="card">
+                  <h5>캡처 테스트 <span>이 차에서 캡처가 되는지 확인</span></h5>
+                  <div class="captest">
+                    <div class="thumb" id="thumb"><div class="mini"><i></i><i class="m"></i><i></i></div><div class="empty">아직 캡처하지 않음</div></div>
+                    <div class="result" id="capRes">
+                      <button class="cbtn" id="capBtn">테스트 캡처</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- buttons -->
+                <div class="card">
+                  <h5>버튼 <span>HMG-API 버튼 연결</span></h5>
+                  <div class="row"><span class="k">캡처</span>
+                    <select class="sel grow" id="capKey" aria-label="캡처 버튼">
+                      <option>운전대 ☆</option><option>헤드유닛 ☆</option><option>RADIO</option><option>MEDIA</option><option>MODE (운전대)</option><option>사용 안 함</option>
+                    </select>
+                    <select class="sel" id="capPress" aria-label="캡처 누름 방식"><option value="short">1회 누름</option><option value="hold">길게 누름</option><option value="double">연속 2회</option></select>
+                  </div>
+                  <div class="row"><span class="k">녹화</span>
+                    <select class="sel grow" id="recKey" aria-label="녹화 버튼">
+                      <option>운전대 ☆</option><option>헤드유닛 ☆</option><option>RADIO</option><option>MEDIA</option><option>MODE (운전대)</option><option>사용 안 함</option>
+                    </select>
+                    <select class="sel" id="recPress" aria-label="녹화 누름 방식"><option value="short">1회 누름</option><option value="hold" selected>길게 누름</option><option value="double">연속 2회</option></select>
+                  </div>
+                  <div class="row"><span class="grow">버튼의 원래 기능 막기</span><button class="sw" id="swStock" role="switch" aria-checked="true" aria-label="원래 기능 막기"></button></div>
+                  <div class="hint" id="pressHint">1회 누름은 바로 실행됩니다. 길게 누름(0.8초)은 항상 원래의 길게 누름 기능을 대신합니다.</div>
+                </div>
+                <!-- recording -->
+                <div class="card">
+                  <h5>녹화 <span>USB 남은 공간 14.6GB · 약 24시간</span></h5>
+                  <div class="row"><span class="k">화질</span>
+                    <select class="sel grow" id="quality" aria-label="녹화 화질">
+                      <option>표준 · 1024×384 · 약 12fps · 10MB/분</option>
+                      <option>선명 · 1280×480 · 약 8fps · 12MB/분</option>
+                      <option>원본 · 1920×720 · 약 3fps · 12MB/분</option>
+                    </select>
+                  </div>
+                  <div class="row"><span class="grow">USB 연결 시 자동 녹화</span><button class="sw" id="swAuto" role="switch" aria-checked="false" aria-label="USB 연결 시 자동 녹화"></button></div>
+                  <div class="row"><span class="grow">플로팅 버튼 표시</span><button class="sw" id="swFab" role="switch" aria-checked="true" aria-label="플로팅 버튼 표시"></button></div>
+                </div>
+                <!-- diagnostics -->
+                <div class="card">
+                  <h5>진단 <span>문제 신고에 첨부할 정보</span></h5>
+                  <div class="row"><button class="cbtn ghost" id="diagBtn">진단 실행</button><span class="hint" id="diagState">약 1분 · USB의 5W-Screencap/diag 에 저장</span></div>
+                  <ul class="steps" id="steps">
+                    <li>차량 정보</li><li>USB 마운트</li><li>캡처 경로</li><li>인코더</li><li>버튼 연결</li><li>오버레이 레이어</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="qrside">
+              <div class="qrbox" id="qr" aria-label="이슈 신고 QR 코드"></div>
+              <h6>문제 신고 · 기능 제안</h6>
+              <p>휴대폰으로 스캔하면 GitHub 이슈 작성 화면이 열립니다. 이 차의 펌웨어와 버전이 미리 채워집니다. 진단을 실행했다면 USB의 SUMMARY.txt를 첨부해 주세요.</p>
+              <div class="fw">DEPEHEV.KOR.S5W_M.V039.001.260902</div>
+            </div>
+          </div>
+          <div class="toast" id="toast2" role="status"></div>
+        </div>
+      </div>
+    </div>
+    <div class="dims"><span>1280 × 480 dp · 상단 56dp 차량 상태바</span><span>QR: 예시 주소</span></div>
+  </section>
+
+  <!-- ===================== 3. behaviour spec ===================== -->
+  <section aria-labelledby="s3">
+    <div class="sec-head">
+      <h2 id="s3">3. 동작 규칙</h2>
+      <p>화면에 보이지 않는 부분입니다. 운전 중에는 버튼과 소리만으로 조작이 끝나도록 정했습니다.</p>
+    </div>
+    <div class="specs">
+      <div class="spec">
+        <h3>하드웨어 버튼</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>방식</th><th>동작</th><th>원래 기능</th></tr></thead>
+          <tbody>
+            <tr><td>1회 누름</td><td>손을 뗄 때 바로 실행</td><td>막기 켜면 실행 안 됨 <span class="tag">HMG-API replace</span></td></tr>
+            <tr><td>길게 누름</td><td>0.8초에 실행</td><td>원래의 길게 누름만 대신함. 짧게 누르면 원래 기능</td></tr>
+            <tr><td>연속 2회</td><td>0.4초 안에 두 번째 누름</td><td>항상 막음. 첫 누름이 0.4초 늦게 판정됨 <span class="tag y">자체 구현</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="spec">
+        <h3>피드백</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>상황</th><th>소리</th><th>화면</th></tr></thead>
+          <tbody>
+            <tr><td>캡처</td><td>셔터음</td><td>저장 후 토스트 "캡처 저장됨"</td></tr>
+            <tr><td>녹화 시작</td><td>짧은 비프 2회</td><td>토스트, 플로팅 버튼이 빨간색 + 시간</td></tr>
+            <tr><td>녹화 정지</td><td>긴 비프 1회</td><td>토스트 "녹화 저장됨 · 3분 12초"</td></tr>
+            <tr><td>USB 없음 / 공간 부족</td><td>경고음</td><td>토스트, 내부 저장소에는 쓰지 않음</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="spec">
+        <h3>저장</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>항목</th><th>규칙</th></tr></thead>
+          <tbody>
+            <tr><td>캡처</td><td><code>5W-Screencap/Screenshots/20261119_205222.jpg</code> (1920×720, JPEG 90)</td></tr>
+            <tr><td>녹화</td><td><code>Recordings/20261119_205222_001.mp4</code>, 2분 단위 세그먼트</td></tr>
+            <tr><td>시계 미설정</td><td>2015년으로 나오면 <code>boot0042_001.mp4</code>처럼 번호로</td></tr>
+            <tr><td>자동 녹화</td><td>USB 연결 시 시작, 분리·시동 꺼짐 시 세그먼트 닫기</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="spec">
+        <h3>캡처에서 빠지는 것</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>창</th><th>레이어</th><th>캡처</th></tr></thead>
+          <tbody>
+            <tr><td>앱, 토스트, 상태바</td><td>2 ~ 20</td><td>찍힘</td></tr>
+            <tr><td>플로팅 버튼·타이머</td><td>22 (SYSTEM_ERROR)</td><td>빠짐: <code>screenshot(w, h, 0, 220999)</code></td></tr>
+            <tr><td>후방카메라</td><td>별도 하드웨어 레이어</td><td>찍히지 않을 가능성 높음 <span class="tag y">미검증</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var W = 1280, H = 480;
+
+  // ---- scale the 1280x480 screens to their frames ----
+  function fit(frameId, scrId) {
+    var f = document.getElementById(frameId), s = document.getElementById(scrId);
+    var apply = function () { s.style.transform = "scale(" + (f.clientWidth / W) + ")"; };
+    apply();
+    if (window.ResizeObserver) new ResizeObserver(apply).observe(f); else window.addEventListener("resize", apply);
+  }
+  fit("f1", "scr1"); fit("f2", "scr2");
+  function scaleOf(frameId) { return document.getElementById(frameId).clientWidth / W; }
+
+  // ---- toasts ----
+  function toast(id, text, sub) {
+    var t = document.getElementById(id);
+    t.innerHTML = "";
+    t.appendChild(document.createTextNode(text));
+    if (sub) { var s = document.createElement("small"); s.textContent = sub; t.appendChild(s); }
+    t.classList.add("on");
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove("on"); }, 2600);
+  }
+  function stamp() {
+    var d = new Date(), p = function (n) { return (n < 10 ? "0" : "") + n; };
+    return "" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + "_" + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+  }
+
+  // ---- floating button ----
+  var SIZE = 72, MARGIN = 16, TOP = 70;
+  var fab = document.getElementById("fab"), tab = document.getElementById("tab");
+  var flash = document.getElementById("flash");
+  var pos = { x: W - SIZE - MARGIN, y: 200 }, docked = null;
+  var rec = false, recStart = 0, timer = null;
+
+  function place(snap) {
+    fab.classList.toggle("snap", !!snap);
+    fab.style.left = pos.x + "px"; fab.style.top = pos.y + "px";
+  }
+  function clampY(y) { return Math.max(TOP, Math.min(H - SIZE - 12, y)); }
+  place(false);
+
+  function fmt(ms) { var s = Math.floor(ms / 1000); var m = Math.floor(s / 60); s = s % 60; return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s; }
+  function tick() {
+    var t = fmt(Date.now() - recStart);
+    document.getElementById("fabTime").textContent = t;
+    document.getElementById("tabTime").textContent = t;
+  }
+  function setRec(on) {
+    rec = on;
+    fab.classList.toggle("rec", on);
+    tab.classList.toggle("rec", on);
+    var svc = document.getElementById("svc");
+    svc.classList.toggle("rec", on);
+    svc.textContent = on ? "녹화 중" : "서비스 동작 중";
+    if (on) {
+      recStart = Date.now(); tick(); timer = setInterval(tick, 500);
+      toast("toast1", "녹화를 시작합니다", "1024×384 · 표준");
+    } else {
+      clearInterval(timer);
+      toast("toast1", "녹화 저장됨 · " + fmt(Date.now() - recStart).replace(":", "분 ") + "초", "Recordings/" + stamp() + "_001.mp4");
+    }
+  }
+  function capture() {
+    flash.classList.remove("go"); void flash.offsetWidth; flash.classList.add("go");
+    setTimeout(function () { toast("toast1", "캡처 저장됨", "Screenshots/" + stamp() + ".jpg"); }, 520);
+  }
+
+  function dock(side) {
+    docked = side;
+    fab.style.display = "none";
+    tab.className = "tab show " + side + (rec ? " rec" : "");
+    tab.style.top = (pos.y + 4) + "px";
+    document.getElementById("tabGlyph").textContent = side === "right" ? "‹" : "›";
+  }
+  function undock() {
+    var side = docked; docked = null;
+    tab.className = "tab " + (side || "right") + (rec ? " rec" : "");
+    fab.style.display = "";
+    pos.x = side === "left" ? -SIZE : W;
+    place(false);
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      pos.x = side === "left" ? MARGIN : W - SIZE - MARGIN; place(true);
+    }); });
+  }
+  tab.addEventListener("click", undock);
+
+  var drag = null, holdT = null, held = false;
+  fab.addEventListener("pointerdown", function (e) {
+    fab.setPointerCapture(e.pointerId);
+    var s = scaleOf("f1");
+    drag = { sx: e.clientX, sy: e.clientY, ox: pos.x, oy: pos.y, s: s, moved: false };
+    held = false;
+    fab.classList.add("press");
+    if (!rec) {
+      fab.classList.add("holding");
+      holdT = setTimeout(function () { held = true; fab.classList.remove("holding"); setRec(true); }, 600);
+    }
+  });
+  fab.addEventListener("pointermove", function (e) {
+    if (!drag) return;
+    var dx = (e.clientX - drag.sx) / drag.s, dy = (e.clientY - drag.sy) / drag.s;
+    if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 8) {
+      drag.moved = true; clearTimeout(holdT); fab.classList.remove("holding", "press"); fab.classList.add("dragging");
+    }
+    if (drag.moved) { pos.x = drag.ox + dx; pos.y = clampY(drag.oy + dy); place(false); }
+  });
+  function end() {
+    if (!drag) return;
+    clearTimeout(holdT);
+    fab.classList.remove("holding", "press", "dragging");
+    var d = drag; drag = null;
+    if (d.moved) {
+      var cx = pos.x + SIZE / 2;
+      if (cx < 0) return dock("left");
+      if (cx > W) return dock("right");
+      pos.x = cx < W / 2 ? MARGIN : W - SIZE - MARGIN; place(true);
+    } else if (!held) {
+      if (rec) setRec(false); else capture();
+    }
+  }
+  fab.addEventListener("pointerup", end);
+  fab.addEventListener("pointercancel", end);
+  fab.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (rec) setRec(false); else capture(); }
+  });
+
+  document.getElementById("hwShort").addEventListener("click", capture);
+  document.getElementById("hwHold").addEventListener("click", function () { setRec(!rec); });
+  document.getElementById("resetFab").addEventListener("click", function () {
+    if (docked) { tab.className = "tab right" + (rec ? " rec" : ""); fab.style.display = ""; docked = null; }
+    pos = { x: W - SIZE - MARGIN, y: 200 }; place(true);
+  });
+
+  // ---- launch screen ----
+  function sw(id, onChange) {
+    var b = document.getElementById(id);
+    b.addEventListener("click", function () {
+      if (b.disabled) return;
+      var v = b.getAttribute("aria-checked") !== "true";
+      b.setAttribute("aria-checked", String(v));
+      if (onChange) onChange(v);
+    });
+    return b;
+  }
+  sw("swAuto", function (v) { toast("toast2", v ? "USB를 연결하면 녹화를 시작합니다" : "자동 녹화를 껐습니다"); });
+  sw("swFab", function (v) { fab.style.visibility = v ? "" : "hidden"; tab.style.visibility = v ? "" : "hidden"; toast("toast2", v ? "플로팅 버튼을 표시합니다" : "플로팅 버튼을 숨겼습니다"); });
+  var stock = sw("swStock");
+
+  function pressHint() {
+    var c = document.getElementById("capPress").value, r = document.getElementById("recPress").value;
+    var hint = document.getElementById("pressHint");
+    var dbl = c === "double" || r === "double";
+    if (dbl) {
+      stock.setAttribute("aria-checked", "true"); stock.disabled = true;
+      hint.className = "hint warn";
+      hint.textContent = "연속 2회를 쓰는 버튼은 원래 기능이 항상 꺼집니다. 한 번만 누르면 0.4초 뒤에 1회 누름으로 처리됩니다.";
+    } else {
+      stock.disabled = false;
+      hint.className = "hint";
+      hint.textContent = "1회 누름은 바로 실행됩니다. 길게 누름(0.8초)은 항상 원래의 길게 누름 기능을 대신합니다.";
+    }
+  }
+  document.getElementById("capPress").addEventListener("change", pressHint);
+  document.getElementById("recPress").addEventListener("change", pressHint);
+
+  document.getElementById("capBtn").addEventListener("click", function () {
+    var b = this; b.disabled = true; b.textContent = "캡처 중…";
+    setTimeout(function () {
+      document.getElementById("thumb").classList.add("done");
+      var r = document.getElementById("capRes");
+      r.innerHTML = "<b>정상</b><span>1920×720 · 0.48초 · 플로팅 버튼 제외됨</span><span>Screenshots/" + stamp() + ".jpg</span>";
+      var again = document.createElement("button");
+      again.className = "cbtn ghost"; again.textContent = "다시 캡처"; again.style.alignSelf = "flex-start";
+      again.addEventListener("click", function () { toast("toast2", "캡처 저장됨", "Screenshots/" + stamp() + ".jpg"); });
+      r.appendChild(again);
+    }, 650);
+  });
+
+  document.getElementById("diagBtn").addEventListener("click", function () {
+    var b = this, items = document.querySelectorAll("#steps li"), i = 0;
+    b.disabled = true; b.textContent = "진단 중…";
+    document.getElementById("diagState").textContent = "평소 1분 이내 · 화면을 끄지 마세요";
+    items.forEach(function (li) { li.className = ""; });
+    (function next() {
+      if (i > 0) items[i - 1].className = "ok";
+      if (i === items.length) {
+        b.disabled = false; b.textContent = "다시 실행";
+        document.getElementById("diagState").textContent = "완료 · USB의 5W-Screencap/diag/SUMMARY.txt";
+        toast("toast2", "진단 완료", "diag/SUMMARY.txt");
+        return;
+      }
+      items[i].className = "run"; i++;
+      setTimeout(next, 700);
+    })();
+  });
+
+  // ---- QR (example address; the repo is private for now) ----
+  var url = "https://github.com/WisdomIT/5w-screencap/issues/new?template=bug_report.yml"
+    + "&firmware=" + encodeURIComponent("DEPEHEV.KOR.S5W_M.V039.001.260902")
+    + "&version=0.1.0&nemesis=1.16.7";
+  var box = document.getElementById("qr");
+  try {
+    var q = qrcode(0, "M"); q.addData(url); q.make();
+    var n = q.getModuleCount(), d = "";
+    for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (q.isDark(r, c)) d += "M" + c + " " + r + "h1v1h-1z";
+    box.innerHTML = '<svg viewBox="0 0 ' + n + " " + n + '" shape-rendering="crispEdges"><path d="' + d + '" fill="#111317"/></svg>';
+  } catch (e) {
+    box.textContent = "QR";
+    box.style.color = "#111317";
+  }
+})();
+</script>
