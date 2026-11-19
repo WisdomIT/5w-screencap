@@ -25,7 +25,8 @@ import java.io.OutputStream;
  *   capture                 -> {"ok":true,"file":"Screenshots/…jpg","ms":480,...} or {"ok":false,"error":"no_usb"}
  *   record start <quality>  -> status; record stop -> status; record toggle <quality> -> status
  *   overlay                 -> the floating button appeared or went: read its layer again
- *   diag <settings-json>    -> {"ok":true,"dir":"diag/…"}: SUMMARY.txt for an issue report
+ *   diag-start <settings-json> -> starts the diagnostics in the background (SUMMARY.txt for an issue report)
+ *   diag-status             -> where they are: state, stage, each stage's result (Diag.status)
  *
  * Only root, system and the mod's own app may connect (checked by the peer's uid).
  */
@@ -105,8 +106,27 @@ public final class Main implements Recorder.Listener {
             if ("stop".equals(a[1])) return recordStop();
             if ("toggle".equals(a[1])) return isRecording() ? recordStop() : recordStart(q);
         }
-        if ("diag".equals(cmd)) return new Diag(screen, store, version).run(a.length >= 2 ? line.substring(5) : "{}");
+        if ("diag-start".equals(cmd)) return diagStart(line.length() > 11 ? line.substring(11) : "{}");
+        if ("diag-status".equals(cmd)) {
+            Diag d;
+            synchronized (lock) { d = diag; }
+            return d == null ? ok().put("state", "idle") : d.status();
+        }
         return fail("unknown_command");
+    }
+
+    // ---- diagnostics ----
+
+    private Diag diag;
+
+    JSONObject diagStart(String settingsJson) throws Exception {
+        synchronized (lock) {
+            if (diag != null && diag.running()) return diag.status();
+            if (store.root() == null) return fail("no_usb");
+            diag = new Diag(screen, store, version, settingsJson);
+            diag.start();
+            return diag.status();
+        }
     }
 
     // ---- capture ----

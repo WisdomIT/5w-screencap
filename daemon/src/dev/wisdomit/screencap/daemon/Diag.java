@@ -13,83 +13,175 @@ import java.io.Writer;
  * The Launch screen's "진단 실행": a short SUMMARY.txt for an issue report, in
  * 5W-Screencap/diag/<name>/ on the stick. No serial numbers, addresses, file names
  * or screen images: only versions, sizes, timings and pass/fail.
+ *
+ * It runs in the background, one stage at a time (STAGES), and status() says where it is, so
+ * the Launch screen can show the stages as they go (as pretendard-systemfont's status screen
+ * does): the stage running now, each finished stage's result and one line about it.
  */
-final class Diag {
+final class Diag implements Runnable {
+    /** shown by the Launch screen in this order */
+    static final String[] STAGES = { "버전 정보", "화면 정보", "화면 캡처", "인코더", "녹화 시험", "USB", "로그", "저장" };
+
     private final Screen screen;
     private final Store store;
-    private final String version;
+    private final String version, settingsJson;
     private final StringBuilder out = new StringBuilder();
+    private final long startedAt = System.currentTimeMillis();
 
-    Diag(Screen screen, Store store, String version) {
+    // progress, read by status() from the socket threads
+    private volatile String state = "running";   // running, done, error
+    private volatile int stage = -1;               // index in STAGES, -1 before the first
+    private volatile String detail = "", error, dirName;
+    private volatile long endedAt;
+    private final String[] result = new String[STAGES.length];   // "ok" / "fail", null while not run
+    private final String[] note = new String[STAGES.length];     // one line about the stage
+    private boolean failed;                                       // the stage running now
+
+    Diag(Screen screen, Store store, String version, String settingsJson) {
         this.screen = screen;
         this.store = store;
         this.version = version;
+        this.settingsJson = settingsJson;
     }
 
-    JSONObject run(String settingsJson) throws Exception {
-        File base = store.dir("diag");
-        if (base == null) return Main.fail("no_usb");
-        File dir = Names.unique(base, store.nextName(), "");
-        if (!dir.mkdirs()) return Main.fail("write_failed");
+    void start() {
+        new Thread(this, "diag").start();
+    }
 
-        section("versions");
-        line("5w-screencap", version);
-        line("firmware", Sh.prop("ro.build.product2"));
-        line("platform", Sh.prop("ro.board.platform"));
-        line("android", Sh.prop("ro.build.version.release"));
-        line("hmgapi", first(Sh.run(5000, "/system/bin/hmgapid", "version")));
-        line("nemesis", first(Sh.run(5000, "/system/xbin/nemesis", "version")));
+    boolean running() {
+        return "running".equals(state);
+    }
 
-        section("settings");
-        out.append(settingsJson).append('\n');
-
-        section("display");
-        line("wm size", first(Sh.run(5000, "/system/bin/wm", "size")));
-        int layer = screen.overlayLayer();
-        line("overlay layer", layer > 0 ? String.valueOf(layer) : "none (floating button off or not found)");
-
-        section("capture");
-        for (int[] s : new int[][] { { 1920, 720 }, { 1024, 384 } }) {
-            long t0 = System.nanoTime();
-            Bitmap b = screen.grab(s[0], s[1]);
-            long ms = (System.nanoTime() - t0) / 1000000;
-            line(s[0] + "x" + s[1], b == null ? "FAIL (null)" : "ok " + ms + " ms" + (screen.excludesOverlay() ? ", overlay excluded" : ""));
-            if (b != null) b.recycle();
+    synchronized JSONObject status() throws Exception {
+        JSONObject j = Main.ok().put("state", state).put("stage", stage).put("total", STAGES.length)
+                .put("detail", detail)
+                .put("elapsed", ((endedAt > 0 ? endedAt : System.currentTimeMillis()) - startedAt) / 1000)
+                .put("started", startedAt);
+        org.json.JSONArray st = new org.json.JSONArray();
+        for (int i = 0; i < STAGES.length; i++) {
+            st.put(new JSONObject().put("name", STAGES[i])
+                    .put("result", result[i] == null ? JSONObject.NULL : result[i])
+                    .put("note", note[i] == null ? "" : note[i]));
         }
+        j.put("stages", st);
+        if (error != null) j.put("error", error);
+        if (dirName != null) j.put("dir", "diag/" + dirName);
+        return j;
+    }
 
-        section("encoder");
-        line(Recorder.CODEC, encoderTest());
+    @Override
+    public void run() {
+        try {
+            File base = store.dir("diag");
+            if (base == null) { finish("error", "no_usb"); return; }
+            File dir = Names.unique(base, store.nextName(), "");
+            if (!dir.mkdirs()) { finish("error", "write_failed"); return; }
+            dirName = dir.getName();
 
-        section("recording self-test (every file must close with an index: moov)");
-        line("1.5 s segments", recordTest(1500, 5000));
+            begin(0, "펌웨어와 HMG-API·NEMESIS 버전");
+            section("versions");
+            line("5w-screencap", version);
+            line("firmware", Sh.prop("ro.build.product2"));
+            line("platform", Sh.prop("ro.board.platform"));
+            line("android", Sh.prop("ro.build.version.release"));
+            String hmgapi = first(Sh.run(5000, "/system/bin/hmgapid", "version"));
+            line("hmgapi", hmgapi);
+            line("nemesis", first(Sh.run(5000, "/system/xbin/nemesis", "version")));
+            section("settings");
+            out.append(settingsJson).append('\n');
+            end(0, hmgapi);
 
-        section("usb");
-        line("folder", String.valueOf(store.root()));
-        File root = store.root();
-        line("free", root == null ? "-" : (Store.free(root) / (1024 * 1024)) + " MB");
-        String mounts = Sh.run(3000, "/system/bin/cat", "/proc/mounts");
-        if (mounts != null) for (String l : mounts.split("\n")) if (l.contains("usb")) out.append(l).append('\n');
+            begin(1, "화면 크기와 플로팅 버튼 레이어");
+            section("display");
+            String size = first(Sh.run(5000, "/system/bin/wm", "size"));
+            line("wm size", size);
+            int layer = screen.overlayLayer();
+            line("overlay layer", layer > 0 ? String.valueOf(layer) : "none (floating button off or not found)");
+            end(1, size.replace("Physical size: ", "") + (layer > 0 ? " · 버튼 레이어 " + layer : " · 플로팅 버튼 없음"));
 
-        section("service log (last 80 lines)");
-        String log = Sh.run(3000, "/system/bin/cat", "/data/hmgapi/logs/5w-screencap/screencapd.log");
-        if (log != null) {
-            String[] lines = log.split("\n");
-            for (int i = Math.max(0, lines.length - 80); i < lines.length; i++) out.append(lines[i]).append('\n');
+            begin(2, "1920×720, 1024×384로 찍어 보는 중");
+            section("capture");
+            String cap = "";
+            for (int[] sz : new int[][] { { 1920, 720 }, { 1024, 384 } }) {
+                long t0 = System.nanoTime();
+                Bitmap b = screen.grab(sz[0], sz[1]);
+                long ms = (System.nanoTime() - t0) / 1000000;
+                line(sz[0] + "x" + sz[1], b == null ? "FAIL (null)" : "ok " + ms + " ms" + (screen.excludesOverlay() ? ", overlay excluded" : ""));
+                if (b == null) failed = true;
+                else b.recycle();
+                if (cap.isEmpty()) cap = b == null ? "화면을 가져오지 못함" : ms + "ms" + (screen.excludesOverlay() ? " · 버튼 제외" : "");
+            }
+            end(2, cap);
+
+            begin(3, "2초 동안 인코딩해 보는 중");
+            section("encoder");
+            String enc = encoderTest();
+            line(Recorder.CODEC, enc);
+            if (enc.startsWith("FAIL")) failed = true;
+            end(3, enc.startsWith("ok ") ? enc.substring(enc.indexOf('(') + 1, enc.indexOf(')')) : "실패");
+
+            begin(4, "5초 녹화, 1.5초마다 파일을 나눠 모두 닫히는지 확인하는 중");
+            section("recording self-test (every file must close with an index: moov)");
+            String rec = recordTest(1500, 5000);
+            line("1.5 s segments", rec);
+            if (rec.startsWith("FAIL")) failed = true;
+            end(4, rec.substring(rec.indexOf(' ') + 1, rec.indexOf(',')).replace(" files closed", " 파일 닫힘"));
+
+            begin(5, "USB 마운트와 남은 공간");
+            section("usb");
+            File root = store.root();
+            line("folder", String.valueOf(root));
+            long freeMb = root == null ? -1 : Store.free(root) / (1024 * 1024);
+            line("free", freeMb < 0 ? "-" : freeMb + " MB");
+            String mounts = Sh.run(3000, "/system/bin/cat", "/proc/mounts");
+            if (mounts != null) for (String l : mounts.split("\n")) if (l.contains("usb")) out.append(l).append('\n');
+            if (root == null) failed = true;
+            end(5, root == null ? "USB 폴더 없음" : String.format("%.1fGB 남음", freeMb / 1024.0));
+
+            begin(6, "서비스 로그와 미디어 기록기 로그");
+            section("service log (last 80 lines)");
+            tail(Sh.run(3000, "/system/bin/cat", "/data/hmgapi/logs/5w-screencap/screencapd.log"), 80);
+            section("media writer messages (logcat)");
+            tail(Sh.run(10000, "/system/bin/logcat", "-d", "-v", "time", "-s",
+                    "MPEG4Writer:*", "MediaMuxer:*", "MediaAdapter:*", "SoftMPEG4Encoder:*"), 80);
+            end(6, "");
+
+            begin(7, "SUMMARY.txt 저장");
+            File f = new File(dir, "SUMMARY.txt");
+            Writer w = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+            try { w.write(out.toString()); } finally { w.close(); }
+            Sh.log("diag " + f.getPath());
+            end(7, "5W-Screencap/diag/" + dirName);
+            finish("done", null);
+        } catch (Throwable t) {
+            Sh.log("diag", t);
+            if (stage >= 0 && result[stage] == null) { result[stage] = "fail"; note[stage] = String.valueOf(t.getMessage()); }
+            finish("error", Store.mounted("/storage/usb0") ? "failed" : "usb_removed");
         }
+    }
 
-        section("media writer messages (logcat)");
-        String lc = Sh.run(10000, "/system/bin/logcat", "-d", "-v", "time", "-s",
-                "MPEG4Writer:*", "MediaMuxer:*", "MediaAdapter:*", "SoftMPEG4Encoder:*");
-        if (lc != null) {
-            String[] lines = lc.split("\n");
-            for (int i = Math.max(0, lines.length - 80); i < lines.length; i++) out.append(lines[i]).append('\n');
-        }
+    private synchronized void begin(int i, String what) {
+        stage = i;
+        detail = what;
+        failed = false;
+    }
 
-        File f = new File(dir, "SUMMARY.txt");
-        Writer w = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
-        try { w.write(out.toString()); } finally { w.close(); }
-        Sh.log("diag " + f.getPath());
-        return Main.ok().put("dir", "diag/" + dir.getName()).put("summary", out.toString());
+    private synchronized void end(int i, String line) {
+        result[i] = failed ? "fail" : "ok";
+        note[i] = line;
+    }
+
+    private synchronized void finish(String st, String err) {
+        error = err;
+        endedAt = System.currentTimeMillis();
+        detail = "";
+        state = st;
+    }
+
+    private void tail(String text, int n) {
+        if (text == null) return;
+        String[] lines = text.split("\n");
+        for (int i = Math.max(0, lines.length - n); i < lines.length; i++) out.append(lines[i]).append('\n');
     }
 
     /** 2 s of the standard preset into a throwaway file: frames in, and the fps it reached */
