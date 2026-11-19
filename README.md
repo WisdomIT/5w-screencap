@@ -1,6 +1,6 @@
 # 5w-screencap
 
-현대·기아 Gen5W(S5W_M, Android 4.4.2) 내비게이션 화면을 버튼 한 번으로 캡처하고, 주행 중 녹화해 USB에 저장하는 [HMG-API](https://github.com/Open-HMG/HMG-API) mod입니다. CarPlay·Android Auto 화면도 찍힙니다. 녹화에 실내 마이크 소리를 넣는 옵션이 있습니다(차량 스피커 소리는 직접 녹음할 수 없습니다).
+현대·기아 Gen5W(S5W_M, Android 4.4.2) 내비게이션 화면을 버튼 한 번으로 캡처하고, 주행 중 녹화해 USB에 저장하는 [HMG-API](https://github.com/Open-HMG/HMG-API) mod입니다. CarPlay·Android Auto 화면도 찍힙니다. 녹화는 영상만 저장합니다(소리는 녹음하지 않습니다).
 
 > ⚠️ 개발 중입니다. 아직 실차에 설치해 확인하지 않았습니다.
 
