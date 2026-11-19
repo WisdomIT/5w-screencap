@@ -190,6 +190,13 @@
       ]
     },
     {
+      "key": "mic",
+      "type": "toggle",
+      "default": false,
+      "title": "녹화에 실내 마이크 소리 포함",
+      "description": "차량 스피커 소리를 직접 녹음할 수 없어(4차 진단), 실내 마이크로 들리는 소리를 넣습니다. 음질이 낮고 대화도 녹음됩니다."
+    },
+    {
       "key": "auto_record",
       "type": "toggle",
       "default": false,

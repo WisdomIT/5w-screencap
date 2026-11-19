@@ -37,8 +37,10 @@ final class Actions {
         final Context app = c.getApplicationContext();
         WORK.execute(new Runnable() {
             @Override public void run() {
-                String q = Settings.cached(app).optString(Settings.QUALITY, "standard");
-                JSONObject r = Daemon.call("record " + how + " " + q, 15000);
+                JSONObject set = Settings.cached(app);
+                String q = set.optString(Settings.QUALITY, "standard");
+                boolean mic = set.optBoolean(Settings.MIC);
+                JSONObject r = Daemon.call("record " + how + " " + q + (mic ? " mic" : ""), 15000);
                 if (!r.optBoolean("ok")) {
                     Feedback.tone(Feedback.Tone.ERROR);
                     Feedback.toast(app, "녹화하지 못했습니다: " + Feedback.error(r.optString("error")));
@@ -48,7 +50,7 @@ final class Actions {
                     Feedback.toast(app, "녹화 저장됨 · " + (s / 60) + "분 " + (s % 60) + "초");
                 } else if (r.optBoolean("recording") && !"stop".equals(how)) {
                     Feedback.tone(Feedback.Tone.REC_START);
-                    Feedback.toast(app, "녹화를 시작합니다");
+                    Feedback.toast(app, mic ? "녹화를 시작합니다 (마이크 소리 포함)" : "녹화를 시작합니다");
                 }
                 finish(app, r, done);
             }

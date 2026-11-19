@@ -17,6 +17,10 @@ import java.nio.ByteBuffer;
  *
  * Files are cut into segments of SEGMENT_MS, each starting on a key frame: an MP4 is only
  * playable once it's closed, so a power cut costs at most the open segment.
+ *
+ * With the microphone on (Mic), each segment also gets an AAC track on the same clock. A segment
+ * waits for both tracks' formats before it opens (MediaMuxer can't add a track once started);
+ * if the microphone fails, recording goes on without sound.
  */
 final class Recorder implements Runnable {
     static final long SEGMENT_MS = 2 * 60 * 1000;
@@ -31,18 +35,21 @@ final class Recorder implements Runnable {
     final File dir;
     final String base;
     final long startedAt = System.currentTimeMillis();
+    final boolean withMic;
     private final Screen screen;
     private final Listener listener;
     private volatile boolean stop;
     private volatile int segments, frames;
     private volatile String currentFile;
+    private volatile String micState = "off";
     private Thread thread;
 
-    Recorder(Screen screen, Quality quality, File dir, String base, Listener listener) {
+    Recorder(Screen screen, Quality quality, File dir, String base, boolean withMic, Listener listener) {
         this.screen = screen;
         this.quality = quality;
         this.dir = dir;
         this.base = base;
+        this.withMic = withMic;
         this.listener = listener;
     }
 
@@ -62,12 +69,15 @@ final class Recorder implements Runnable {
     int segments() { return segments; }
     int frames() { return frames; }
     String currentFile() { return currentFile; }
+    /** "off" (not asked for), "starting", "on", or why it stopped ("mic_unavailable", "mic_error") */
+    String micState() { return micState; }
 
     @Override
     public void run() {
         String error = null;
         MediaCodec codec = null;
         Segments out = new Segments();
+        Mic mic = null;
         try {
             codec = MediaCodec.createByCodecName(CODEC);
             MediaFormat fmt = MediaFormat.createVideoFormat(MIME, quality.width, quality.height);
@@ -87,6 +97,12 @@ final class Recorder implements Runnable {
             long frameNs = 1000000000L / quality.fps;
             long t0 = System.nanoTime(), next = t0;
             boolean eosSent = false;
+            if (withMic) {
+                micState = "starting";
+                out.expectAudio = true;
+                mic = new Mic(t0, out);
+                mic.start();
+            }
 
             while (true) {
                 if (!stop) {
@@ -149,6 +165,7 @@ final class Recorder implements Runnable {
             error = t.getMessage() != null && t.getMessage().contains("ENOSPC") ? "usb_full"
                     : !Store.mounted(dir.getParentFile().getParentFile().getPath()) ? "usb_removed" : "encoder";
         } finally {
+            if (mic != null) mic.stop(3000);   // its last samples go into the open segment
             if (codec != null) {
                 try { codec.stop(); } catch (Throwable ignored) { }
                 try { codec.release(); } catch (Throwable ignored) { }
@@ -159,28 +176,34 @@ final class Recorder implements Runnable {
         listener.ended(this, error);
     }
 
-    /** One MP4 at a time; a new one starts on the first key frame after SEGMENT_MS. */
-    private final class Segments {
-        MediaFormat format;
+    /**
+     * One MP4 at a time; a new one starts on the first key frame after SEGMENT_MS. Written from
+     * the recorder thread (video) and the Mic thread (sound): every method is synchronized.
+     */
+    private final class Segments implements Mic.Sink {
+        MediaFormat format, audioFormat;
+        boolean expectAudio, audioGone;
         MediaMuxer muxer;
-        int track;
+        int track, audioTrack = -1;
         long firstPtsUs, openedAt;
 
-        void write(ByteBuffer b, MediaCodec.BufferInfo info) throws Exception {
+        synchronized void write(ByteBuffer b, MediaCodec.BufferInfo info) throws Exception {
             boolean key = (info.flags & 1) != 0;   // BUFFER_FLAG_SYNC_FRAME
             if (muxer == null || (key && System.currentTimeMillis() - openedAt >= SEGMENT_MS)) {
                 if (muxer == null && !key) return;   // a segment starts on a key frame
                 if (format == null) return;
+                if (expectAudio && audioFormat == null && !audioGone) return;   // wait for the sound track's format
                 close();
                 File f = Names.unique(dir, Names.segment(base, segments + 1), ".mp4");
                 muxer = new MediaMuxer(f.getPath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
                 track = muxer.addTrack(format);
+                audioTrack = audioFormat != null && !audioGone ? muxer.addTrack(audioFormat) : -1;
                 muxer.start();
                 segments++;
                 currentFile = f.getName();
                 firstPtsUs = info.presentationTimeUs;
                 openedAt = System.currentTimeMillis();
-                Sh.log("segment " + f.getPath());
+                Sh.log("segment " + f.getPath() + (audioTrack >= 0 ? " (with sound)" : ""));
             }
             long pts = info.presentationTimeUs;
             info.presentationTimeUs = pts - firstPtsUs;
@@ -188,11 +211,41 @@ final class Recorder implements Runnable {
             info.presentationTimeUs = pts;
         }
 
-        void close() {
+        @Override
+        public synchronized void audioFormat(MediaFormat f) {
+            audioFormat = f;
+            micState = "on";
+        }
+
+        @Override
+        public synchronized void audioSample(ByteBuffer b, MediaCodec.BufferInfo info) {
+            if (muxer == null || audioTrack < 0) return;
+            long pts = info.presentationTimeUs - firstPtsUs;
+            if (pts < 0) return;   // from before this segment's first frame
+            long orig = info.presentationTimeUs;
+            info.presentationTimeUs = pts;
+            try {
+                muxer.writeSampleData(audioTrack, b, info);
+            } catch (Throwable t) {
+                Sh.log("audio sample", t);
+            } finally {
+                info.presentationTimeUs = orig;
+            }
+        }
+
+        @Override
+        public synchronized void audioGone(String why) {
+            audioGone = true;
+            micState = why;
+            Sh.log("recording goes on without sound: " + why);
+        }
+
+        synchronized void close() {
             if (muxer == null) return;
             try { muxer.stop(); } catch (Throwable t) { Sh.log("muxer stop", t); }
             try { muxer.release(); } catch (Throwable ignored) { }
             muxer = null;
+            audioTrack = -1;
         }
     }
 

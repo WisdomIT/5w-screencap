@@ -60,6 +60,9 @@ final class Diag {
         section("encoder");
         line(Recorder.CODEC, encoderTest());
 
+        section("microphone (the 마이크 소리 option)");
+        line("mic", micTest());
+
         section("usb");
         line("folder", String.valueOf(store.root()));
         File root = store.root();
@@ -79,7 +82,7 @@ final class Diag {
         File tmp = new File(store.dir("diag"), ".enctest");
         tmp.mkdirs();
         final String[] err = { null };
-        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "enctest", new Recorder.Listener() {
+        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "enctest", false, new Recorder.Listener() {
             @Override public void ended(Recorder rec, String error) { err[0] = error; }
         });
         r.start();
@@ -92,6 +95,39 @@ final class Diag {
         tmp.delete();
         if (err[0] != null) return "FAIL " + err[0];
         return (frames > 0 && bytes > 0 ? "ok " : "FAIL ") + frames + " frames in 2 s (" + (frames / 2.0) + " fps), " + bytes + " bytes";
+    }
+
+    /** 1 s from the cabin microphone: the rate it opened at and how loud (no sound is kept) */
+    private static String micTest() {
+        for (int rate : Mic.RATES) {
+            android.media.AudioRecord a = null;
+            try {
+                int min = android.media.AudioRecord.getMinBufferSize(rate, android.media.AudioFormat.CHANNEL_IN_MONO,
+                        android.media.AudioFormat.ENCODING_PCM_16BIT);
+                if (min <= 0) continue;
+                a = new android.media.AudioRecord(Mic.SOURCE_MIC, rate, android.media.AudioFormat.CHANNEL_IN_MONO,
+                        android.media.AudioFormat.ENCODING_PCM_16BIT, Math.max(min * 4, rate));
+                if (a.getState() != android.media.AudioRecord.STATE_INITIALIZED) continue;
+                a.startRecording();
+                byte[] pcm = new byte[rate * 2];
+                int got = 0;
+                long until = System.currentTimeMillis() + 2000;
+                while (got < pcm.length && System.currentTimeMillis() < until) {
+                    int n = a.read(pcm, got, pcm.length - got);
+                    if (n <= 0) break;
+                    got += n;
+                }
+                double sum = 0;
+                for (int i = 0; i + 1 < got; i += 2) { int v = (short) ((pcm[i] & 0xff) | (pcm[i + 1] << 8)); sum += (double) v * v; }
+                double rms = got < 2 ? 0 : Math.sqrt(sum / (got / 2));
+                return "ok " + rate + " Hz, " + got + " bytes, " + (rms > 0 ? String.format("%.1f dBFS", 20 * Math.log10(rms / 32768)) : "silent");
+            } catch (Throwable t) {
+                return "FAIL " + t;
+            } finally {
+                if (a != null) { try { a.stop(); } catch (Throwable ignored) { } a.release(); }
+            }
+        }
+        return "FAIL no rate opened";
     }
 
     private void section(String s) { out.append("\n===== ").append(s).append('\n'); }

@@ -20,7 +20,7 @@ import java.io.InputStream;
 final class Settings {
     static final String HMGAPID = "/system/bin/hmgapid";
     static final String CAPTURE = "capture", RECORD = "record", QUALITY = "quality",
-            AUTO_RECORD = "auto_record", FLOATING = "floating";
+            AUTO_RECORD = "auto_record", FLOATING = "floating", MIC = "mic";
     static final String[] ACTIONS = { CAPTURE, RECORD };
 
     private Settings() {}
@@ -31,7 +31,7 @@ final class Settings {
             return new JSONObject()
                     .put(CAPTURE + "_key", "wheel_custom").put(CAPTURE + "_press", "short")
                     .put(RECORD + "_key", "wheel_custom").put(RECORD + "_press", "hold")
-                    .put(QUALITY, "standard").put(AUTO_RECORD, false).put(FLOATING, true)
+                    .put(QUALITY, "standard").put(MIC, false).put(AUTO_RECORD, false).put(FLOATING, true)
                     .put(CAPTURE, "star").put(RECORD, "wheel_custom.hold");
         } catch (Exception e) {
             return new JSONObject();

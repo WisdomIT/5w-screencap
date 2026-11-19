@@ -23,7 +23,8 @@ import java.io.OutputStream;
  *   ping                    -> {"ok":true,"version":"0.1.0"}
  *   status                  -> recording state, USB folder, free space, overlay layer
  *   capture                 -> {"ok":true,"file":"Screenshots/…jpg","ms":480,...} or {"ok":false,"error":"no_usb"}
- *   record start <quality>  -> status; record stop -> status; record toggle <quality> -> status
+ *   record start <quality> [mic]  -> status; record stop -> status; record toggle <quality> [mic] -> status
+ *                           ("mic": with the cabin microphone as the sound track; off unless the owner turns it on)
  *   overlay                 -> the floating button appeared or went: read its layer again
  *   diag <settings-json>    -> {"ok":true,"dir":"diag/…"}: SUMMARY.txt for an issue report
  *
@@ -100,10 +101,12 @@ public final class Main implements Recorder.Listener {
         if ("capture".equals(cmd)) return capture();
         if ("overlay".equals(cmd)) { screen.overlayChanged(); return ok(); }
         if ("record".equals(cmd) && a.length >= 2) {
-            String q = a.length >= 3 ? a[2] : "standard";
-            if ("start".equals(a[1])) return recordStart(q);
+            String[] opt = a.length >= 3 ? a[2].split(" ") : new String[0];
+            String q = opt.length >= 1 ? opt[0] : "standard";
+            boolean mic = opt.length >= 2 && "mic".equals(opt[1]);
+            if ("start".equals(a[1])) return recordStart(q, mic);
             if ("stop".equals(a[1])) return recordStop();
-            if ("toggle".equals(a[1])) return isRecording() ? recordStop() : recordStart(q);
+            if ("toggle".equals(a[1])) return isRecording() ? recordStop() : recordStart(q, mic);
         }
         if ("diag".equals(cmd)) return new Diag(screen, store, version).run(a.length >= 2 ? line.substring(5) : "{}");
         return fail("unknown_command");
@@ -141,16 +144,16 @@ public final class Main implements Recorder.Listener {
         synchronized (lock) { return recorder != null; }
     }
 
-    JSONObject recordStart(String qualityName) throws Exception {
+    JSONObject recordStart(String qualityName, boolean mic) throws Exception {
         synchronized (lock) {
             if (recorder != null) return status();
             File dir = store.dir("Recordings");
             if (dir == null) return fail("no_usb");
             if (Store.free(dir) < Store.MIN_FREE) return fail("usb_full");
             lastError = null;
-            recorder = new Recorder(screen, Quality.of(qualityName), dir, store.nextName(), this);
+            recorder = new Recorder(screen, Quality.of(qualityName), dir, store.nextName(), mic, this);
             recorder.start();
-            Sh.log("recording " + recorder.quality.name + " into " + dir);
+            Sh.log("recording " + recorder.quality.name + (mic ? " with the microphone" : "") + " into " + dir);
         }
         return status();
     }
@@ -185,7 +188,8 @@ public final class Main implements Recorder.Listener {
         if (r != null) {
             s.put("startedAt", r.startedAt).put("quality", r.quality.name)
                     .put("segments", r.segments()).put("frames", r.frames())
-                    .put("file", r.currentFile() == null ? JSONObject.NULL : r.currentFile());
+                    .put("file", r.currentFile() == null ? JSONObject.NULL : r.currentFile())
+                    .put("mic", r.micState());
         }
         File root = store.root();
         s.put("usb", root == null ? JSONObject.NULL : root.getPath());
