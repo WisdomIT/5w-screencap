@@ -1,3 +1,0 @@
-66a41b61ca8f69902b8db86a72ab5d2db389018d515b820b1cc1d88ba1f82fb0  5w-screencap-0.1.0-nemesis-package.zip
-55742329c3a13603cec6241b431e8b6b69c0fd8b28515cfc705234fba5d5209a  5w-screencap-0.1.0-usb.zip
-bdb17575adfaf1108270599170e49de315fb46cddc139da18e473ba03e2a597b  5w-screencap-0.1.0.zip
