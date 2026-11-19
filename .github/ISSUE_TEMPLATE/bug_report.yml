@@ -1,0 +1,63 @@
+name: 버그 신고
+description: 캡처·녹화가 안 되거나, 버튼이 반응하지 않거나, 화면이 이상할 때
+title: "[버그] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        차량의 Launch 화면(NEMESIS Manager → 5W Screencap → Launch)에서 QR을 스캔했다면 아래 차량 정보가 이미 채워져 있습니다.
+        가능하면 Launch 화면의 **진단 실행** 결과도 첨부해 주세요. 진단이 끝나면 USB의 `5W-Screencap/diag/` 폴더에 날짜별 폴더가 생기고, 그 안의 `SUMMARY.txt`를 올리면 됩니다.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 무슨 일이 있었나요?
+      description: 무엇을 했을 때 어떻게 됐는지 적어 주세요. 사진이 있으면 끌어다 놓으세요.
+      placeholder: 예) 운전대 ☆ 버튼을 눌렀는데 셔터음만 나고 USB에 파일이 없습니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 다시 겪으려면
+      description: 순서대로 적어 주세요. 언제나 그런지, 가끔인지도 알려 주세요.
+      placeholder: |
+        1. USB 연결
+        2. CarPlay 화면에서 ☆ 버튼 1회
+        3. …
+
+  - type: input
+    id: firmware
+    attributes:
+      label: 펌웨어
+      description: 설정 > 일반 > SW 정보, 또는 Launch 화면 오른쪽 아래
+      placeholder: DEPEHEV.KOR.S5W_M.V039.001.260902
+    validations:
+      required: true
+
+  - type: input
+    id: car
+    attributes:
+      label: 차종과 연식
+      placeholder: 기아 니로 하이브리드 2021
+
+  - type: input
+    id: hmgapi
+    attributes:
+      label: HMG-API / NEMESIS 버전
+      placeholder: HMG-API 1.1.0, NEMESIS 1.16.7
+
+  - type: input
+    id: version
+    attributes:
+      label: 5W Screencap 버전
+      placeholder: 0.1.0
+
+  - type: textarea
+    id: diag
+    attributes:
+      label: 진단 결과
+      description: "USB의 `5W-Screencap/diag/<날짜-시간>/SUMMARY.txt` 내용을 붙여 넣거나 파일을 첨부해 주세요. 캡처 이미지나 녹화 파일은 위치가 드러날 수 있으니 필요할 때만 올려 주세요."
+      render: text
