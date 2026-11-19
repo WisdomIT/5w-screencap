@@ -33,7 +33,7 @@ has "published as on" "1 of 1 mods on" "$out"
 check "defaults: one binding" "wheel_custom hold replace RECORD" "$(bindings)"
 
 # the Launch screen saves both choices; the engine re-settles at once
-printf '{"capture": "radio.short_r", "record": "mode.hold", "quality": "standard", "auto_record": false, "floating": true}\n' \
+printf '{"capture_key": "radio", "capture_press": "short_r", "record_key": "mode", "record_press": "hold", "capture": "radio.short_r", "record": "mode.hold", "quality": "standard", "auto_record": false, "floating": true}\n' \
     > $R/data/hmgapi/settings/5w-screencap.json
 eng publish-state; check "publish-state" 0 $rc
 check "radio press replaced, MODE held" "mode hold replace RECORD
@@ -46,6 +46,12 @@ check "keep: the car still mutes" "mute short keep CAPTURE" "$(bindings)"
 printf '{"capture": "call.double", "record": "star"}\n' > $R/data/hmgapi/settings/5w-screencap.json
 eng publish-state
 check "double: single presses taken from the car" "call short replace CAPTURE" "$(bindings)"
+
+# the HMG-API app's page saves only what it shows (not the private values): until the app syncs,
+# the bindings fall back to the private defaults (the app's Settings.sync puts them right on STATE_CHANGED)
+printf '{"capture_key": "radio", "capture_press": "short_r", "record_key": "mode", "record_press": "hold"}\n' > $R/data/hmgapi/settings/5w-screencap.json
+eng publish-state
+check "page save without private values: defaults until the app syncs" "wheel_custom hold replace RECORD" "$(bindings)"
 
 eng remove 5w-screencap; check "remove" 0 $rc
 eng apply; check "apply after remove" 0 $rc

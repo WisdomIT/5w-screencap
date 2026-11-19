@@ -36,14 +36,14 @@ final class Store {
                 if (sp > 0) p = p.substring(0, sp);
                 if (p.startsWith("/") && p.endsWith("/" + FOLDER) && mounted(new File(p).getParent())) {
                     File f = new File(p);
-                    if (f.isDirectory() || f.mkdirs()) return f;
+                    if (ensureDir(f)) return f;
                 }
             }
         }
         for (String stick : STICKS) {   // hmgapid not answering: look ourselves
             if (!mounted(stick)) continue;
             File f = new File(stick, FOLDER);
-            if (f.isDirectory() || f.mkdirs()) return f;
+            if (ensureDir(f)) return f;
         }
         return null;
     }
@@ -52,7 +52,23 @@ final class Store {
         File r = root();
         if (r == null) return null;
         File d = new File(r, sub);
-        return d.isDirectory() || d.mkdirs() ? d : null;
+        return ensureDir(d) ? d : null;
+    }
+
+    /**
+     * The folder exists (made if needed). On the stick's FUSE view a fresh mkdir can report
+     * failure though it worked, or show up a moment later (the first capture after install
+     * said "no USB" on a Niro), so look again before giving up.
+     */
+    static boolean ensureDir(File d) {
+        for (int i = 0; i < 5; i++) {
+            if (d.isDirectory()) return true;
+            d.mkdirs();
+            if (d.isDirectory()) return true;
+            try { Thread.sleep(100); } catch (InterruptedException e) { return false; }
+        }
+        Sh.log("can't make " + d);
+        return false;
     }
 
     static long free(File f) {

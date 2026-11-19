@@ -24,9 +24,10 @@ public final class EventReceiver extends BroadcastReceiver {
         new Thread(new Runnable() {
             @Override public void run() {
                 try {
-                    JSONObject s = Settings.load(app);
+                    JSONObject s = Settings.sync(app, Settings.load(app));
                     if (USB_FOLDER.equals(action)) {
                         if (mounted && s.optBoolean(Settings.AUTO_RECORD)) autoRecord(app);
+                        FloatingService.refresh(app);   // the button shows only while a stick is in
                     } else {
                         FloatingService.sync(app, s.optBoolean(Settings.FLOATING, true));
                     }

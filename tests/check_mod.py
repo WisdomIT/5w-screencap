@@ -74,6 +74,8 @@ for e in mod["provides"]["star_key"]:
     check(f"star_key {e['id']}: broadcast is ours", e.get("broadcast", "").startswith(tuple(p + "." for p in pkgs)))
 for e in mod["provides"]["launcher"]:
     check("launcher package is a mod app", e["package"] in pkgs)
+    for k in ("icon", "icon_night", "icon_disabled", "icon_disabled_night"):
+        check(f"launcher {k} built", k in e and (MOD / e[k]).is_file())
 
 manifest = (ROOT / "app" / "AndroidManifest.xml").read_text(encoding="utf-8")
 for action in {b["broadcast"] for b in mod["input"]} | {e["broadcast"] for e in mod["provides"]["star_key"]}:

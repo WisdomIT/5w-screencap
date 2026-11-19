@@ -25,6 +25,9 @@ import org.json.JSONObject;
  *   drag                 move; let go and it sticks to the nearer side
  *   drag half off-screen it folds into a small tab at that edge; tap the tab to bring it back
  *
+ * It's on screen only while a USB stick is in (no stick: nowhere to save, so nothing to press);
+ * the service keeps running and puts it back when one comes in (USB_FOLDER, or the next status).
+ *
  * The window is TYPE_SYSTEM_ERROR (layer 22, above the status bar): screencapd grabs only the
  * layers below it, so the button and its timer stay out of captures. It's told when the
  * window comes and goes so it reads the layer again.
@@ -41,7 +44,7 @@ public final class FloatingService extends Service {
     private FabView view;
     private int screenW, screenH;
     private float dp;
-    private boolean polling;
+    private boolean polling, attached;
 
     /** puts the button up or takes it down, as the "floating" setting says */
     static void sync(Context c, boolean on) {
@@ -86,12 +89,25 @@ public final class FloatingService extends Service {
         lp.x = p.getInt("fab_x", screenW - box - px(MARGIN_DP));
         lp.y = clampY(p.getInt("fab_y", screenH / 2 - box / 2));
         view.setOnTouchListener(new Touch());
-        wm.addView(view, lp);
-        layout();
         instance = this;
-        tellDaemonOverlay();
         polling = true;
-        poll();
+        poll();   // the button goes up once screencapd says a stick is in
+    }
+
+    /** puts the window up or takes it down; tells screencapd so it reads the layer again */
+    private void attach(boolean on) {
+        if (on == attached || view == null) return;
+        try {
+            if (on) {
+                wm.addView(view, lp);
+                attached = true;
+                layout();
+            } else {
+                wm.removeView(view);
+                attached = false;
+            }
+        } catch (Exception ignored) { }
+        tellDaemonOverlay();
     }
 
     @Override
@@ -100,9 +116,8 @@ public final class FloatingService extends Service {
         polling = false;
         main.removeCallbacksAndMessages(null);
         if (view != null) {
-            try { wm.removeView(view); } catch (Exception ignored) { }
+            attach(false);
             view = null;
-            tellDaemonOverlay();
         }
         super.onDestroy();
     }
@@ -128,6 +143,7 @@ public final class FloatingService extends Service {
 
     private void apply(JSONObject s) {
         if (view == null) return;
+        attach(s.optBoolean("ok") && !s.isNull("usb") && s.has("usb"));
         boolean rec = s.optBoolean("recording");
         if (rec != view.recording || s.optLong("startedAt") != view.startedAt) {
             view.recording = rec;
@@ -146,7 +162,7 @@ public final class FloatingService extends Service {
         lp.height = sz[1];
         if (view.mode == FabView.TAB_LEFT) lp.x = 0;
         else if (view.mode == FabView.TAB_RIGHT) lp.x = screenW - sz[0];
-        try { wm.updateViewLayout(view, lp); } catch (Exception ignored) { }
+        if (attached) try { wm.updateViewLayout(view, lp); } catch (Exception ignored) { }
     }
 
     private void save() {
@@ -223,7 +239,7 @@ public final class FloatingService extends Service {
                     if (moved && view.mode == FabView.CIRCLE) {
                         lp.x = startX + Math.round(dx);
                         lp.y = clampY(startY + Math.round(dy));
-                        try { wm.updateViewLayout(view, lp); } catch (Exception ignored) { }
+                        if (attached) try { wm.updateViewLayout(view, lp); } catch (Exception ignored) { }
                     }
                     return true;
                 }

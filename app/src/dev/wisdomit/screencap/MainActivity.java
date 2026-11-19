@@ -1,6 +1,7 @@
 package dev.wisdomit.screencap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -53,7 +55,7 @@ public final class MainActivity extends Activity {
     private ImageView thumb;
     private Button capButton, diagButton;
     private Spinner capKey, capPress, recKey, recPress, quality;
-    private Switch block, autoRecord, floating;
+    private Switch autoRecord, floating;
     private QrView qr;
     private String usbRoot;
 
@@ -72,7 +74,7 @@ public final class MainActivity extends Activity {
         super.onResume();
         background(new Runnable() {
             @Override public void run() {
-                final JSONObject s = Settings.load(MainActivity.this);
+                final JSONObject s = Settings.sync(MainActivity.this, Settings.load(MainActivity.this));
                 final JSONObject st = Daemon.call("status", 3000);
                 final CarInfo info = CarInfo.read(version);
                 ui.post(new Runnable() {
@@ -95,9 +97,14 @@ public final class MainActivity extends Activity {
         root.setBackgroundColor(BG);
         root.setPadding(0, dp(TOP_INSET_DP), 0, 0);
 
+        // left: scrolls, so nothing is cut off whatever the font size or the car's screen
+        ScrollView scroll = new ScrollView(this);
+        scroll.setFillViewport(true);
+        scroll.setVerticalScrollBarEnabled(true);
         LinearLayout left = vertical();
         left.setPadding(dp(28), dp(14), dp(22), dp(18));
-        root.addView(left, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+        scroll.addView(left, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        root.addView(scroll, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
 
         LinearLayout head = horizontal();
         head.setGravity(Gravity.CENTER_VERTICAL);
@@ -105,25 +112,31 @@ public final class MainActivity extends Activity {
         title.setTypeface(Typeface.DEFAULT_BOLD);
         head.addView(title);
         head.addView(text("  v" + version, 16, MUTED));
+        head.addView(text("   made by WisdomIT", 15, MUTED));
         View spacer = new View(this);
         head.addView(spacer, new LinearLayout.LayoutParams(0, 1, 1));
         pill = text("확인 중", 16, SUB);
         pill.setPadding(dp(14), dp(5), dp(14), dp(5));
         pill.setBackground(round(CARD, 999));
         head.addView(pill);
+        Button close = button("닫기  ✕", false);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { close(); }
+        });
+        LinearLayout.LayoutParams closeLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        closeLp.leftMargin = dp(12);
+        head.addView(close, closeLp);
         left.addView(head);
 
         LinearLayout row1 = horizontal(), row2 = horizontal();
+        row1.setBaselineAligned(false);
+        row2.setBaselineAligned(false);
         row1.addView(captureCard(), cardLp(0, dp(12)));
         row1.addView(buttonCard(), cardLp(dp(12), 0));
         row2.addView(recordCard(), cardLp(0, dp(12)));
         row2.addView(diagCard(), cardLp(dp(12), 0));
-        LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
-        rowLp.topMargin = dp(12);
-        left.addView(row1, rowLp);
-        LinearLayout.LayoutParams rowLp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
-        rowLp2.topMargin = dp(12);
-        left.addView(row2, rowLp2);
+        left.addView(row1, margins(dp(12)));
+        left.addView(row2, margins(dp(12)));
 
         // right: issue QR
         LinearLayout right = vertical();
@@ -172,21 +185,20 @@ public final class MainActivity extends Activity {
     private View buttonCard() {
         LinearLayout c = card("버튼", "HMG-API 버튼 연결");
         capKey = spinner(keyTitles());
-        capPress = spinner(Choices.PRESSES);
+        capPress = spinner(Choices.PRESS_TITLES);
         c.addView(labeled("캡처", capKey, capPress));
         recKey = spinner(keyTitles());
-        recPress = spinner(Choices.PRESSES);
+        recPress = spinner(Choices.PRESS_TITLES);
         c.addView(labeled("녹화", recKey, recPress));
-        block = new Switch(this);
-        c.addView(switchRow("버튼의 원래 기능 막기", block));
         buttonHint = text("", 14, MUTED);
-        c.addView(buttonHint);
+        c.addView(buttonHint, margins(dp(4)));
         saveState = text("", 13, MUTED);
         c.addView(saveState);
         AdapterView.OnItemSelectedListener keyChanged = new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
                 Spinner press = p == capKey ? capPress : recPress;
-                setPresses(press, pos - 1, press.getSelectedItemPosition());
+                String prev = pressOf(p == capKey ? capKey : recKey, press);
+                setPresses(press, keyOf((Spinner) p), prev);
                 changed();
             }
             @Override public void onNothingSelected(AdapterView<?> p) { }
@@ -195,12 +207,11 @@ public final class MainActivity extends Activity {
         recKey.setOnItemSelectedListener(keyChanged);
         capPress.setOnItemSelectedListener(onSelect());
         recPress.setOnItemSelectedListener(onSelect());
-        block.setOnCheckedChangeListener(onToggle());
         return c;
     }
 
     private View recordCard() {
-        LinearLayout c = card("녹화", "");
+        LinearLayout c = card("녹화", " ");
         recTitle = (TextView) ((LinearLayout) c.getChildAt(0)).getChildAt(1);
         quality = spinner(QUALITY_TITLES);
         quality.setOnItemSelectedListener(onSelect());
@@ -230,13 +241,11 @@ public final class MainActivity extends Activity {
 
     private void fill(JSONObject s) {
         loading = true;
-        Choices.Pick cp = Choices.pick(s.optString(Settings.CAPTURE)), rp = Choices.pick(s.optString(Settings.RECORD));
-        capKey.setSelection(cp.key + 1, false);
-        setPresses(capPress, cp.key, cp.press);
-        recKey.setSelection(rp.key + 1, false);
-        setPresses(recPress, rp.key, rp.press);
-        block.setChecked(cp.key >= 0 && !Choices.isStar(cp.key) && cp.press == Choices.PRESS_SHORT ? cp.replace
-                : rp.key >= 0 && !Choices.isStar(rp.key) && rp.press == Choices.PRESS_SHORT ? rp.replace : true);
+        String ck = s.optString("capture_key"), rk = s.optString("record_key");
+        capKey.setSelection(Choices.keyIndex(ck) + 1, false);
+        setPresses(capPress, ck, s.optString("capture_press"));
+        recKey.setSelection(Choices.keyIndex(rk) + 1, false);
+        setPresses(recPress, rk, s.optString("record_press"));
         String q = s.optString(Settings.QUALITY, "standard");
         for (int i = 0; i < QUALITY_VALUES.length; i++) if (QUALITY_VALUES[i].equals(q)) quality.setSelection(i, false);
         autoRecord.setChecked(s.optBoolean(Settings.AUTO_RECORD));
@@ -247,31 +256,33 @@ public final class MainActivity extends Activity {
         });
     }
 
-    private void setPresses(Spinner press, int key, int selected) {
-        String[] items = Choices.pressesFor(key);
-        ArrayAdapter<String> a = adapter(items);
-        press.setAdapter(a);
-        press.setSelection(Math.min(selected, items.length - 1), false);
-        press.setEnabled(key >= 0);
+    /** the press list for this button, keeping the press if it has it */
+    private void setPresses(Spinner press, String key, String selected) {
+        String[] values = Choices.pressValues(key);
+        press.setAdapter(adapter(Choices.pressTitles(key)));
+        int at = 0;
+        for (int i = 0; i < values.length; i++) if (values[i].equals(selected)) at = i;
+        if (Choices.isStar(key) && "double".equals(selected)) at = 0;
+        press.setSelection(at, false);
+        press.setEnabled(Choices.keyIndex(key) >= 0);
     }
 
-    private Choices.Pick pickOf(Spinner key, Spinner press) {
-        return new Choices.Pick(key.getSelectedItemPosition() - 1, press.getSelectedItemPosition(), block.isChecked());
+    private static String keyOf(Spinner key) {
+        int i = key.getSelectedItemPosition() - 1;
+        return i < 0 ? Choices.OFF : Choices.KEYS[i][0];
+    }
+
+    private static String pressOf(Spinner key, Spinner press) {
+        String[] values = Choices.pressValues(keyOf(key));
+        int i = press.getSelectedItemPosition();
+        return i >= 0 && i < values.length ? values[i] : values[0];
     }
 
     private void hint() {
-        Choices.Pick c = pickOf(capKey, capPress), r = pickOf(recKey, recPress);
-        boolean dbl = c.press == Choices.PRESS_DOUBLE && c.key >= 0 && !Choices.isStar(c.key)
-                || r.press == Choices.PRESS_DOUBLE && r.key >= 0 && !Choices.isStar(r.key);
-        boolean star = c.key >= 0 && Choices.isStar(c.key) && c.press == Choices.PRESS_SHORT
-                || r.key >= 0 && Choices.isStar(r.key) && r.press == Choices.PRESS_SHORT;
-        if (dbl) {
-            block.setChecked(true);
-            block.setEnabled(false);
-        } else {
-            block.setEnabled(true);
-        }
-        String clash = Choices.clash(Choices.value(c), Choices.value(r));
+        String ck = keyOf(capKey), cp = pressOf(capKey, capPress), rk = keyOf(recKey), rp = pressOf(recKey, recPress);
+        String clash = Choices.clash(Choices.combined(ck, cp), Choices.combined(rk, rp));
+        boolean star = Choices.isStar(ck) && "short".equals(cp) || Choices.isStar(rk) && "short".equals(rp);
+        boolean dbl = "double".equals(cp) && Choices.keyIndex(ck) >= 0 || "double".equals(rp) && Choices.keyIndex(rk) >= 0;
         if (clash != null) {
             buttonHint.setText(clash);
             buttonHint.setTextColor(WARN_FG);
@@ -290,14 +301,16 @@ public final class MainActivity extends Activity {
     private void changed() {
         if (loading) return;
         hint();
-        final String capture = Choices.value(pickOf(capKey, capPress)), record = Choices.value(pickOf(recKey, recPress));
+        String ck = keyOf(capKey), cp = pressOf(capKey, capPress), rk = keyOf(recKey), rp = pressOf(recKey, recPress);
+        final String capture = Choices.combined(ck, cp), record = Choices.combined(rk, rp);
         if (Choices.clash(capture, record) != null) {
             saveState.setText("저장하지 않음");
             return;
         }
         final JSONObject v = new JSONObject();
         try {
-            v.put(Settings.CAPTURE, capture).put(Settings.RECORD, record)
+            v.put("capture_key", ck).put("capture_press", cp).put("record_key", rk).put("record_press", rp)
+                    .put(Settings.CAPTURE, capture).put(Settings.RECORD, record)
                     .put(Settings.QUALITY, QUALITY_VALUES[Math.max(0, quality.getSelectedItemPosition())])
                     .put(Settings.AUTO_RECORD, autoRecord.isChecked()).put(Settings.FLOATING, floating.isChecked());
         } catch (Exception ignored) { }
@@ -314,6 +327,14 @@ public final class MainActivity extends Activity {
                 });
             }
         });
+    }
+
+    /** back to the car's home screen */
+    private void close() {
+        try {
+            startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        } catch (Exception ignored) { }
+        finish();
     }
 
     private AdapterView.OnItemSelectedListener onSelect() {
@@ -425,14 +446,30 @@ public final class MainActivity extends Activity {
     }
 
     private ArrayAdapter<String> adapter(String[] items) {
-        ArrayAdapter<String> a = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return a;
+        return new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items) {
+            @Override public View getView(int pos, View convert, ViewGroup parent) {
+                return style((TextView) super.getView(pos, convert, parent), false);
+            }
+            @Override public View getDropDownView(int pos, View convert, ViewGroup parent) {
+                return style((TextView) super.getDropDownView(pos, convert, parent), true);
+            }
+        };
+    }
+
+    private TextView style(TextView t, boolean dropDown) {
+        t.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        t.setTextColor(TEXT);
+        t.setSingleLine(true);
+        t.setPadding(dp(12), dp(dropDown ? 12 : 8), dp(12), dp(dropDown ? 12 : 8));
+        if (dropDown) t.setBackgroundColor(0xFF252931);
+        return t;
     }
 
     private Spinner spinner(String[] items) {
-        Spinner s = new Spinner(this);
+        Spinner s = new Spinner(this, Spinner.MODE_DROPDOWN);
         s.setAdapter(adapter(items));
+        s.setBackground(round(0xFF252931, 10));
+        s.setMinimumHeight(dp(44));
         return s;
     }
 
@@ -445,7 +482,8 @@ public final class MainActivity extends Activity {
         TextView t = text(title, 17, TEXT);
         t.setTypeface(Typeface.DEFAULT_BOLD);
         h.addView(t);
-        TextView s = text(sub.isEmpty() ? "" : "  " + sub, 14, MUTED);
+        TextView s = text(sub.trim(), 14, MUTED);
+        s.setPadding(dp(8), 0, 0, 0);
         h.addView(s);
         c.addView(h, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return c;
@@ -457,7 +495,12 @@ public final class MainActivity extends Activity {
         TextView l = text(label, 16, SUB);
         r.addView(l, new LinearLayout.LayoutParams(dp(56), ViewGroup.LayoutParams.WRAP_CONTENT));
         r.addView(a, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        if (b != null) r.addView(b, new LinearLayout.LayoutParams(dp(190), ViewGroup.LayoutParams.WRAP_CONTENT));
+        if (b != null) {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.3f);
+            lp.leftMargin = dp(8);
+            r.addView(b, lp);
+        }
+        r.setPadding(0, dp(4), 0, dp(4));
         return r;
     }
 
@@ -503,7 +546,7 @@ public final class MainActivity extends Activity {
     }
 
     private LinearLayout.LayoutParams cardLp(int left, int right) {
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);   // the row is as tall as its taller card
         p.leftMargin = left / 2;
         p.rightMargin = right / 2;
         return p;

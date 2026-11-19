@@ -21,14 +21,18 @@ final class Settings {
     static final String HMGAPID = "/system/bin/hmgapid";
     static final String CAPTURE = "capture", RECORD = "record", QUALITY = "quality",
             AUTO_RECORD = "auto_record", FLOATING = "floating";
+    static final String[] ACTIONS = { CAPTURE, RECORD };
 
     private Settings() {}
 
     /** the same defaults as mod/5w-screencap/settings.json (tests check they agree) */
     static JSONObject defaults() {
         try {
-            return new JSONObject().put(CAPTURE, "star").put(RECORD, "wheel_custom.hold")
-                    .put(QUALITY, "standard").put(AUTO_RECORD, false).put(FLOATING, true);
+            return new JSONObject()
+                    .put(CAPTURE + "_key", "wheel_custom").put(CAPTURE + "_press", "short")
+                    .put(RECORD + "_key", "wheel_custom").put(RECORD + "_press", "hold")
+                    .put(QUALITY, "standard").put(AUTO_RECORD, false).put(FLOATING, true)
+                    .put(CAPTURE, "star").put(RECORD, "wheel_custom.hold");
         } catch (Exception e) {
             return new JSONObject();
         }
@@ -40,6 +44,9 @@ final class Settings {
         JSONObject s = cached(c);
         if (out != null && out.trim().startsWith("{")) {
             try {
+                // HMG-API's answer is the whole truth (its defaults with the owner's values over them):
+                // start from our defaults, not the last copy, so a value it no longer has isn't kept
+                s = defaults();
                 JSONObject got = new JSONObject(out.trim());
                 for (java.util.Iterator<String> it = got.keys(); it.hasNext(); ) {
                     String k = it.next();
@@ -62,6 +69,41 @@ final class Settings {
             }
         } catch (Exception ignored) { }
         return s;
+    }
+
+    /**
+     * Brings each action's private value (what the bindings compare) in step with its button and
+     * press, and saves if that changed something. Needed after the owner edits the two lists in the
+     * HMG-API app: its page doesn't show private values and saves without them. Settings from
+     * before the split (only the combined value) get their button and press from it.
+     * Blocks; returns the settings as they are now.
+     */
+    static JSONObject sync(Context c, JSONObject s) {
+        if (syncValues(s)) save(c, s);
+        return s;
+    }
+
+    /** the part of sync without saving (plain JSON, tested off the car); true if s changed */
+    static boolean syncValues(JSONObject s) {
+        boolean changed = false;
+        try {
+            for (String a : ACTIONS) {
+                String key = s.optString(a + "_key", ""), press = s.optString(a + "_press", "");
+                if (key.isEmpty()) {
+                    String[] kp = Choices.split(s.optString(a));
+                    s.put(a + "_key", kp[0]).put(a + "_press", kp[1]);
+                    key = kp[0];
+                    press = kp[1];
+                    changed = true;
+                }
+                String want = Choices.combined(key, press);
+                if (!want.equals(s.optString(a))) {
+                    s.put(a, want);
+                    changed = true;
+                }
+            }
+        } catch (Exception ignored) { }
+        return changed;
     }
 
     /** saves all values in HMG-API (blocks); false if hmgapid didn't take them */

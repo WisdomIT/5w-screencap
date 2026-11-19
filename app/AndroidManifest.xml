@@ -13,6 +13,7 @@
 
     <application
         android:label="5W Screencap"
+        android:icon="@drawable/app_icon"
         android:allowBackup="false">
 
         <!-- Launch screen: the app menu tile (mod.json provides.launcher); NEMESIS Manager's Launch opens the HMG-API app -->

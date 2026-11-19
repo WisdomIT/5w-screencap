@@ -2,9 +2,9 @@
   "version": 1,
   "settings": [
     {
-      "key": "capture",
+      "key": "capture_key",
       "type": "choice",
-      "default": "star",
+      "default": "wheel_custom",
       "title": "캡처 버튼",
       "options": [
         {
@@ -12,8 +12,209 @@
           "title": "사용 안 함"
         },
         {
+          "value": "wheel_custom",
+          "title": "운전대 ☆"
+        },
+        {
+          "value": "custom",
+          "title": "헤드유닛 ☆"
+        },
+        {
+          "value": "mode",
+          "title": "운전대 MODE"
+        },
+        {
+          "value": "mute",
+          "title": "운전대 음소거"
+        },
+        {
+          "value": "call",
+          "title": "운전대 통화"
+        },
+        {
+          "value": "radio",
+          "title": "RADIO"
+        },
+        {
+          "value": "media",
+          "title": "MEDIA"
+        },
+        {
+          "value": "fmam",
+          "title": "FM/AM"
+        },
+        {
+          "value": "setup",
+          "title": "SETUP"
+        },
+        {
+          "value": "phone",
+          "title": "PHONE"
+        },
+        {
+          "value": "map",
+          "title": "MAP"
+        },
+        {
+          "value": "tune_enter",
+          "title": "TUNE 누름"
+        }
+      ]
+    },
+    {
+      "key": "capture_press",
+      "type": "choice",
+      "default": "short",
+      "title": "캡처 버튼 누르는 방식",
+      "options": [
+        {
+          "value": "short",
+          "title": "1회 누름 (☆ 키: 차량 설정 > 버튼 > ☆ 에서 고름)"
+        },
+        {
+          "value": "short_r",
+          "title": "1회 누름 · 원래 기능 막기"
+        },
+        {
+          "value": "hold",
+          "title": "길게 누름 (0.8초)"
+        },
+        {
+          "value": "double",
+          "title": "연속 2회 · 원래 기능 막기"
+        }
+      ]
+    },
+    {
+      "key": "record_key",
+      "type": "choice",
+      "default": "wheel_custom",
+      "title": "녹화 시작/정지 버튼",
+      "options": [
+        {
+          "value": "off",
+          "title": "사용 안 함"
+        },
+        {
+          "value": "wheel_custom",
+          "title": "운전대 ☆"
+        },
+        {
+          "value": "custom",
+          "title": "헤드유닛 ☆"
+        },
+        {
+          "value": "mode",
+          "title": "운전대 MODE"
+        },
+        {
+          "value": "mute",
+          "title": "운전대 음소거"
+        },
+        {
+          "value": "call",
+          "title": "운전대 통화"
+        },
+        {
+          "value": "radio",
+          "title": "RADIO"
+        },
+        {
+          "value": "media",
+          "title": "MEDIA"
+        },
+        {
+          "value": "fmam",
+          "title": "FM/AM"
+        },
+        {
+          "value": "setup",
+          "title": "SETUP"
+        },
+        {
+          "value": "phone",
+          "title": "PHONE"
+        },
+        {
+          "value": "map",
+          "title": "MAP"
+        },
+        {
+          "value": "tune_enter",
+          "title": "TUNE 누름"
+        }
+      ]
+    },
+    {
+      "key": "record_press",
+      "type": "choice",
+      "default": "hold",
+      "title": "녹화 시작/정지 버튼 누르는 방식",
+      "options": [
+        {
+          "value": "short",
+          "title": "1회 누름 (☆ 키: 차량 설정 > 버튼 > ☆ 에서 고름)"
+        },
+        {
+          "value": "short_r",
+          "title": "1회 누름 · 원래 기능 막기"
+        },
+        {
+          "value": "hold",
+          "title": "길게 누름 (0.8초)"
+        },
+        {
+          "value": "double",
+          "title": "연속 2회 · 원래 기능 막기"
+        }
+      ]
+    },
+    {
+      "key": "quality",
+      "type": "choice",
+      "default": "standard",
+      "title": "녹화 화질",
+      "options": [
+        {
+          "value": "standard",
+          "title": "표준 · 1024×384 · 약 12fps · 10MB/분"
+        },
+        {
+          "value": "sharp",
+          "title": "선명 · 1280×480 · 약 8fps · 12MB/분"
+        },
+        {
+          "value": "full",
+          "title": "원본 · 1920×720 · 약 3fps · 12MB/분"
+        }
+      ]
+    },
+    {
+      "key": "auto_record",
+      "type": "toggle",
+      "default": false,
+      "title": "USB 연결 시 자동 녹화"
+    },
+    {
+      "key": "floating",
+      "type": "toggle",
+      "default": true,
+      "title": "플로팅 버튼 표시"
+    },
+    {
+      "key": "capture",
+      "type": "choice",
+      "private": true,
+      "default": "star",
+      "title": "캡처 (앱이 위의 두 값으로 맞추는 값)",
+      "options": [
+        {
+          "value": "off",
+          "title": "사용 안 함"
+        },
+        {
           "value": "star",
-          "title": "차량 ☆ 버튼 설정에서 고름 (설정 > 버튼 > ☆)"
+          "title": "차량 ☆ 메뉴"
         },
         {
           "value": "wheel_custom.hold",
@@ -188,8 +389,9 @@
     {
       "key": "record",
       "type": "choice",
+      "private": true,
       "default": "wheel_custom.hold",
-      "title": "녹화 시작/정지 버튼",
+      "title": "녹화 시작/정지 (앱이 위의 두 값으로 맞추는 값)",
       "options": [
         {
           "value": "off",
@@ -197,7 +399,7 @@
         },
         {
           "value": "star",
-          "title": "차량 ☆ 버튼 설정에서 고름 (설정 > 버튼 > ☆)"
+          "title": "차량 ☆ 메뉴"
         },
         {
           "value": "wheel_custom.hold",
@@ -368,38 +570,6 @@
           "title": "TUNE 누름 · 연속 2회 (원래 기능 막기)"
         }
       ]
-    },
-    {
-      "key": "quality",
-      "type": "choice",
-      "default": "standard",
-      "title": "녹화 화질",
-      "options": [
-        {
-          "value": "standard",
-          "title": "표준 · 1024×384 · 약 12fps · 10MB/분"
-        },
-        {
-          "value": "sharp",
-          "title": "선명 · 1280×480 · 약 8fps · 12MB/분"
-        },
-        {
-          "value": "full",
-          "title": "원본 · 1920×720 · 약 3fps · 12MB/분"
-        }
-      ]
-    },
-    {
-      "key": "auto_record",
-      "type": "toggle",
-      "default": false,
-      "title": "USB 연결 시 자동 녹화"
-    },
-    {
-      "key": "floating",
-      "type": "toggle",
-      "default": true,
-      "title": "플로팅 버튼 표시"
     }
   ]
 }

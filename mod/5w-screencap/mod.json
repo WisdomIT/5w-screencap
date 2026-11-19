@@ -34,7 +34,11 @@
       {
         "package": "dev.wisdomit.screencap",
         "class": ".MainActivity",
-        "title": "화면 캡처"
+        "title": "화면 캡처",
+        "icon": "icon.png",
+        "icon_night": "icon_night.png",
+        "icon_disabled": "icon_disabled.png",
+        "icon_disabled_night": "icon_disabled_night.png"
       }
     ],
     "star_key": [

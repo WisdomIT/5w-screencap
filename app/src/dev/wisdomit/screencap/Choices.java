@@ -1,10 +1,11 @@
 package dev.wisdomit.screencap;
 
 /**
- * The Launch screen shows a button choice as two lists (button, press) and one switch
- * ("원래 기능 막기"); HMG-API keeps it as one setting value, "<key>.<mode>", which picks the
- * binding in mod.json. Plain Java, tested off the car; KEYS must match tools/gen_input.py
- * (tests compare them with settings.json).
+ * A button choice: the owner picks a button (<action>_key) and a press (<action>_press), in the
+ * Launch screen's two dropdowns or HMG-API's two lists. HMG-API's `when` can only compare one
+ * setting, so the binding is picked by a private third value, <action> = combined(key, press),
+ * that Settings.sync keeps in step. Plain Java, tested off the car; KEYS and PRESS_VALUES must
+ * match tools/gen_input.py (tests compare them with settings.json).
  *
  *   off                       not used
  *   star                      the car's ★-key menu entry (one press; picked in the car's settings)
@@ -27,64 +28,59 @@ final class Choices {
         { "map", "MAP" },
         { "tune_enter", "TUNE 누름" },
     };
-    /** first entry of the button list */
-    static final String OFF_LABEL = "사용 안 함";
+    static final String OFF = "off", OFF_LABEL = "사용 안 함";
 
-    static final int PRESS_SHORT = 0, PRESS_HOLD = 1, PRESS_DOUBLE = 2;
-    static final String[] PRESSES = { "1회 누름", "길게 누름", "연속 2회" };
-    static final String[] STAR_PRESSES = { "1회 누름 (☆ 메뉴)", "길게 누름" };
-
-    /** one choice as the Launch screen shows it: key index in KEYS (-1: off), press, block */
-    static final class Pick {
-        final int key, press;
-        final boolean replace;
-
-        Pick(int key, int press, boolean replace) {
-            this.key = key;
-            this.press = press;
-            this.replace = replace;
-        }
-    }
+    static final String[] PRESS_VALUES = { "short", "short_r", "hold", "double" };
+    static final String[] PRESS_TITLES = { "1회 누름", "1회 누름 · 원래 기능 막기", "길게 누름", "연속 2회" };
+    /** a star key's one press is the car's ★-menu entry; a double press can't be offered there */
+    static final String[] STAR_PRESS_VALUES = { "short", "hold" };
+    static final String[] STAR_PRESS_TITLES = { "1회 누름 (☆ 메뉴)", "길게 누름" };
 
     private Choices() {}
 
-    static boolean isStar(int key) {
-        return key == 0 || key == 1;
+    /** index in KEYS, or -1 for off or a key we don't offer */
+    static int keyIndex(String key) {
+        for (int i = 0; i < KEYS.length; i++) if (KEYS[i][0].equals(key)) return i;
+        return -1;
     }
 
-    static String[] pressesFor(int key) {
-        return isStar(key) ? STAR_PRESSES : PRESSES;
+    static boolean isStar(String key) {
+        return "wheel_custom".equals(key) || "custom".equals(key);
     }
 
-    static String value(Pick p) {
-        if (p.key < 0) return "off";
-        String k = KEYS[p.key][0];
-        if (isStar(p.key)) return p.press == PRESS_HOLD ? k + ".hold" : "star";
-        if (p.press == PRESS_HOLD) return k + ".hold";
-        if (p.press == PRESS_DOUBLE) return k + ".double";
-        return k + (p.replace ? ".short_r" : ".short");
+    static String[] pressValues(String key) {
+        return isStar(key) ? STAR_PRESS_VALUES : PRESS_VALUES;
     }
 
-    static Pick pick(String value) {
-        if (value == null || value.equals("off") || value.isEmpty()) return new Pick(-1, PRESS_SHORT, true);
-        if (value.equals("star")) return new Pick(0, PRESS_SHORT, true);
-        int dot = value.indexOf('.');
-        String k = dot < 0 ? value : value.substring(0, dot), mode = dot < 0 ? "" : value.substring(dot + 1);
-        int key = -1;
-        for (int i = 0; i < KEYS.length; i++) if (KEYS[i][0].equals(k)) key = i;
-        if (key < 0) return new Pick(-1, PRESS_SHORT, true);
-        if (mode.equals("hold")) return new Pick(key, PRESS_HOLD, true);
-        if (mode.equals("double")) return new Pick(key, PRESS_DOUBLE, true);
-        return new Pick(key, PRESS_SHORT, !mode.equals("short"));
+    static String[] pressTitles(String key) {
+        return isStar(key) ? STAR_PRESS_TITLES : PRESS_TITLES;
     }
 
-    /** why two choices can't both be saved, or null */
+    /** the private value HMG-API's `when` compares (same rule as tools/gen_input.py combined()) */
+    static String combined(String key, String press) {
+        if (keyIndex(key) < 0) return OFF;
+        if (isStar(key)) return "hold".equals(press) ? key + ".hold" : "star";
+        for (String p : PRESS_VALUES) if (p.equals(press)) return key + "." + p;
+        return key + ".short_r";
+    }
+
+    /** {key, press} back from a combined value (for settings saved before the split) */
+    static String[] split(String combined) {
+        if (combined == null || combined.isEmpty() || OFF.equals(combined)) return new String[] { OFF, "short" };
+        if ("star".equals(combined)) return new String[] { "wheel_custom", "short" };
+        int dot = combined.indexOf('.');
+        String key = dot < 0 ? combined : combined.substring(0, dot), press = dot < 0 ? "short" : combined.substring(dot + 1);
+        if (keyIndex(key) < 0) return new String[] { OFF, "short" };
+        return new String[] { key, press };
+    }
+
+    /** why the two combined choices can't both be saved, or null */
     static String clash(String capture, String record) {
-        if ("off".equals(capture) || "off".equals(record)) return null;
+        if (OFF.equals(capture) || OFF.equals(record)) return null;
         if ("star".equals(capture) && "star".equals(record)) return null;   // the car's menu gives each ★ key one entry
-        Pick c = pick(capture), r = pick(record);
-        if (c.key < 0 || r.key < 0 || c.key != r.key) return null;
-        boolean cHold = c.press == PRESS_HOLD, rHold = r.press == PRESS_HOLD;
+        String[] c = split(capture), r = split(record);
+        if (!c[0].equals(r[0]) || OFF.equals(c[0])) return null;
+        boolean cHold = "hold".equals(c[1]), rHold = "hold".equals(r[1]);
         if (cHold && rHold) return "캡처와 녹화에 같은 버튼의 길게 누름을 함께 쓸 수 없습니다";
         if (!cHold && !rHold) return "캡처와 녹화에 같은 버튼의 누름을 함께 쓸 수 없습니다";
         return null;

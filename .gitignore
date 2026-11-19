@@ -5,6 +5,7 @@ dist/
 diag*/usb/*.jar
 mod/5w-screencap/app/
 mod/5w-screencap/svc/
+mod/5w-screencap/icon*.png
 
 # macOS
 .DS_Store

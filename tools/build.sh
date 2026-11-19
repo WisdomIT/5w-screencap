@@ -81,8 +81,15 @@ dex "$W/daemon" "$W/daemon/classes"
 (cd "$W/daemon" && zip -q -X screencapd.jar classes.dex)
 cp "$W/daemon/screencapd.jar" "$MOD/svc/screencapd.jar"
 
+# ---- icons: the app-menu tile (mod.json provides.launcher) and the APK's own (hdpi, the head unit's 240 dpi) ----
+python3 "$ROOT/tools/mkicon.py" "$W/icons" --app 72
+cp "$W/icons/icon.png" "$W/icons/icon_night.png" "$W/icons/icon_disabled.png" "$W/icons/icon_disabled_night.png" "$MOD/"
+mkdir -p "$W/app/res/drawable-hdpi"
+cp "$W/icons/app_icon.png" "$W/app/res/drawable-hdpi/app_icon.png"
+"$TC/aapt2" compile -o "$W/app/res.zip" --dir "$W/app/res"
+
 # ---- app ----
-"$TC/aapt2" link -o "$W/app/base.apk" -I "$ANDROID_JAR" --manifest "$ROOT/app/AndroidManifest.xml" \
+"$TC/aapt2" link -o "$W/app/base.apk" -I "$ANDROID_JAR" --manifest "$ROOT/app/AndroidManifest.xml" "$W/app/res.zip" \
     --min-sdk-version 19 --target-sdk-version 19 --version-code "$VCODE" --version-name "$VNAME"
 javac --release 8 -encoding UTF-8 -Xlint:-options -nowarn -cp "$ANDROID_JAR" -d "$W/app/classes" \
     $(find "$ROOT/app/src" "$ROOT/app/third_party" -name '*.java')
