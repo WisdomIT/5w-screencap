@@ -55,7 +55,7 @@ public final class MainActivity extends Activity {
     private ImageView thumb;
     private Button capButton, diagButton;
     private Spinner capKey, capPress, recKey, recPress, quality;
-    private Switch mic, autoRecord, floating;
+    private Switch autoRecord, floating;
     private QrView qr;
     private String usbRoot;
 
@@ -216,10 +216,6 @@ public final class MainActivity extends Activity {
         quality = spinner(QUALITY_TITLES);
         quality.setOnItemSelectedListener(onSelect());
         c.addView(labeled("화질", quality, null));
-        mic = new Switch(this);
-        mic.setOnCheckedChangeListener(onToggle());
-        c.addView(switchRow("실내 마이크 소리 포함", mic));
-        c.addView(text("차량 스피커 소리는 직접 녹음할 수 없어 마이크로 들리는 소리를 넣습니다. 음질이 낮고 대화도 녹음됩니다.", 13, MUTED));
         autoRecord = new Switch(this);
         autoRecord.setOnCheckedChangeListener(onToggle());
         c.addView(switchRow("USB 연결 시 자동 녹화", autoRecord));
@@ -252,7 +248,6 @@ public final class MainActivity extends Activity {
         setPresses(recPress, rk, s.optString("record_press"));
         String q = s.optString(Settings.QUALITY, "standard");
         for (int i = 0; i < QUALITY_VALUES.length; i++) if (QUALITY_VALUES[i].equals(q)) quality.setSelection(i, false);
-        mic.setChecked(s.optBoolean(Settings.MIC));
         autoRecord.setChecked(s.optBoolean(Settings.AUTO_RECORD));
         floating.setChecked(s.optBoolean(Settings.FLOATING, true));
         hint();
@@ -317,7 +312,6 @@ public final class MainActivity extends Activity {
             v.put("capture_key", ck).put("capture_press", cp).put("record_key", rk).put("record_press", rp)
                     .put(Settings.CAPTURE, capture).put(Settings.RECORD, record)
                     .put(Settings.QUALITY, QUALITY_VALUES[Math.max(0, quality.getSelectedItemPosition())])
-                    .put(Settings.MIC, mic.isChecked())
                     .put(Settings.AUTO_RECORD, autoRecord.isChecked()).put(Settings.FLOATING, floating.isChecked());
         } catch (Exception ignored) { }
         saveState.setText("저장 중…");

@@ -60,12 +60,8 @@ final class Diag {
         section("encoder");
         line(Recorder.CODEC, encoderTest());
 
-        section("microphone (the 마이크 소리 option)");
-        line("mic", micTest());
-
         section("recording self-test (every file must close with an index: moov)");
-        line("video, 1.5 s segments", recordTest(false, 1500, 5000));
-        line("video + mic", recordTest(true, Recorder.SEGMENT_MS, 4000));
+        line("1.5 s segments", recordTest(1500, 5000));
 
         section("usb");
         line("folder", String.valueOf(store.root()));
@@ -83,7 +79,7 @@ final class Diag {
 
         section("media writer messages (logcat)");
         String lc = Sh.run(10000, "/system/bin/logcat", "-d", "-v", "time", "-s",
-                "MPEG4Writer:*", "MediaMuxer:*", "MediaAdapter:*", "SoftAACEncoder2:*", "SoftMPEG4Encoder:*", "AudioRecord:*");
+                "MPEG4Writer:*", "MediaMuxer:*", "MediaAdapter:*", "SoftMPEG4Encoder:*");
         if (lc != null) {
             String[] lines = lc.split("\n");
             for (int i = Math.max(0, lines.length - 80); i < lines.length; i++) out.append(lines[i]).append('\n');
@@ -101,7 +97,7 @@ final class Diag {
         File tmp = new File(store.dir("diag"), ".enctest");
         tmp.mkdirs();
         final String[] err = { null };
-        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "enctest", false, new Recorder.Listener() {
+        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "enctest", new Recorder.Listener() {
             @Override public void ended(Recorder rec, String error) { err[0] = error; }
         });
         r.start();
@@ -120,16 +116,15 @@ final class Diag {
      * A short recording into a throwaway folder; then each MP4 is checked for its index (moov),
      * which KitKat's MPEG4Writer leaves out when it refuses a track. The files are deleted.
      */
-    private String recordTest(boolean mic, long segmentMs, long ms) {
+    private String recordTest(long segmentMs, long ms) {
         File tmp = new File(store.dir("diag"), ".rectest");
         tmp.mkdirs();
         final String[] err = { null };
-        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "rectest", mic, segmentMs, new Recorder.Listener() {
+        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "rectest", segmentMs, new Recorder.Listener() {
             @Override public void ended(Recorder rec, String error) { err[0] = error; }
         });
         r.start();
         try { Thread.sleep(ms); } catch (InterruptedException ignored) { }
-        String micState = r.micState();
         r.stop(8000);
         File[] files = tmp.listFiles();
         StringBuilder sb = new StringBuilder();
@@ -147,7 +142,7 @@ final class Diag {
         }
         tmp.delete();
         return (all > 0 && good == all && err[0] == null ? "ok " : "FAIL ") + good + "/" + all + " files closed,"
-                + sb + " frames " + r.frames() + (mic ? ", mic " + micState : "") + (err[0] != null ? ", error " + err[0] : "");
+                + sb + " frames " + r.frames() + (err[0] != null ? ", error " + err[0] : "");
     }
 
     /** whether the MP4 has a top-level moov box (walks the box headers) */
@@ -172,39 +167,6 @@ final class Diag {
             }
         } catch (Exception ignored) { }
         return false;
-    }
-
-    /** 1 s from the cabin microphone: the rate it opened at and how loud (no sound is kept) */
-    private static String micTest() {
-        for (int rate : Mic.RATES) {
-            android.media.AudioRecord a = null;
-            try {
-                int min = android.media.AudioRecord.getMinBufferSize(rate, android.media.AudioFormat.CHANNEL_IN_MONO,
-                        android.media.AudioFormat.ENCODING_PCM_16BIT);
-                if (min <= 0) continue;
-                a = new android.media.AudioRecord(Mic.SOURCE_MIC, rate, android.media.AudioFormat.CHANNEL_IN_MONO,
-                        android.media.AudioFormat.ENCODING_PCM_16BIT, Math.max(min * 4, rate));
-                if (a.getState() != android.media.AudioRecord.STATE_INITIALIZED) continue;
-                a.startRecording();
-                byte[] pcm = new byte[rate * 2];
-                int got = 0;
-                long until = System.currentTimeMillis() + 2000;
-                while (got < pcm.length && System.currentTimeMillis() < until) {
-                    int n = a.read(pcm, got, pcm.length - got);
-                    if (n <= 0) break;
-                    got += n;
-                }
-                double sum = 0;
-                for (int i = 0; i + 1 < got; i += 2) { int v = (short) ((pcm[i] & 0xff) | (pcm[i + 1] << 8)); sum += (double) v * v; }
-                double rms = got < 2 ? 0 : Math.sqrt(sum / (got / 2));
-                return "ok " + rate + " Hz, " + got + " bytes, " + (rms > 0 ? String.format("%.1f dBFS", 20 * Math.log10(rms / 32768)) : "silent");
-            } catch (Throwable t) {
-                return "FAIL " + t;
-            } finally {
-                if (a != null) { try { a.stop(); } catch (Throwable ignored) { } a.release(); }
-            }
-        }
-        return "FAIL no rate opened";
     }
 
     private void section(String s) { out.append("\n===== ").append(s).append('\n'); }
