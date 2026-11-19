@@ -1,0 +1,605 @@
+{
+  "id": "5w-screencap",
+  "name": "5W Screencap",
+  "version": "0.1.0",
+  "hmgapi": ">=1.0.0",
+  "authors": [
+    "WisdomIT"
+  ],
+  "description": "Saves the head unit screen to USB: a photo with one button press, a video while you drive. CarPlay and Android Auto included; picture only, no sound.",
+  "repo": "https://github.com/WisdomIT/5w-screencap",
+  "live": true,
+  "apps": [
+    {
+      "apk": "app/Screencap.apk",
+      "package": "dev.wisdomit.screencap"
+    }
+  ],
+  "services": [
+    {
+      "name": "screencapd",
+      "jar": "svc/screencapd.jar",
+      "class": "dev.wisdomit.screencap.daemon.Main",
+      "user": "root",
+      "start": "android",
+      "restart": true
+    }
+  ],
+  "usb": [
+    "5W-Screencap"
+  ],
+  "provides": {
+    "launcher": [
+      {
+        "package": "dev.wisdomit.screencap",
+        "class": ".MainActivity",
+        "title": "화면 캡처",
+        "icon": "icon.png",
+        "icon_night": "icon_night.png",
+        "icon_disabled": "icon_disabled.png",
+        "icon_disabled_night": "icon_disabled_night.png"
+      }
+    ],
+    "star_key": [
+      {
+        "id": "capture",
+        "title": "화면 캡처",
+        "broadcast": "dev.wisdomit.screencap.CAPTURE"
+      },
+      {
+        "id": "record",
+        "title": "화면 녹화 시작/정지",
+        "broadcast": "dev.wisdomit.screencap.RECORD"
+      }
+    ]
+  },
+  "car_events": {
+    "shutdown": {}
+  },
+  "input": [
+    {
+      "key": "wheel_custom",
+      "press": "hold",
+      "when": "settings.capture=wheel_custom.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "custom",
+      "press": "hold",
+      "when": "settings.capture=custom.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mode",
+      "press": "short",
+      "when": "settings.capture=mode.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mode",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=mode.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mode",
+      "press": "hold",
+      "when": "settings.capture=mode.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mode",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=mode.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mute",
+      "press": "short",
+      "when": "settings.capture=mute.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mute",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=mute.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mute",
+      "press": "hold",
+      "when": "settings.capture=mute.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "mute",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=mute.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "call",
+      "press": "short",
+      "when": "settings.capture=call.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "call",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=call.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "call",
+      "press": "hold",
+      "when": "settings.capture=call.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "call",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=call.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "radio",
+      "press": "short",
+      "when": "settings.capture=radio.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "radio",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=radio.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "radio",
+      "press": "hold",
+      "when": "settings.capture=radio.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "radio",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=radio.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "media",
+      "press": "short",
+      "when": "settings.capture=media.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "media",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=media.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "media",
+      "press": "hold",
+      "when": "settings.capture=media.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "media",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=media.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "fmam",
+      "press": "short",
+      "when": "settings.capture=fmam.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "fmam",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=fmam.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "fmam",
+      "press": "hold",
+      "when": "settings.capture=fmam.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "fmam",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=fmam.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "setup",
+      "press": "short",
+      "when": "settings.capture=setup.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "setup",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=setup.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "setup",
+      "press": "hold",
+      "when": "settings.capture=setup.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "setup",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=setup.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "phone",
+      "press": "short",
+      "when": "settings.capture=phone.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "phone",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=phone.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "phone",
+      "press": "hold",
+      "when": "settings.capture=phone.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "phone",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=phone.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "map",
+      "press": "short",
+      "when": "settings.capture=map.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "map",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=map.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "map",
+      "press": "hold",
+      "when": "settings.capture=map.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "map",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=map.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "tune_enter",
+      "press": "short",
+      "when": "settings.capture=tune_enter.short",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "tune_enter",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=tune_enter.short_r",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "tune_enter",
+      "press": "hold",
+      "when": "settings.capture=tune_enter.hold",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "tune_enter",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.capture=tune_enter.double",
+      "broadcast": "dev.wisdomit.screencap.CAPTURE"
+    },
+    {
+      "key": "wheel_custom",
+      "press": "hold",
+      "when": "settings.record=wheel_custom.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "custom",
+      "press": "hold",
+      "when": "settings.record=custom.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mode",
+      "press": "short",
+      "when": "settings.record=mode.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mode",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=mode.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mode",
+      "press": "hold",
+      "when": "settings.record=mode.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mode",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=mode.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mute",
+      "press": "short",
+      "when": "settings.record=mute.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mute",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=mute.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mute",
+      "press": "hold",
+      "when": "settings.record=mute.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "mute",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=mute.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "call",
+      "press": "short",
+      "when": "settings.record=call.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "call",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=call.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "call",
+      "press": "hold",
+      "when": "settings.record=call.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "call",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=call.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "radio",
+      "press": "short",
+      "when": "settings.record=radio.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "radio",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=radio.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "radio",
+      "press": "hold",
+      "when": "settings.record=radio.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "radio",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=radio.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "media",
+      "press": "short",
+      "when": "settings.record=media.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "media",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=media.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "media",
+      "press": "hold",
+      "when": "settings.record=media.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "media",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=media.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "fmam",
+      "press": "short",
+      "when": "settings.record=fmam.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "fmam",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=fmam.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "fmam",
+      "press": "hold",
+      "when": "settings.record=fmam.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "fmam",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=fmam.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "setup",
+      "press": "short",
+      "when": "settings.record=setup.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "setup",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=setup.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "setup",
+      "press": "hold",
+      "when": "settings.record=setup.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "setup",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=setup.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "phone",
+      "press": "short",
+      "when": "settings.record=phone.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "phone",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=phone.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "phone",
+      "press": "hold",
+      "when": "settings.record=phone.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "phone",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=phone.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "map",
+      "press": "short",
+      "when": "settings.record=map.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "map",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=map.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "map",
+      "press": "hold",
+      "when": "settings.record=map.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "map",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=map.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "tune_enter",
+      "press": "short",
+      "when": "settings.record=tune_enter.short",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "tune_enter",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=tune_enter.short_r",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "tune_enter",
+      "press": "hold",
+      "when": "settings.record=tune_enter.hold",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    },
+    {
+      "key": "tune_enter",
+      "press": "short",
+      "stock": "replace",
+      "when": "settings.record=tune_enter.double",
+      "broadcast": "dev.wisdomit.screencap.RECORD"
+    }
+  ]
+}

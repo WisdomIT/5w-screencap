@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 설치·사용 방법
+    url: https://github.com/WisdomIT/5w-screencap#readme
+    about: 이슈를 쓰기 전에 README의 설치와 사용 방법을 확인해 주세요.

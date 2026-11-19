@@ -1,11 +1,29 @@
 # build tools (d8) and build outputs
 .tools/
+build/
+dist/
 diag*/usb/*.jar
+mod/5w-screencap/app/
+mod/5w-screencap/svc/
+mod/5w-screencap/icon*.png
 
 # macOS
 .DS_Store
 ._*
+__pycache__/
 
 # raw framebuffer / screen dumps (large) and the OEM binary copied off the head unit
 *.raw
 diag/results/**/bin_screenshot
+
+# on-car output copied off a USB stick (screenshots, recordings, diagnostics): never commit.
+# Anchored to the root: git on macOS ignores case, and an unanchored 5W-Screencap/ would hide mod/5w-screencap/.
+/5W-Screencap/
+/5W-DIAG*/
+
+# screen captures, recordings and sound from the car: never commit (keep the text results)
+diag/results/**/*.mp4
+diag/results/**/*.ivf
+diag/results/**/*.jpg
+diag/results/**/*.png
+diag/results/**/*.wav
