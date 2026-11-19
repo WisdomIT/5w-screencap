@@ -82,6 +82,16 @@ public final class DaemonTests {
         check("closed MP4 has moov", Diag.hasMoov(closed));
         check("unfinished MP4 has none", !Diag.hasMoov(open));
 
+        // Diag.status before it runs: the stages the Launch screen draws, none finished yet
+        org.json.JSONObject st = new Diag(null, null, "0.1.0", "{}").status();
+        eq("diag state", "running", st.getString("state"));
+        eq("diag stage before the first", -1, st.getInt("stage"));
+        eq("diag total", Diag.STAGES.length, st.getInt("total"));
+        eq("diag stages listed", Diag.STAGES.length, st.getJSONArray("stages").length());
+        eq("first stage name", "버전 정보", st.getJSONArray("stages").getJSONObject(0).getString("name"));
+        check("no result yet", st.getJSONArray("stages").getJSONObject(0).isNull("result"));
+        check("no folder yet", !st.has("dir"));
+
         // Recorder.csd: a copy of csd-0 from its start, whatever the format's buffer position
         android.media.MediaFormat f = android.media.MediaFormat.createVideoFormat("video/mp4v-es", 16, 16);
         java.nio.ByteBuffer vol = java.nio.ByteBuffer.wrap(new byte[] { 0, 0, 1, (byte) 0xb0, 1, 2, 3 });

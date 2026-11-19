@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -51,9 +52,17 @@ public final class MainActivity extends Activity {
     private String version = "?";
     private boolean loading = true;
 
-    private TextView pill, saveState, buttonHint, recTitle, capResult, diagState, fwText;
+    private TextView pill, saveState, buttonHint, recTitle, capResult, diagState, fwText, diagTitle, diagDetail, diagResult;
     private ImageView thumb;
     private Button capButton, diagButton;
+    private LinearLayout diagPanel;
+    private ProgressBar diagProgress;
+    /** the stage views, made when the first status names the stages (screencapd's Diag.STAGES) */
+    private final java.util.List<TextView> stepViews = new java.util.ArrayList<TextView>();
+    private LinearLayout stepGrid;
+    private boolean diagPolling;
+    /** this screen saw the diagnostics running; otherwise a finished run is shown as the last one */
+    private boolean sawDiagRunning;
     private Spinner capKey, capPress, recKey, recPress, quality;
     private Switch autoRecord, floating;
     private QrView qr;
@@ -77,16 +86,24 @@ public final class MainActivity extends Activity {
                 final JSONObject s = Settings.sync(MainActivity.this, Settings.load(MainActivity.this));
                 final JSONObject st = Daemon.call("status", 3000);
                 final CarInfo info = CarInfo.read(version);
+                final JSONObject diag = Daemon.call("diag-status", 3000);
                 ui.post(new Runnable() {
                     @Override public void run() {
                         fill(s);
                         status(st);
                         qr.setText(info.issueUrl());
                         fwText.setText(info.firmware + "\nHMG-API " + info.hmgapi + " · 5W Screencap " + version);
+                        if (showDiag(diag)) pollDiag();   // it may have been running while this screen was away
                     }
                 });
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        diagPolling = false;
     }
 
     // ---- layout ----
@@ -227,13 +244,35 @@ public final class MainActivity extends Activity {
 
     private View diagCard() {
         LinearLayout c = card("진단", "문제 신고에 첨부할 정보");
+        LinearLayout row = horizontal();
+        row.setGravity(Gravity.CENTER_VERTICAL);
         diagButton = button("진단 실행", false);
         diagButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { runDiag(); }
+            @Override public void onClick(View v) { startDiag(); }
         });
-        c.addView(diagButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        diagState = text("약 10초 · USB의 5W-Screencap/diag 에 저장됩니다. 캡처 이미지나 개인 정보는 담지 않습니다.", 14, MUTED);
-        c.addView(diagState, margins(dp(8)));
+        row.addView(diagButton);
+        diagState = text("약 20초 · USB의 5W-Screencap/diag 에 저장됩니다. 캡처 이미지나 개인 정보는 담지 않습니다.", 13, MUTED);
+        diagState.setPadding(dp(12), 0, 0, 0);
+        row.addView(diagState, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        c.addView(row, margins(dp(4)));
+
+        // progress, as pretendard-systemfont's status screen shows it
+        diagPanel = vertical();
+        diagPanel.setVisibility(View.GONE);
+        diagTitle = text("", 16, TEXT);
+        diagTitle.setTypeface(Typeface.DEFAULT_BOLD);
+        diagPanel.addView(diagTitle);
+        diagProgress = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        diagPanel.addView(diagProgress, margins(dp(6)));
+        stepGrid = vertical();
+        diagPanel.addView(stepGrid, margins(dp(6)));
+        diagDetail = text("", 13, SUB);
+        diagPanel.addView(diagDetail, margins(dp(6)));
+        diagResult = text("", 13, SUB);
+        diagResult.setTypeface(Typeface.MONOSPACE);
+        diagResult.setVisibility(View.GONE);
+        diagPanel.addView(diagResult, margins(dp(6)));
+        c.addView(diagPanel, margins(dp(8)));
         return c;
     }
 
@@ -407,29 +446,161 @@ public final class MainActivity extends Activity {
         }
     }
 
-    private void runDiag() {
+    private void startDiag() {
         diagButton.setEnabled(false);
-        diagButton.setText("진단 중…");
-        diagState.setText("평소 10초 안에 끝납니다. 화면을 끄지 마세요.");
+        diagState.setText("진단을 시작하는 중…");
         diagState.setTextColor(SUB);
         background(new Runnable() {
             @Override public void run() {
-                final JSONObject r = Daemon.call("diag " + Settings.cached(MainActivity.this), 60000);
+                final JSONObject r = Daemon.call("diag-start " + Settings.cached(MainActivity.this), 5000);
                 ui.post(new Runnable() {
                     @Override public void run() {
                         diagButton.setEnabled(true);
-                        diagButton.setText("다시 실행");
-                        if (r.optBoolean("ok")) {
-                            diagState.setText("완료 · USB의 5W-Screencap/" + r.optString("dir") + "/SUMMARY.txt");
-                            diagState.setTextColor(GOOD_FG);
-                        } else {
-                            diagState.setText("실패 · " + Feedback.error(r.optString("error")));
-                            diagState.setTextColor(BAD_FG);
+                        if (!r.optBoolean("ok")) {
+                            diagState.setText("진단을 시작하지 못했습니다 · " + Feedback.error(r.optString("error")));
+                            diagState.setTextColor("no_usb".equals(r.optString("error")) ? WARN_FG : BAD_FG);
+                            return;
                         }
+                        sawDiagRunning = true;
+                        showDiag(r);
+                        pollDiag();
                     }
                 });
             }
         });
+    }
+
+    /** asks screencapd every 0.7 s while the diagnostics run */
+    private void pollDiag() {
+        if (diagPolling) return;
+        diagPolling = true;
+        ui.post(new Runnable() {
+            @Override public void run() {
+                final Runnable self = this;
+                background(new Runnable() {
+                    @Override public void run() {
+                        final JSONObject st = Daemon.call("diag-status", 3000);
+                        ui.post(new Runnable() {
+                            @Override public void run() {
+                                if (!diagPolling) return;
+                                if (showDiag(st)) ui.postDelayed(self, 700);
+                                else diagPolling = false;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /** draws the diagnostics' state; true while it should keep watching */
+    private boolean showDiag(JSONObject st) {
+        String state = st.optString("state");
+        org.json.JSONArray stages = st.optJSONArray("stages");
+        int total = st.optInt("total", stages == null ? 0 : stages.length());
+        int idx = st.optInt("stage", -1);
+        long sec = st.optLong("elapsed");
+        if ("running".equals(state)) {
+            sawDiagRunning = true;
+            diagButton.setEnabled(false);
+            diagButton.setText("진단 중…");
+            diagPanel.setVisibility(View.VISIBLE);
+            diagTitle.setTextColor(TEXT);
+            diagTitle.setText("진단 중 · " + (idx < 0 ? "준비" : (idx + 1) + "/" + total + " " + stageName(stages, idx)));
+            diagProgress.setMax(Math.max(total, 1));
+            diagProgress.setProgress(Math.max(idx, 0));
+            drawSteps(stages, idx);
+            String now = st.optString("detail");
+            diagDetail.setText((now.isEmpty() ? "" : "지금: " + now + "\n") + sec + "초 경과 · USB를 뽑지 마세요");
+            diagDetail.setTextColor(SUB);
+            diagResult.setVisibility(View.GONE);
+            diagState.setText("진단이 끝나면 결과가 아래에 나옵니다");
+            diagState.setTextColor(SUB);
+            return true;
+        }
+        diagButton.setEnabled(true);
+        diagButton.setText("진단 실행");
+        if ("done".equals(state) || "error".equals(state)) {
+            diagPanel.setVisibility(View.VISIBLE);
+            diagProgress.setMax(Math.max(total, 1));
+            diagProgress.setProgress("done".equals(state) ? total : Math.max(idx, 0));
+            drawSteps(stages, "done".equals(state) ? total : idx);
+            int fails = 0;
+            StringBuilder lines = new StringBuilder();
+            for (int i = 0; stages != null && i < stages.length(); i++) {
+                JSONObject g = stages.optJSONObject(i);
+                if (g == null || g.isNull("result")) continue;
+                boolean ok = "ok".equals(g.optString("result"));
+                if (!ok) fails++;
+                String note = g.optString("note");
+                if (!note.isEmpty()) lines.append(ok ? "✓ " : "✗ ").append(g.optString("name")).append("  ").append(note).append('\n');
+            }
+            diagResult.setText(lines.toString().trim());
+            diagResult.setVisibility(lines.length() > 0 ? View.VISIBLE : View.GONE);
+            String dir = st.optString("dir");
+            if ("error".equals(state)) {
+                diagTitle.setTextColor(WARN_FG);
+                boolean removed = "usb_removed".equals(st.optString("error")) || "no_usb".equals(st.optString("error"));
+                diagTitle.setText(removed ? "USB가 분리되어 진단을 멈췄습니다" : "진단을 멈췄습니다");
+                diagDetail.setText(removed ? "USB를 다시 꽂고 진단 실행을 눌러 주세요." : "다시 실행해 주세요. 계속 멈추면 오른쪽 QR로 알려 주세요.");
+            } else if (sawDiagRunning) {
+                diagTitle.setTextColor(fails == 0 ? GOOD_FG : WARN_FG);
+                diagTitle.setText((fails == 0 ? "진단 완료 · " : "진단 완료 · 확인할 항목 " + fails + "개 · ") + sec + "초");
+                diagDetail.setText("USB의 5W-Screencap/" + dir + " 폴더에 저장했습니다. 문제를 알릴 때는 그 안의 SUMMARY.txt를 첨부해 주세요.");
+            } else {
+                diagTitle.setTextColor(SUB);
+                diagTitle.setText("지난 진단 결과" + (fails > 0 ? " · 확인할 항목 " + fails + "개" : ""));
+                diagDetail.setText("USB의 5W-Screencap/" + dir + " (새로 진단하려면 진단 실행을 누르세요)");
+            }
+            diagDetail.setTextColor(SUB);
+            diagState.setText("약 20초 · USB의 5W-Screencap/diag 에 저장됩니다. 캡처 이미지나 개인 정보는 담지 않습니다.");
+            diagState.setTextColor(MUTED);
+            return false;
+        }
+        diagPanel.setVisibility(View.GONE);   // idle, or screencapd not answering
+        return false;
+    }
+
+    /** ✓ finished (✗ if it found a problem), ● running, ○ waiting; four to a row */
+    private void drawSteps(org.json.JSONArray stages, int current) {
+        int n = stages == null ? 0 : stages.length();
+        if (stepViews.size() != n) {
+            stepGrid.removeAllViews();
+            stepViews.clear();
+            LinearLayout line = null;
+            for (int i = 0; i < n; i++) {
+                if (i % 4 == 0) {
+                    line = horizontal();
+                    stepGrid.addView(line, margins(i == 0 ? 0 : dp(3)));
+                }
+                TextView t = text("", 14, MUTED);
+                t.setSingleLine(true);
+                line.addView(t, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                stepViews.add(t);
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            JSONObject g = stages.optJSONObject(i);
+            String name = g == null ? "" : g.optString("name");
+            String result = g == null || g.isNull("result") ? null : g.optString("result");
+            TextView t = stepViews.get(i);
+            if (result != null && i != current) {
+                boolean ok = "ok".equals(result);
+                t.setText((ok ? "✓ " : "✗ ") + name);
+                t.setTextColor(ok ? GOOD_FG : BAD_FG);
+            } else if (i == current) {
+                t.setText("● " + name);
+                t.setTextColor(ACCENT);
+            } else {
+                t.setText("○ " + name);
+                t.setTextColor(MUTED);
+            }
+        }
+    }
+
+    private static String stageName(org.json.JSONArray stages, int i) {
+        JSONObject g = stages == null ? null : stages.optJSONObject(i);
+        return g == null ? "" : g.optString("name");
     }
 
     // ---- small view helpers ----
