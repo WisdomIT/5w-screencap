@@ -33,6 +33,8 @@ final class Mic implements Runnable {
 
     interface Sink {
         void audioFormat(MediaFormat f);
+        /** the encoder's configuration buffer (AudioSpecificConfig) */
+        void audioCsd(ByteBuffer b, MediaCodec.BufferInfo info);
         void audioSample(ByteBuffer b, MediaCodec.BufferInfo info);
         /** no sound from here on (the microphone or encoder failed) */
         void audioGone(String why);
@@ -112,7 +114,9 @@ final class Mic implements Runnable {
                     } else if (idx == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                         sink.audioFormat(aac.getOutputFormat());
                     } else if (idx >= 0) {
-                        if (info.size > 0 && (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) == 0 && baseUs >= 0) {
+                        if (info.size > 0 && (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                            sink.audioCsd(out[idx], info);
+                        } else if (info.size > 0 && baseUs >= 0) {
                             ByteBuffer b = out[idx];
                             b.position(info.offset);
                             b.limit(info.offset + info.size);

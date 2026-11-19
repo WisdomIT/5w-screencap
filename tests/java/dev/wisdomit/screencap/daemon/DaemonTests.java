@@ -8,6 +8,19 @@ import static dev.wisdomit.screencap.T.check;
 import static dev.wisdomit.screencap.T.eq;
 
 public final class DaemonTests {
+    /** concatenates parts; with a type, a box of that total size with zero payload */
+    static byte[] box(byte[] head, String type, int size, byte[]... more) throws Exception {
+        java.io.ByteArrayOutputStream o = new java.io.ByteArrayOutputStream();
+        o.write(head);
+        if (!type.isEmpty()) {
+            o.write(new byte[] { (byte) (size >> 24), (byte) (size >> 16), (byte) (size >> 8), (byte) size });
+            o.write(type.getBytes("ISO-8859-1"));
+            o.write(new byte[size - 8]);
+        }
+        for (byte[] b : more) o.write(b);
+        return o.toByteArray();
+    }
+
     public static void run() throws Exception {
         // Yuv: white and red, BT.601 limited range, I420 plane layout
         int w = 4, h = 2;
@@ -57,5 +70,25 @@ public final class DaemonTests {
         eq("no overlay", -1, Screen.findOverlayLayer("  Window #5 Window{41a2c8 u0 StatusBar}:\n    mBaseLayer=161000 mSubLayer=0\n"));
         eq("no dump", -1, Screen.findOverlayLayer(null));
         eq("default layer is TYPE_SYSTEM_ERROR's", 22 * 10000 + 1000, Screen.DEFAULT_OVERLAY_LAYER);
+
+        // Diag.hasMoov: a closed MP4 has a moov box; one MPEG4Writer never finished has "????" as its mdat size
+        File closed = new File(dir, "closed.mp4"), open = new File(dir, "open.mp4");
+        Files.write(closed.toPath(), box(box(new byte[0], "ftyp", 16), "", 0, box(new byte[0], "free", 8),
+                box(new byte[0], "mdat", 100), box(new byte[0], "moov", 40)));
+        byte[] unfinished = box(box(new byte[0], "ftyp", 16), "", 0, box(new byte[0], "free", 8), box(new byte[0], "mdat", 300));
+        int m = unfinished.length - 300;
+        unfinished[m] = '?'; unfinished[m + 1] = '?'; unfinished[m + 2] = '?'; unfinished[m + 3] = '?';
+        Files.write(open.toPath(), unfinished);
+        check("closed MP4 has moov", Diag.hasMoov(closed));
+        check("unfinished MP4 has none", !Diag.hasMoov(open));
+
+        // Recorder.csd: a copy of csd-0 from its start, whatever the format's buffer position
+        android.media.MediaFormat f = android.media.MediaFormat.createVideoFormat("video/mp4v-es", 16, 16);
+        java.nio.ByteBuffer vol = java.nio.ByteBuffer.wrap(new byte[] { 0, 0, 1, (byte) 0xb0, 1, 2, 3 });
+        vol.position(7);   // as if something had read it already
+        f.setByteBuffer("csd-0", vol);
+        byte[] got = Recorder.csd(f);
+        eq("csd copied from the start", 7, got == null ? -1 : got.length);
+        eq("csd left the format's buffer alone", 7, vol.position());
     }
 }

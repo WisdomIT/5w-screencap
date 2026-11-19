@@ -63,6 +63,10 @@ final class Diag {
         section("microphone (the 마이크 소리 option)");
         line("mic", micTest());
 
+        section("recording self-test (every file must close with an index: moov)");
+        line("video, 1.5 s segments", recordTest(false, 1500, 5000));
+        line("video + mic", recordTest(true, Recorder.SEGMENT_MS, 4000));
+
         section("usb");
         line("folder", String.valueOf(store.root()));
         File root = store.root();
@@ -110,6 +114,64 @@ final class Diag {
         tmp.delete();
         if (err[0] != null) return "FAIL " + err[0];
         return (frames > 0 && bytes > 0 ? "ok " : "FAIL ") + frames + " frames in 2 s (" + (frames / 2.0) + " fps), " + bytes + " bytes";
+    }
+
+    /**
+     * A short recording into a throwaway folder; then each MP4 is checked for its index (moov),
+     * which KitKat's MPEG4Writer leaves out when it refuses a track. The files are deleted.
+     */
+    private String recordTest(boolean mic, long segmentMs, long ms) {
+        File tmp = new File(store.dir("diag"), ".rectest");
+        tmp.mkdirs();
+        final String[] err = { null };
+        Recorder r = new Recorder(screen, Quality.STANDARD, tmp, "rectest", mic, segmentMs, new Recorder.Listener() {
+            @Override public void ended(Recorder rec, String error) { err[0] = error; }
+        });
+        r.start();
+        try { Thread.sleep(ms); } catch (InterruptedException ignored) { }
+        String micState = r.micState();
+        r.stop(8000);
+        File[] files = tmp.listFiles();
+        StringBuilder sb = new StringBuilder();
+        int good = 0, all = 0;
+        if (files != null) {
+            java.util.Arrays.sort(files);
+            for (File x : files) {
+                if (!x.getName().endsWith(".mp4")) { x.delete(); continue; }
+                all++;
+                boolean moov = hasMoov(x);
+                if (moov) good++;
+                sb.append(' ').append(x.getName().replace("rectest_", "#")).append(moov ? " ok" : " NO-MOOV").append(',');
+                x.delete();
+            }
+        }
+        tmp.delete();
+        return (all > 0 && good == all && err[0] == null ? "ok " : "FAIL ") + good + "/" + all + " files closed,"
+                + sb + " frames " + r.frames() + (mic ? ", mic " + micState : "") + (err[0] != null ? ", error " + err[0] : "");
+    }
+
+    /** whether the MP4 has a top-level moov box (walks the box headers) */
+    static boolean hasMoov(File f) {
+        try {
+            java.io.RandomAccessFile in = new java.io.RandomAccessFile(f, "r");
+            try {
+                long pos = 0, len = in.length();
+                byte[] h = new byte[16];
+                while (pos + 8 <= len) {
+                    in.seek(pos);
+                    in.readFully(h, 0, 8);
+                    long size = ((h[0] & 0xffL) << 24) | ((h[1] & 0xff) << 16) | ((h[2] & 0xff) << 8) | (h[3] & 0xff);
+                    String type = new String(h, 4, 4, "ISO-8859-1");
+                    if (size == 1) { in.readFully(h, 8, 8); size = java.nio.ByteBuffer.wrap(h, 8, 8).getLong(); }
+                    if ("moov".equals(type)) return true;
+                    if (size < 8) return false;
+                    pos += size;
+                }
+            } finally {
+                in.close();
+            }
+        } catch (Exception ignored) { }
+        return false;
     }
 
     /** 1 s from the cabin microphone: the rate it opened at and how loud (no sound is kept) */

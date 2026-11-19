@@ -36,6 +36,7 @@ final class Recorder implements Runnable {
     final String base;
     final long startedAt = System.currentTimeMillis();
     final boolean withMic;
+    final long segmentMs;
     private final Screen screen;
     private final Listener listener;
     private volatile boolean stop;
@@ -45,6 +46,11 @@ final class Recorder implements Runnable {
     private Thread thread;
 
     Recorder(Screen screen, Quality quality, File dir, String base, boolean withMic, Listener listener) {
+        this(screen, quality, dir, base, withMic, SEGMENT_MS, listener);
+    }
+
+    Recorder(Screen screen, Quality quality, File dir, String base, boolean withMic, long segmentMs, Listener listener) {
+        this.segmentMs = segmentMs;
         this.screen = screen;
         this.quality = quality;
         this.dir = dir;
@@ -146,9 +152,11 @@ final class Recorder implements Runnable {
                     } else if (idx == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
                         outBufs = codec.getOutputBuffers();
                     } else if (idx == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
-                        out.format = codec.getOutputFormat();
+                        out.videoFormat(codec.getOutputFormat());
                     } else if (idx >= 0) {
-                        if (info.size > 0 && (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) == 0) {
+                        if (info.size > 0 && (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                            out.videoCsd(outBufs[idx], info);   // the VOL header: our own copy for every segment
+                        } else if (info.size > 0) {
                             ByteBuffer bb = outBufs[idx];
                             bb.position(info.offset);
                             bb.limit(info.offset + info.size);
@@ -177,11 +185,18 @@ final class Recorder implements Runnable {
     }
 
     /**
-     * One MP4 at a time; a new one starts on the first key frame after SEGMENT_MS. Written from
+     * One MP4 at a time; a new one starts on the first key frame after segmentMs. Written from
      * the recorder thread (video) and the Mic thread (sound): every method is synchronized.
+     *
+     * Each new MP4 gets the codecs' configuration (MPEG-4 VOL header, AAC config) from our own
+     * copies, put into the track formats as a fresh csd-0 just before addTrack. Taken as it came
+     * from the encoder a second or more earlier, the MPEG-4 track's csd-0 didn't reach the writer
+     * on a Niro (MPEG4Writer "Missing codec specific data": no moov, an unplayable file); this
+     * happened when the first MP4 had to wait for the sound track's format.
      */
     private final class Segments implements Mic.Sink {
         MediaFormat format, audioFormat;
+        byte[] videoCsd, audioCsd;
         boolean expectAudio, audioGone;
         MediaMuxer muxer;
         int track, audioTrack = -1;
@@ -189,15 +204,18 @@ final class Recorder implements Runnable {
 
         synchronized void write(ByteBuffer b, MediaCodec.BufferInfo info) throws Exception {
             boolean key = (info.flags & 1) != 0;   // BUFFER_FLAG_SYNC_FRAME
-            if (muxer == null || (key && System.currentTimeMillis() - openedAt >= SEGMENT_MS)) {
+            if (muxer == null || (key && System.currentTimeMillis() - openedAt >= segmentMs)) {
                 if (muxer == null && !key) return;   // a segment starts on a key frame
                 if (format == null) return;
                 if (expectAudio && audioFormat == null && !audioGone) return;   // wait for the sound track's format
                 close();
                 File f = Names.unique(dir, Names.segment(base, segments + 1), ".mp4");
                 muxer = new MediaMuxer(f.getPath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+                if (videoCsd != null) format.setByteBuffer("csd-0", ByteBuffer.wrap(videoCsd.clone()));
                 track = muxer.addTrack(format);
-                audioTrack = audioFormat != null && !audioGone ? muxer.addTrack(audioFormat) : -1;
+                boolean withAudio = audioFormat != null && !audioGone;
+                if (withAudio && audioCsd != null) audioFormat.setByteBuffer("csd-0", ByteBuffer.wrap(audioCsd.clone()));
+                audioTrack = withAudio ? muxer.addTrack(audioFormat) : -1;
                 muxer.start();
                 segments++;
                 currentFile = f.getName();
@@ -216,10 +234,25 @@ final class Recorder implements Runnable {
             info.presentationTimeUs = pts;
         }
 
+        synchronized void videoFormat(MediaFormat f) {
+            format = f;
+            if (videoCsd == null) videoCsd = csd(f);
+        }
+
+        synchronized void videoCsd(ByteBuffer b, MediaCodec.BufferInfo info) {
+            videoCsd = bytes(b, info);
+        }
+
         @Override
         public synchronized void audioFormat(MediaFormat f) {
             audioFormat = f;
+            if (audioCsd == null) audioCsd = csd(f);
             micState = "on";
+        }
+
+        @Override
+        public synchronized void audioCsd(ByteBuffer b, MediaCodec.BufferInfo info) {
+            audioCsd = bytes(b, info);
         }
 
         @Override
@@ -261,6 +294,31 @@ final class Recorder implements Runnable {
             muxer = null;
             audioTrack = -1;
         }
+    }
+
+    /** a copy of the format's csd-0, read from its start without moving the format's own buffer */
+    static byte[] csd(MediaFormat f) {
+        try {
+            ByteBuffer b = f.getByteBuffer("csd-0");
+            if (b == null) return null;
+            ByteBuffer d = b.duplicate();
+            d.position(0);
+            byte[] out = new byte[d.remaining()];
+            d.get(out);
+            return out.length > 0 ? out : null;
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
+    /** a copy of an output buffer's bytes */
+    static byte[] bytes(ByteBuffer b, MediaCodec.BufferInfo info) {
+        ByteBuffer d = b.duplicate();
+        d.position(info.offset);
+        d.limit(info.offset + info.size);
+        byte[] out = new byte[info.size];
+        d.get(out);
+        return out;
     }
 
     private static void sleepNs(long ns) {
