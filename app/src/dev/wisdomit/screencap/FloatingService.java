@@ -46,11 +46,21 @@ public final class FloatingService extends Service {
     private float dp;
     private boolean polling, attached;
 
-    /** puts the button up or takes it down, as the "floating" setting says */
+    /**
+     * Puts the button up or takes it down, as the "floating" setting says, and tells screencapd,
+     * whose watchdog starts this service again when it stops hearing from it (unless it's off).
+     */
     static void sync(Context c, boolean on) {
         Intent i = new Intent(c, FloatingService.class);
         if (on) c.startService(i);
         else c.stopService(i);
+        tellDaemonWanted(on);
+    }
+
+    private static void tellDaemonWanted(final boolean on) {
+        new Thread(new Runnable() {
+            @Override public void run() { Daemon.call("floating " + (on ? "on" : "off"), 3000); }
+        }, "fab-wanted").start();
     }
 
     /** something changed (recording started or stopped): ask screencapd now */
@@ -66,6 +76,12 @@ public final class FloatingService extends Service {
 
     @Override
     public int onStartCommand(Intent i, int flags, int startId) {
+        // started by screencapd's watchdog or at boot: only if the owner wants the button
+        if (!Settings.cached(this).optBoolean(Settings.FLOATING, true)) {
+            tellDaemonWanted(false);
+            stopSelf();
+            return START_NOT_STICKY;
+        }
         if (view == null) show();
         return START_STICKY;
     }

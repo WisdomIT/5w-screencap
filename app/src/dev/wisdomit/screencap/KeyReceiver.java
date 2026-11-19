@@ -14,6 +14,8 @@ import org.json.JSONObject;
  *
  * "Double" (two presses within 0.4 s) is counted here: HMG-API only delivers single
  * presses, taken from the car ("stock": "replace"), so a lone press does nothing.
+ *
+ * While a recording runs, the capture button stops it instead of taking a photo.
  */
 public final class KeyReceiver extends BroadcastReceiver {
     static final String CAPTURE = "dev.wisdomit.screencap.CAPTURE", RECORD = "dev.wisdomit.screencap.RECORD";
@@ -36,7 +38,7 @@ public final class KeyReceiver extends BroadcastReceiver {
         Actions.Done done = new Actions.Done() {
             @Override public void done(JSONObject r) { pr.finish(); }
         };
-        if (capture) Actions.capture(c, done);
+        if (capture) Actions.captureOrStop(c, done);
         else Actions.record(c, "toggle", done);
     }
 }

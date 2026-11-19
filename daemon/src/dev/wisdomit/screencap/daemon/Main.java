@@ -25,10 +25,16 @@ import java.io.OutputStream;
  *   capture                 -> {"ok":true,"file":"Screenshots/…jpg","ms":480,...} or {"ok":false,"error":"no_usb"}
  *   record start <quality>  -> status; record stop -> status; record toggle <quality> -> status
  *   overlay                 -> the floating button appeared or went: read its layer again
+ *   floating on|off         -> whether the owner wants the floating button (the watchdog below)
  *   diag-start <settings-json> -> starts the diagnostics in the background (SUMMARY.txt for an issue report)
  *   diag-status             -> where they are: state, stage, each stage's result (Diag.status)
  *
  * Only root, system and the mod's own app may connect (checked by the peer's uid).
+ *
+ * Floating button watchdog: the app's FloatingService asks for status every few seconds. If it
+ * hasn't for KICK_AFTER_MS while a stick is in, the service isn't running (the head unit comes
+ * back from QuickBoot without BOOT_COMPLETED, or our start request came too early), so it's
+ * started again. Off while the owner has turned the floating button off.
  */
 public final class Main implements Recorder.Listener {
     static final String SOCKET = "dev.wisdomit.screencap";
@@ -37,6 +43,10 @@ public final class Main implements Recorder.Listener {
     private final Screen screen;
     private final Store store;
     private volatile int appUid;
+    static final long KICK_AFTER_MS = 20000, KICK_EVERY_MS = 10000;
+    /** last status request from the app (its floating button), and whether the owner wants the button */
+    private volatile long lastAppStatus;
+    private volatile boolean floatingWanted = true;
     private Recorder recorder;
     private String lastError;
     private final Object lock = new Object();
@@ -62,8 +72,13 @@ public final class Main implements Recorder.Listener {
 
     private void serve() throws Exception {
         LocalServerSocket server = new LocalServerSocket(SOCKET);
-        // let the app put its floating button up now that we can answer it
-        Sh.run(10000, "/system/bin/am", "startservice", "-n", Screen.APP + "/.FloatingService");
+        // let the app put its floating button up now that we can answer it, and keep it up
+        startFloating("service start");
+        Thread watchdog = new Thread(new Runnable() {
+            @Override public void run() { floatingWatchdog(); }
+        }, "floating-watchdog");
+        watchdog.setDaemon(true);
+        watchdog.start();
         while (true) {
             final LocalSocket s = server.accept();
             new Thread(new Runnable() {
@@ -82,6 +97,7 @@ public final class Main implements Recorder.Listener {
             } else {
                 BufferedReader r = new BufferedReader(new InputStreamReader(s.getInputStream(), "UTF-8"));
                 String line = r.readLine();
+                if (line != null && uid == appUid && line.startsWith("status")) lastAppStatus = System.currentTimeMillis();
                 reply = line == null ? fail("empty") : dispatch(line.trim());
             }
             out.write((reply.toString() + "\n").getBytes("UTF-8"));
@@ -100,6 +116,11 @@ public final class Main implements Recorder.Listener {
         if ("status".equals(cmd)) return status();
         if ("capture".equals(cmd)) return capture();
         if ("overlay".equals(cmd)) { screen.overlayChanged(); return ok(); }
+        if ("floating".equals(cmd) && a.length >= 2) {
+            floatingWanted = !"off".equals(a[1]);
+            if (floatingWanted) lastAppStatus = System.currentTimeMillis();   // it's starting: give it time
+            return ok().put("floating", floatingWanted);
+        }
         if ("record".equals(cmd) && a.length >= 2) {
             String q = a.length >= 3 ? a[2].split(" ")[0] : "standard";   // later words: older apps' options, ignored
             if ("start".equals(a[1])) return recordStart(q);
@@ -113,6 +134,28 @@ public final class Main implements Recorder.Listener {
             return d == null ? ok().put("state", "idle") : d.status();
         }
         return fail("unknown_command");
+    }
+
+    // ---- floating button watchdog ----
+
+    private void floatingWatchdog() {
+        while (true) {
+            try { Thread.sleep(KICK_EVERY_MS); } catch (InterruptedException e) { return; }
+            if (!floatingWanted || !anyStickMounted()) continue;
+            if (System.currentTimeMillis() - lastAppStatus < KICK_AFTER_MS) continue;
+            startFloating("no word from the floating button for " + (System.currentTimeMillis() - lastAppStatus) / 1000 + " s");
+            lastAppStatus = System.currentTimeMillis();   // wait a full period before asking again
+        }
+    }
+
+    private static boolean anyStickMounted() {
+        for (String s : Store.STICKS) if (Store.mounted(s)) return true;
+        return false;
+    }
+
+    private static void startFloating(String why) {
+        Sh.log("starting the floating button (" + why + ")");
+        Sh.run(10000, "/system/bin/am", "startservice", "-n", Screen.APP + "/.FloatingService");
     }
 
     // ---- diagnostics ----
